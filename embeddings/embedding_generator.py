@@ -61,6 +61,21 @@ ACAO_DERIVADA_ENRIQUECIDA = {
     '': 'Sem classificação de ação derivada específica ou informação insuficiente nos registros.'
 }
 
+# Dicionário de Enriquecimento Semântico das Ações Matrizes (Macroclasses) em português
+ACAO_MATRIZ_ENRIQUECIDA = {
+    'ARRECADAÇÃO DE RECURSOS OU EXECUÇÃO DE SERVIÇOS': 'Ações voltadas para a coleta de fundos, doações de recursos financeiros, campanhas de arrecadação ou prestação de serviços comunitários e apoio social no campo.',
+    'COMERCIALIZAÇÃO': 'Atividades de venda, feiras agrícolas, circuitos curtos de comércio, mercados institucionais e canais de escoamento da produção da agricultura familiar e camponesa.',
+    'COMUNICATIVA': 'Ações de comunicação, publicação de notas públicas, manifestos, cartas abertas, comunicados, entrevistas coletivas e divulgação de informações pelos movimentos sociais.',
+    'DESLOCAMENTO COLETIVO': 'Marchas, caravanas, caminhadas organizadas e deslocamento em massa de trabalhadores rurais e famílias camponesas em protestos ou mobilizações.',
+    'ENCONTRO DE MEDIAÇÃO': 'Reuniões, audiências com órgãos do governo, instâncias de negociação, mediação de conflitos de terra, fóruns e mesas de diálogo institucional.',
+    'EVENTOS': 'Encontros organizativos, assembleias, plenárias, cursos de formação política ou técnica, seminários e congressos promovidos pelos movimentos do campo.',
+    'FESTIVIDADES, RITOS E LAZER': 'Festas comunitárias, celebrações culturais, atos místicos, comemorações de conquistas, ritos tradicionais e atividades de integração cultural no campo.',
+    'INTERSECCIONALIDADE INSTITUCIONAL': 'Participação de lideranças em instâncias estatais, conselhos de políticas públicas, ocupação de cargos públicos, candidaturas eleitorais e articulação com instituições civis.',
+    'JUDICIALIZAÇÃO': 'Processos judiciais, petições legais, demandas na justiça, conquistas judiciais favoráveis ou disputas jurídicas envolvendo posse de terras, despejos e reintegrações.',
+    'OCUPACAO': 'Ocupações de terras improdutivas, latifúndios, prédios públicos (como sedes do INCRA) ou espaços públicos urbanos e rurais como forma de pressão política.',
+    'PRODUÇÃO': 'Atividades produtivas diretas, cultivo agrícola, produção de alimentos saudáveis e agroecológicos, criação de tecnologias sociais e reflorestamento no campo.'
+}
+
 class EmbeddingManager:
     def __init__(self, model_name='sentence-transformers/distiluse-base-multilingual-cased-v1'):
         self.model_name = model_name
@@ -72,8 +87,14 @@ class EmbeddingManager:
         # Gerar embeddings para as ações derivadas enriquecidas
         self.action_keys = list(ACAO_DERIVADA_ENRIQUECIDA.keys())
         self.action_descriptions = list(ACAO_DERIVADA_ENRIQUECIDA.values())
-        logging.info("Gerando embeddings para as ações enriquecidas...")
+        logging.info("Gerando embeddings para as ações derivadas enriquecidas...")
         self.action_embeddings = self.model.encode(self.action_descriptions, show_progress_bar=False)
+        
+        # Gerar embeddings para as ações matrizes enriquecidas
+        self.matriz_keys = list(ACAO_MATRIZ_ENRIQUECIDA.keys())
+        self.matriz_descriptions = list(ACAO_MATRIZ_ENRIQUECIDA.values())
+        logging.info("Gerando embeddings para as ações matrizes enriquecidas...")
+        self.matriz_embeddings = self.model.encode(self.matriz_descriptions, show_progress_bar=False)
         logging.info("Embeddings das ações gerados com sucesso.")
 
     def encode_text(self, texts, batch_size=32):
@@ -83,12 +104,10 @@ class EmbeddingManager:
         return self.model.encode(texts, batch_size=batch_size, show_progress_bar=True)
 
     def compute_similarities(self, text_embeddings):
-        """Computes cosine similarity between text embeddings and the action embeddings.
-        Returns a dictionary of scores mapped to the action keys.
-        """
-        # Shape: (n_texts, n_actions)
-        sim_matrix = cosine_similarity(text_embeddings, self.action_embeddings)
-        return sim_matrix
+        """Computes cosine similarity between text embeddings and both action and matrix embeddings."""
+        sim_derivada = cosine_similarity(text_embeddings, self.action_embeddings)
+        sim_matriz = cosine_similarity(text_embeddings, self.matriz_embeddings)
+        return np.hstack([sim_derivada, sim_matriz])
 
 def process_embeddings_and_similarities(chunked_csv_path, output_dir="data/processed"):
     """Loads the chunked dataset, generates embeddings for all chunks, computes similarities to actions,
@@ -109,14 +128,19 @@ def process_embeddings_and_similarities(chunked_csv_path, output_dir="data/proce
     chunk_embeddings = emb_manager.encode_text(chunks)
     
     # Calcular similaridades
-    logging.info("Calculando similaridade cosseno com as ações enriquecidas...")
+    logging.info("Calculando similaridade cosseno com as ações (derivada e matriz)...")
     similarities = emb_manager.compute_similarities(chunk_embeddings)
     
-    # Adicionar as similaridades como colunas adicionais no dataframe
-    # Cada coluna será 'sim_score_' + nome da ação derivada (normalizada)
+    # Adicionar as similaridades derivada como colunas adicionais no dataframe
+    num_deriv = len(emb_manager.action_keys)
     for i, action_key in enumerate(emb_manager.action_keys):
         col_name = f"sim_score_{action_key.replace('/', '_').replace(' ', '_').lower()}"
         df[col_name] = similarities[:, i]
+        
+    # Adicionar as similaridades matriz como colunas adicionais no dataframe
+    for i, matriz_key in enumerate(emb_manager.matriz_keys):
+        col_name = f"sim_score_matriz_{matriz_key.replace('/', '_').replace(' ', '_').replace(',', '').lower()}"
+        df[col_name] = similarities[:, num_deriv + i]
         
     # Salvar a matriz de embeddings do chunk em arquivo numpy separado para o classificador supervisionado
     embeddings_path = os.path.join(output_dir, "chunk_embeddings.npy")
