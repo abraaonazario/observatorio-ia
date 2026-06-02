@@ -33,3 +33,4 @@ embeddings/*.csv
 # Trained ML Models & Encoders (CRITICAL - binary files >50MB)
 models/*.pkl
 models/*.txt
+models/*.pth
