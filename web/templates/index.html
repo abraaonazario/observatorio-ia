@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatório IA — Conflitos Agrários no Brasil</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js (Map Library) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+    
+    <!-- Chart.js (Charts Library) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.4">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-logo">
+            <i class="fa-solid fa-leaf text-emerald"></i>
+            <h1>Observatório <span>IA</span></h1>
+            <p>Classificação Semântica e Análise de Conflitos Agrários no Brasil</p>
+        </div>
+        <div class="header-actions">
+            <button id="btn-train" class="btn btn-secondary">
+                <i class="fa-solid fa-rotate"></i> Treinar Classificador
+            </button>
+            <span id="train-status-badge" class="badge bg-idle">Status: Ocioso</span>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- TOP STATS -->
+        <section class="stat-card glass" id="card-total-conflitos">
+            <div class="stat-icon bg-emerald-glow">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="stat-info">
+                <h3>Total de Conflitos Registrados</h3>
+                <p class="stat-number">{{ stats.total_conflitos }}</p>
+            </div>
+        </section>
+        
+        <section class="stat-card glass" id="card-total-noticias">
+            <div class="stat-icon bg-gold-glow">
+                <i class="fa-solid fa-newspaper"></i>
+            </div>
+            <div class="stat-info">
+                <h3>Notícias Agrárias Processadas</h3>
+                <p class="stat-number">{{ stats.total_noticias }}</p>
+            </div>
+        </section>
+
+        <!-- MAPA DE CONFLITOS -->
+        <section class="grid-col-12 grid-row-2 card glass">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-earth-americas text-emerald"></i> Mapa Georreferenciado de Conflitos Agrários</h2>
+                <span class="card-subtitle">Hotspots de incidentes com visualização de dispersão por estado (Jittering)</span>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </section>
+
+        <!-- TABELA DE NOTÍCIAS CADASTRADAS -->
+        <section class="grid-col-12 card glass">
+            <div class="card-header flex-header">
+                <div>
+                    <h2><i class="fa-solid fa-list-ul text-emerald"></i> Banco de Notícias Agrárias Processadas</h2>
+                    <span class="card-subtitle">Selecione uma notícia cadastrada para classificar automaticamente ou clique no link para visualizar o PDF original</span>
+                </div>
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-news" placeholder="Buscar notícia por título, código, estado, pauta ou movimento...">
+                </div>
+            </div>
+            <div class="card-body" style="min-height: auto;">
+                <div class="table-scroll-container">
+                    <table class="news-table" id="table-news-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%; text-align: center;">#</th>
+                                <th style="width: 10%;">Código</th>
+                                <th style="width: 33%;">Título da Notícia</th>
+                                <th style="width: 12%;">Estado</th>
+                                <th style="width: 18%;">Movimento</th>
+                                <th style="width: 12%;">Pauta</th>
+                                <th style="width: 10%; text-align: center;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="news-table-body">
+                            <tr>
+                                <td colspan="6" class="table-placeholder">
+                                    <div class="spinner inline-spinner"></div> Carregando banco de notícias...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-pagination-info" id="table-pagination">
+                    Mostrando <span id="table-showing-count">0</span> de <span id="table-total-count">0</span> notícias processadas no dataset
+                </div>
+            </div>
+        </section>
+
+        <!-- CLASSIFICADOR EM TEMPO REAL -->
+        <section class="grid-col-6 card glass card-interactive">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-brain text-emerald"></i> Classificador Semântico com RAG e ML</h2>
+                <span class="card-subtitle">Insira a notícia para a IA segmentar, buscar termos similares e classificar</span>
+            </div>
+            <div class="card-body">
+                <form id="classify-form">
+                    <div class="form-group">
+                        <label for="news-text">Texto da Notícia Agrária:</label>
+                        <textarea id="news-text" placeholder="Cole aqui o texto completo ou trecho da notícia sobre ocupações, manifestações, notas de repúdio ou conflitos de terra..." required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="meta-estado">Estado:</label>
+                            <select id="meta-estado">
+                                <option value="N.I">Não Informado (N.I)</option>
+                                <option value="Rondônia">Rondônia</option>
+                                <option value="Amazonas">Amazonas</option>
+                                <option value="Pernambuco">Pernambuco</option>
+                                <option value="Alagoas">Alagoas</option>
+                                <option value="Pará">Pará</option>
+                                <option value="Mato Grosso">Mato Grosso</option>
+                                <option value="Bahia">Bahia</option>
+                                <option value="São Paulo">São Paulo</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="meta-pauta">Pauta Provável:</label>
+                            <select id="meta-pauta">
+                                <option value="N.I">Não Informado (N.I)</option>
+                                <option value="luta pela terra;">Luta pela terra</option>
+                                <option value="despejo;">Ameaça de Despejo</option>
+                                <option value="violência no campo;">Violência no Campo</option>
+                                <option value="demarcação quilombola;">Demarcação Quilombola / Indígena</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="meta-movimento">Movimento Social:</label>
+                            <select id="meta-movimento">
+                                <option value="N.I">Não Informado (N.I)</option>
+                                <option value="Liga dos Camponeses Pobres (LCP)">Liga dos Camponeses Pobres (LCP)</option>
+                                <option value="Movimento dos Trabalhadores Sem Terra (MST)">Movimento Sem Terra (MST)</option>
+                                <option value="Comissão Pastoral da Terra (CPT)">Comissão Pastoral da Terra (CPT)</option>
+                                <option value="Comunidades Quilombolas">Comunidades Quilombolas / Indígenas</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="btn-classify">
+                        <i class="fa-solid fa-bolt"></i> Processar e Classificar
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- RESULTADOS DA CLASSIFICAÇÃO -->
+        <section class="grid-col-6 card glass">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-chart-line text-gold"></i> Resultado da Classificação da IA</h2>
+                <span class="card-subtitle">Macro-categoria e Ação Derivada com níveis de confiança calculados</span>
+            </div>
+            <div class="card-body" id="classification-results-container">
+                <div class="placeholder-results">
+                    <i class="fa-solid fa-robot text-muted"></i>
+                    <p>Aguardando submissão da notícia para exibir predições da inteligência artificial...</p>
+                </div>
+                
+                <div id="loader" class="loader-container hidden">
+                    <div class="spinner"></div>
+                    <p>IA executando chunking semântico, gerando embeddings e aplicando modelos...</p>
+                </div>
+
+                <div id="results-content" class="hidden">
+                    <div class="result-box glass-accent">
+                        <h3>Ação Derivada Identificada</h3>
+                        <p id="res-derivada" class="res-highlight text-emerald">NOME DA AÇÃO</p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill bg-emerald-glow" id="res-derivada-conf-bar" style="width: 0%;"></div>
+                        </div>
+                        <span class="conf-text">Confiança do Classificador: <strong id="res-derivada-conf">0%</strong></span>
+                    </div>
+
+                    <div class="result-box glass-gold-accent">
+                        <h3>Ação Matriz (Macro Categoria)</h3>
+                        <p id="res-matriz" class="res-highlight text-gold">NOME DA MATRIZ</p>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill bg-gold-glow" id="res-matriz-conf-bar" style="width: 0%;"></div>
+                        </div>
+                        <span class="conf-text">Confiança do Classificador: <strong id="res-matriz-conf">0%</strong></span>
+                    </div>
+
+                    <div class="chunks-breakdown">
+                        <h4><i class="fa-solid fa-list-check"></i> Detalhamento por Chunk Semântico</h4>
+                        <div id="chunks-list" class="chunks-scroll-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRÁFICOS ANALÍTICOS -->
+        <section class="grid-col-4 card glass">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-users text-emerald"></i> Top Movimentos Sociais</h2>
+                <span class="card-subtitle">Frequência absoluta no dataset</span>
+            </div>
+            <div class="card-body">
+                <canvas id="chart-movimentos"></canvas>
+            </div>
+        </section>
+
+        <section class="grid-col-4 card glass">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-map-location-dot text-gold"></i> Hotspots por Estado</h2>
+                <span class="card-subtitle">Estados com maior atividade</span>
+            </div>
+            <div class="card-body">
+                <canvas id="chart-estados"></canvas>
+            </div>
+        </section>
+
+        <section class="grid-col-4 card glass">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-flag text-emerald"></i> Distribuição das Pautas</h2>
+                <span class="card-subtitle">Temáticas mais frequentes</span>
+            </div>
+            <div class="card-body">
+                <canvas id="chart-pautas"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>© 2026 Observatório IA dos Conflitos Agrários no Brasil. Desenvolvido para pesquisa doutoral e monitoramento estratégico.</p>
+    </footer>
+
+    <!-- Passar dados de estatísticas do Python para o JS como variáveis globais de baseline -->
+    <script>
+        window.statsData = {
+            top_movimentos: {{ stats.top_movimentos | tojson | safe }},
+            top_estados: {{ stats.top_estados | tojson | safe }},
+            top_pautas: {{ stats.top_pautas | tojson | safe }}
+        };
+    </script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}?v=1.4"></script>
+</body>
+</html>

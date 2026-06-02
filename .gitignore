@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter Notebook & IDEs
+.ipynb_checkpoints
+.vscode/
+.idea/
+
+# Large Data Archives (CRITICAL - avoid pushing 1GB files)
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Original Spreadsheets & Local Cache
+*.xlsx
+*.xls
+
+# Processed Datasets & Embeddings Matrix (CRITICAL - dynamic regeneration available)
+data/processed/
+embeddings/*.npy
+embeddings/*.csv
+
+# Trained ML Models & Encoders (CRITICAL - binary files >50MB)
+models/*.pkl
+models/*.txt
