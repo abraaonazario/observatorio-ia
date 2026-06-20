@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvimento — Observatório IA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.7">
+
+    <style>
+        .metodologia-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .metodologia-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .metodologia-container p {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+        }
+
+        .tech-list {
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            background: #f8f9fa;
+            border-left: 4px solid #1a73e8;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-item h3 {
+            margin-top: 0;
+            color: #1a73e8;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .tech-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        /* Maturity Timeline Styles */
+        .maturity-section {
+            margin: 3rem 0;
+            padding: 2.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 16px;
+            border: 1px solid rgba(26, 115, 232, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        .maturity-section h2 {
+            font-size: 2rem !important;
+            color: #0f172a !important;
+            margin-bottom: 0.8rem !important;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .maturity-section h2 i {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.8rem;
+            border-radius: 12px;
+        }
+
+        .maturity-section > p {
+            color: #475569;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .maturity-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .maturity-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+
+        .maturity-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2.5rem;
+        }
+
+        .maturity-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .maturity-icon {
+            position: absolute;
+            left: -1.2rem;
+            top: 0;
+            width: 44px;
+            height: 44px;
+            background: #ffffff;
+            border: 3px solid #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .maturity-content {
+            background: #ffffff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .maturity-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+            border-color: #e2e8f0;
+        }
+
+        .maturity-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1e293b;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .maturity-content p {
+            margin: 0 !important;
+            font-size: 1rem !important;
+            color: #475569 !important;
+        }
+
+        /* Nível Atual / Destacado */
+        .maturity-item.active .maturity-icon.highlight {
+            background: #10b981;
+            border-color: #059669;
+            color: white;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .maturity-item.active .maturity-content.highlight-content {
+            background: linear-gradient(135deg, #f0fdf4, #ffffff);
+            border-left: 5px solid #10b981;
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            border-right: 1px solid rgba(16, 185, 129, 0.2);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            transform: scale(1.02);
+        }
+
+        .maturity-item.active .maturity-content.highlight-content h4 {
+            color: #059669;
+        }
+
+        .maturity-item.active .maturity-content.highlight-content p {
+            color: #065f46 !important;
+            font-weight: 500;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bd-header">
+        <div class="bd-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
+        </div>
+
+        <nav class="bd-nav">
+            <a href="{{ url_for('dashboard') }}">Dados</a>
+            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+            <a href="{{ url_for('metodologia') }}">Metodologia</a>
+            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+        </nav>
+
+        <div class="bd-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+            <button class="bd-chatbot-btn">
+                Chatbot <span class="beta">Beta</span>
+            </button>
+            <div class="bd-profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="metodologia-container">
+        <h1>Desenvolvimento Tecnológico</h1>
+        <p>A arquitetura do <strong>DataLuta</strong> foi desenvolvida utilizando um conjunto de tecnologias de ponta em
+            Inteligência Artificial, Ciência de Dados e Engenharia de Software. Abaixo, detalhamos o <em>stack</em>
+            tecnológico que sustenta nosso pipeline analítico.</p>
+
+        <div class="maturity-section">
+            <h2><i class="fa-solid fa-chart-line"></i> Nível de Maturidade da IA (0 a 5)</h2>
+            <p>O Observatório IA evolui continuamente. Acompanhe a nossa esteira de evolução e o estágio atual do projeto em termos de maturidade de dados e inteligência artificial:</p>
+            
+            <div class="maturity-timeline">
+                <div class="maturity-item">
+                    <div class="maturity-icon"><i class="fa-solid fa-folder-open"></i></div>
+                    <div class="maturity-content">
+                        <h4>Nível 0: Ad Hoc / Inexistente</h4>
+                        <p>Sem processamento estruturado. Dados soltos e sem padronização.</p>
+                    </div>
+                </div>
+                <div class="maturity-item">
+                    <div class="maturity-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                    <div class="maturity-content">
+                        <h4>Nível 1: Inicial</h4>
+                        <p>Ingestão de dados brutos (PDFs/Planilhas) e extração de texto básica automatizada.</p>
+                    </div>
+                </div>
+                <div class="maturity-item">
+                    <div class="maturity-icon"><i class="fa-solid fa-filter"></i></div>
+                    <div class="maturity-content">
+                        <h4>Nível 2: Gerenciado</h4>
+                        <p>Dados limpos, estruturados e aplicação de pipeline de NLP com Semantic Chunking.</p>
+                    </div>
+                </div>
+                <div class="maturity-item">
+                    <div class="maturity-icon"><i class="fa-solid fa-chart-bar"></i></div>
+                    <div class="maturity-content">
+                        <h4>Nível 3: Definido</h4>
+                        <p>Modelos base (HistGradientBoosting/RF) treinados, validados e com métricas de classificação estabelecidas.</p>
+                    </div>
+                </div>
+                <div class="maturity-item">
+                    <div class="maturity-icon"><i class="fa-solid fa-brain"></i></div>
+                    <div class="maturity-content">
+                        <h4>Nível 4: Quantitativamente Gerenciado</h4>
+                        <p>Modelos de Deep Learning (MT-DNN Multi-Task) implementados, otimizados e embeddings gerados.</p>
+                    </div>
+                </div>
+                <div class="maturity-item active">
+                    <div class="maturity-icon highlight"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="maturity-content highlight-content">
+                        <h4>Nível 5: Otimizado (Status Atual)</h4>
+                        <p>Observabilidade total, RAG semântico extrativo em tempo real, Grafo de Conhecimento interativo e georreferenciamento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-list">
+            <div class="tech-item">
+                <h3><i class="fa-solid fa-brain"></i> Redes Neurais PyTorch (MT-DNN)</h3>
+                <p>O núcleo de classificação preditiva utiliza uma arquitetura profunda de Redes Neurais baseada em
+                    Multi-Task Deep Neural Networks construída em <strong>PyTorch</strong>, capaz de aprender múltiplas
+                    dimensões do conflito simultaneamente.</p>
+            </div>
+
+            <div class="tech-item">
+                <h3><i class="fa-solid fa-language"></i> Processamento de Linguagem (spaCy)</h3>
+                <p>A segmentação de textos complexos (chunking), identificação de classes gramaticais e
+                    pré-processamento estrutural (NLP) são garantidos pelos modelos robustos pré-treinados do
+                    <strong>spaCy</strong> para a língua portuguesa.</p>
+            </div>
+
+            <div class="tech-item">
+                <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Busca Semântica (Sentence-Transformers)</h3>
+                <p>Para extração de <em>embeddings</em> e vetorização de sentenças, implementamos a biblioteca
+                    <strong>Transformers (Hugging Face)</strong>, permitindo buscas contextuais avançadas independentes
+                    de palavras-chave exatas.</p>
+            </div>
+
+            <div class="tech-item">
+                <h3><i class="fa-solid fa-file-pdf"></i> Extração de Dados (PDFPlumber)</h3>
+                <p>A leitura e extração programática de textos brutos a partir de dossiês documentais e laudos periciais
+                    digitalizados (arquivos PDF) são feitas via <strong>PDFPlumber</strong>.</p>
+            </div>
+
+            <div class="tech-item">
+                <h3><i class="fa-solid fa-server"></i> Interface Web (Flask/Python)</h3>
+                <p>A camada de visualização, roteamento de APIs e interface com o usuário final é sustentada por um
+                    servidor em <strong>Flask</strong>, integrado com Jinja2 para renderização dinâmica.</p>
+            </div>
+        </div>
+
+        <div class="architecture-section" style="margin-top: 4rem;">
+            <h2><i class="fa-solid fa-folder-tree"></i> Arquitetura de Pastas (Pipeline de Código)</h2>
+            <p>O Observatório foi construído de forma modular. Cada pasta do código-fonte tem uma responsabilidade estrita no ciclo de vida do dado, funcionando como uma linha de montagem industrial. Abaixo está o fluxo de execução de cada módulo:</p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; position: relative;">
+                
+                <!-- Linha Guia -->
+                <div style="position: absolute; left: 24px; top: 30px; bottom: 30px; width: 4px; background: #e2e8f0; z-index: 0;"></div>
+
+                <!-- 1. Ingestion -->
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div style="width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(59,130,246,0.3); border: 4px solid white;">
+                        1
+                    </div>
+                    <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #cbd5e1;"></i> /ingestion</h3>
+                        <p style="margin-bottom: 0; color: #475569;"><strong>O que faz:</strong> É a "boca" do sistema. Este módulo entra nos arquivos ZIP, lê a planilha Excel principal e usa o <em>PDFPlumber</em> para extrair a matéria bruta dos PDFs sem que o usuário precise descompactar nada manualmente.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Preprocessing -->
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div style="width: 50px; height: 50px; background: #eab308; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(234,179,8,0.3); border: 4px solid white;">
+                        2
+                    </div>
+                    <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #cbd5e1;"></i> /preprocessing</h3>
+                        <p style="margin-bottom: 0; color: #475569;"><strong>O que faz:</strong> É o "lavador". Recebe o texto sujo da ingestão, aplica as baterias de limpeza com Expressões Regulares (eliminando links, hifens e menus) e usa o <em>spaCy</em> para fatiar o texto em "Chunks" lógicos.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Embeddings -->
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div style="width: 50px; height: 50px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(16,185,129,0.3); border: 4px solid white;">
+                        3
+                    </div>
+                    <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #cbd5e1;"></i> /embeddings</h3>
+                        <p style="margin-bottom: 0; color: #475569;"><strong>O que faz:</strong> É o "tradutor matemático". Contém o Dicionário de Enriquecimento Semântico. Ele transforma os textos em números (vetores), criando a base de conhecimento (RAG) que a IA usará para buscar similaridades.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Training -->
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div style="width: 50px; height: 50px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(139,92,246,0.3); border: 4px solid white;">
+                        4
+                    </div>
+                    <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #cbd5e1;"></i> /training</h3>
+                        <p style="margin-bottom: 0; color: #475569;"><strong>O que faz:</strong> É a "escola". Contém os scripts que ensinam a IA. Pega os dados estruturados e roda os algoritmos de Machine Learning (HistGradientBoosting/MT-DNN) para treinar as predições de classificação sociológica.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Models -->
+                <div style="display: flex; align-items: flex-start; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div style="width: 50px; height: 50px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; box-shadow: 0 4px 6px rgba(239,68,68,0.3); border: 4px solid white;">
+                        5
+                    </div>
+                    <div style="background: white; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        <h3 style="margin-top: 0; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-folder-open" style="color: #cbd5e1;"></i> /models</h3>
+                        <p style="margin-bottom: 0; color: #475569;"><strong>O que faz:</strong> É a "memória" física. Guarda os arquivos binários (<code>.pkl</code>, <code>.bin</code>) gerados na etapa de treinamento, preservando o "cérebro" da IA pronto para o uso na Web.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="algorithm-flow-section" style="margin-top: 4rem;">
+            <h2><i class="fa-solid fa-microchip"></i> Fluxo Algorítmico da Inteligência Artificial</h2>
+            <p>O coração analítico do Observatório não é uma única IA genérica (como o ChatGPT), mas sim um ecossistema de algoritmos hiper-especializados ("Ensemble Learning"). Abaixo está o fluxo exato de como cada algoritmo processa os dados:</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; overflow-x: auto; padding-bottom: 1rem;">
+                
+                <!-- Algoritmo 1 -->
+                <div style="flex: 1; min-width: 180px; background: white; border: 2px solid #ef4444; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+                    <div style="background: #ef4444; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 1rem;">1. Extração</div>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #991b1b; font-size: 1.1rem;">PDFPlumber</h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5;"><strong>Visão Computacional.</strong> Enxerga a geometria da página e extrai apenas caracteres puros.</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-right" style="color: #cbd5e1; font-size: 1.2rem; margin: 0 0.5rem;"></i>
+
+                <!-- Algoritmo 2 -->
+                <div style="flex: 1; min-width: 180px; background: white; border: 2px solid #3b82f6; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+                    <div style="background: #3b82f6; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 1rem;">2. Higienização</div>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #1d4ed8; font-size: 1.1rem;">Filtros RegEx</h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5;"><strong>Processamento de Texto.</strong> Elimina links, hifens, NUL bytes e formatações indesejadas (ruídos).</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-right" style="color: #cbd5e1; font-size: 1.2rem; margin: 0 0.5rem;"></i>
+
+                <!-- Algoritmo 3 -->
+                <div style="flex: 1; min-width: 180px; background: white; border: 2px solid #eab308; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+                    <div style="background: #eab308; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 1rem;">3. Estruturação</div>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #a16207; font-size: 1.1rem;">spaCy (NLP)</h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5;"><strong>Linguística.</strong> Analisa a gramática e corta o texto gigante em "Chunks" lógicos.</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-right" style="color: #cbd5e1; font-size: 1.2rem; margin: 0 0.5rem;"></i>
+
+                <!-- Algoritmo 4 -->
+                <div style="flex: 1; min-width: 180px; background: white; border: 2px solid #10b981; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+                    <div style="background: #10b981; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 1rem;">4. Vetorização</div>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #047857; font-size: 1.1rem;">DistilUSE</h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5;"><strong>Matemática Semântica.</strong> Converte palavras limpas em coordenadas vetoriais matemáticas.</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-right" style="color: #cbd5e1; font-size: 1.2rem; margin: 0 0.5rem;"></i>
+
+                <!-- Algoritmo 5 -->
+                <div style="flex: 1; min-width: 180px; background: white; border: 2px solid #8b5cf6; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative;">
+                    <div style="background: #8b5cf6; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 1rem;">5. Predição</div>
+                    <h3 style="margin: 0 0 0.5rem 0; color: #5b21b6; font-size: 1.1rem;">Machine Learning</h3>
+                    <p style="font-size: 0.85rem; color: #64748b; margin: 0; line-height: 1.5;"><strong>Árvores de Decisão.</strong> Lê os vetores e prediz se é Ação Matriz ou Derivada.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="version-history-section" style="margin-top: 4rem;">
+            <h2><i class="fa-solid fa-code-branch"></i> Histórico de Versões (Changelog)</h2>
+            <p>Acompanhe as atualizações, correções e novas funcionalidades integradas ao Observatório IA.</p>
+
+            <div class="version-list" style="margin-top: 2rem;">
+                <div class="version-item" style="background: white; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); margin-bottom: 1.5rem; border: 1px solid #f1f5f9; border-left: 4px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #059669; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-star"></i> v1.1.0</h3>
+                        <span style="background: #ecfdf5; color: #059669; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">Versão Atual</span>
+                    </div>
+                    <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8; font-size: 1.05rem;">
+                        <li><strong style="color: #059669;">Funcionalidade:</strong> Inclusão do indicador <b>Qtd. Páginas</b> na Tabela de PDFs, processado em segundo plano e servido via cache.</li>
+                        <li><strong style="color: #ef4444;">Correção (Bugfix):</strong> Solucionado o truncamento precoce de textos grandes causados por caracteres nulos (<code>NUL bytes</code>) do codificador de PDF, estabilizando as métricas.</li>
+                        <li><strong style="color: #ef4444;">Correção (Bugfix):</strong> Refatorado o algoritmo de pareamento semântico que unificou os <b>23 chunks</b> entre a base em tempo real e o gerador estático (CSV).</li>
+                        <li><strong style="color: #3b82f6;">Melhoria:</strong> Melhorias de performance na filtragem e extração de metadados do ZIP.</li>
+                    </ul>
+                </div>
+
+                <div class="version-item" style="background: white; border-left: 4px solid #3b82f6; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); margin-bottom: 1.5rem; border: 1px solid #f1f5f9; border-left: 4px solid #3b82f6;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="margin: 0; color: #1d4ed8; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-box-open"></i> v1.0.0</h3>
+                        <span style="background: #eff6ff; color: #1d4ed8; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">Lançamento Inicial</span>
+                    </div>
+                    <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8; font-size: 1.05rem;">
+                        <li>Integração robusta de coleta de dados brutos e tratamento automático de PDFs.</li>
+                        <li>Segmentação e extração baseada em <b>Semantic Chunking (spaCy)</b>.</li>
+                        <li>Implementação do <b>Classificador MT-DNN (PyTorch)</b> para as dimensões de "Ação Matriz" e "Ação Derivada".</li>
+                        <li>Geração da interface Web Analítica no formato <i>Dashboard</i> com <b>Grafo de Conhecimento</b> e inferência via Web UI.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

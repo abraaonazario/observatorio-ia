@@ -10,6 +10,7 @@ from tqdm import tqdm
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Dicionário de Enriquecimento Semântico das Ações Derivadas em português
+#retirar a descrição 
 ACAO_DERIVADA_ENRIQUECIDA = {
     'ACAMPAMENTO': 'Formação de acampamento camponês provisório ou estabelecimento de acampados em terras reivindicadas para reforma agrária.',
     'ASSEMBLEIA/PLENÁRIA': 'Reunião de membros de movimentos sociais para tomada de decisões coletivas, plenárias organizativas ou planejamento de ações agrárias.',
@@ -77,22 +78,30 @@ ACAO_MATRIZ_ENRIQUECIDA = {
 }
 
 class EmbeddingManager:
-    def __init__(self, model_name='sentence-transformers/distiluse-base-multilingual-cased-v1'):
+    def __init__(self, model_name='sentence-transformers/distiluse-base-multilingual-cased-v1', category='agrario'):
         self.model_name = model_name
+        self.category = category
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         logging.info(f"Carregando modelo de embeddings: {model_name} no dispositivo {device}...")
         self.model = SentenceTransformer(model_name, device=device)
         logging.info("Modelo de embeddings carregado com sucesso.")
         
+        if category == 'agrario':
+            derivada_dict = ACAO_DERIVADA_ENRIQUECIDA
+            matriz_dict = ACAO_MATRIZ_ENRIQUECIDA
+        else:
+            derivada_dict = {'Ação Indefinida': 'Nenhuma classe definida'}
+            matriz_dict = {'Matriz Indefinida': 'Nenhuma matriz definida'}
+        
         # Gerar embeddings para as ações derivadas enriquecidas
-        self.action_keys = list(ACAO_DERIVADA_ENRIQUECIDA.keys())
-        self.action_descriptions = list(ACAO_DERIVADA_ENRIQUECIDA.values())
+        self.action_keys = list(derivada_dict.keys())
+        self.action_descriptions = list(derivada_dict.values())
         logging.info("Gerando embeddings para as ações derivadas enriquecidas...")
         self.action_embeddings = self.model.encode(self.action_descriptions, show_progress_bar=False)
         
         # Gerar embeddings para as ações matrizes enriquecidas
-        self.matriz_keys = list(ACAO_MATRIZ_ENRIQUECIDA.keys())
-        self.matriz_descriptions = list(ACAO_MATRIZ_ENRIQUECIDA.values())
+        self.matriz_keys = list(matriz_dict.keys())
+        self.matriz_descriptions = list(matriz_dict.values())
         logging.info("Gerando embeddings para as ações matrizes enriquecidas...")
         self.matriz_embeddings = self.model.encode(self.matriz_descriptions, show_progress_bar=False)
         logging.info("Embeddings das ações gerados com sucesso.")
@@ -109,7 +118,7 @@ class EmbeddingManager:
         sim_matriz = cosine_similarity(text_embeddings, self.matriz_embeddings)
         return np.hstack([sim_derivada, sim_matriz])
 
-def process_embeddings_and_similarities(chunked_csv_path, output_dir="data/processed"):
+def process_embeddings_and_similarities(chunked_csv_path, output_dir="data/processed", category="agrario"):
     """Loads the chunked dataset, generates embeddings for all chunks, computes similarities to actions,
     and saves the enriched dataset containing embeddings and similarity scores.
     """
@@ -121,7 +130,7 @@ def process_embeddings_and_similarities(chunked_csv_path, output_dir="data/proce
     # Remover chunks vazios ou inválidos
     df = df.dropna(subset=['chunk_texto'])
     
-    emb_manager = EmbeddingManager()
+    emb_manager = EmbeddingManager(category=category)
     
     chunks = df['chunk_texto'].tolist()
     logging.info(f"Gerando embeddings para {len(chunks)} chunks semânticos...")

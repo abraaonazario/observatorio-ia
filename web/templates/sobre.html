@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre — Observatório IA</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.7">
+    
+    <style>
+        .metodologia-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        .metodologia-container h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+        .metodologia-container p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            color: #4a4a4a;
+        }
+        .sobre-logo {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        .sobre-logo .b {
+            background: #2b7a4b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px 0 0 4px;
+        }
+        .sobre-logo .d {
+            background: #73c873;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="bd-header">
+        <div class="bd-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
+        </div>
+        
+        <nav class="bd-nav">
+            <a href="{{ url_for('dashboard') }}">Dados</a>
+            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+            <a href="{{ url_for('metodologia') }}">Metodologia</a>
+            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+            <a href="{{ url_for('sobre') }}">Sobre</a>
+        </nav>
+
+        <div class="bd-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+            <button class="bd-chatbot-btn">
+                Chatbot <span class="beta">Beta</span>
+            </button>
+            <div class="bd-profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="metodologia-container">
+        <div class="sobre-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
+        </div>
+        <h1>Conflitos mapeados.</h1>
+        <p>O <strong>DataLuta</strong> é o maior observatório de dados do Brasil voltado para o mapeamento e análise de conflitos espaciais, territoriais, agrários e de águas, empregando Inteligência Artificial para extração de conhecimento avançado.</p>
+    </main>
+</body>
+</html>

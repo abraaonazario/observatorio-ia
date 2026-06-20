@@ -1,0 +1,51 @@
+Acurácia: 78.71%
+
+                                                   precision    recall  f1-score   support
+
+                                                        1.00      1.00      1.00         6
+                                      ACAMPAMENTO       0.20      0.25      0.22         4
+                              ASSEMBLEIA/PLENÁRIA       1.00      0.77      0.87        13
+                                        AUDIÊNCIA       1.00      0.60      0.75         5
+                                AUDIÊNCIA PÚBLICA       1.00      0.75      0.86        12
+                                 BLOQUEIO DE VIAS       0.67      0.73      0.70        11
+                                         CAMPANHA       0.00      0.00      0.00         3
+                                     CARTA ABERTA       0.85      0.78      0.81        36
+              CIRCUITOS CURTOS DE COMERCIALIZAÇÃO       1.00      0.38      0.55         8
+                      CONQUISTA DE INFRAESTRUTURA       1.00      1.00      1.00         3
+                               CONQUISTA JUDICIAL       0.71      0.68      0.70        22
+                   CRIAÇÃO DE TECNOLOGIAS SOCIAIS       0.00      0.00      0.00         1
+                                 DEMANDA JUDICIAL       0.88      0.88      0.88        43
+                                 DERROTA JUDICIAL       1.00      0.50      0.67         2
+                      DIREITO DE CONSULTA POPULAR       1.00      1.00      1.00         2
+                              DOAÇÃO DE ALIMENTOS       1.00      1.00      1.00         8
+DOCUMENTO DE FORMAÇÃO E INFORMAÇÃO DOS MOVIMENTOS       1.00      0.80      0.89        10
+                                         ENCONTRO       0.73      0.93      0.82       148
+                             ENTREVISTA CONCEDIDA       0.79      0.90      0.84        58
+                           FESTIVIDADES CULTURAIS       0.91      0.81      0.86        37
+                                         FORMAÇÃO       1.00      0.25      0.40         4
+                                            FÓRUM       1.00      1.00      1.00         3
+                                JORNADAS DE LUTAS       0.79      0.73      0.76        26
+                                           MARCHA       0.75      0.64      0.69        14
+                            MERCADO INSTITUCIONAL       0.94      0.94      0.94        17
+                                 NOTA DE DENÚNCIA       0.87      0.83      0.85        90
+                                    NOTA DE PESAR       1.00      0.70      0.82        10
+                                  NOTA DE REPÚDIO       0.50      0.33      0.40         6
+      OCUPAÇÃO DE CARGOS PÚBLICOS OU CANDIDATURAS       0.75      0.75      0.75         4
+                       OCUPAÇÃO DE ESPAÇO PÚBLICO       0.73      0.57      0.64        14
+                       OCUPAÇÃO DE PRÉDIO PRIVADO       0.00      0.00      0.00         3
+                       OCUPAÇÃO DE PRÉDIO PÚBLICO       0.22      0.40      0.29         5
+                                OCUPAÇÃO DE TERRA       0.47      0.67      0.55        21
+                PARTICIPAÇÃO EM AUDIÊNCIA PÚBLICA       0.60      0.50      0.55         6
+                                         PASSEATA       0.00      0.00      0.00         1
+                                        PREMIAÇÃO       1.00      0.57      0.73         7
+                  PRODUÇÃO DE ALIMENTOS SAUDÁVEIS       0.78      0.78      0.78        18
+                               PROJETOS TEMÁTICOS       0.67      0.67      0.67         3
+                                  REFLORESTAMENTO       1.00      0.80      0.89         5
+                                         RETOMADA       1.00      0.50      0.67         2
+                                          REUNIÃO       0.74      0.83      0.79        42
+                   TENTATIVA DE OCUPAÇÃO DE TERRA       1.00      0.17      0.29         6
+                               VIOLÊNCIA JURÍDICA       1.00      0.25      0.40         8
+
+                                         accuracy                           0.79       747
+                                        macro avg       0.76      0.62      0.66       747
+                                     weighted avg       0.80      0.79      0.78       747

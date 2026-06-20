@@ -1,263 +1,753 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observatório IA — Conflitos Agrários no Brasil</title>
-    
+    {% set cat_names = {'agrario': 'Agrários', 'urbano': 'Urbanos', 'aguas': 'por Água', 'floresta': 'Florestais'} %}
+    {% set cat_name = cat_names.get(current_category, 'Agrários') %}
+    <title>Observatório IA — Conflitos {{ cat_name }} no Brasil</title>
+    <script>
+        window.onerror = function (message, source, lineno, colno, error) {
+            if (typeof message === 'string' && message.includes('ResizeObserver')) return;
+            fetch('/api/log', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'uncaught', message: message + ' at ' + source + ':' + lineno }) });
+        };
+        const origError = console.error;
+        console.error = function () {
+            origError.apply(console, arguments);
+            fetch('/api/log', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'error', message: Array.from(arguments).join(' ') }) });
+        };
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Leaflet.js (Map Library) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+
     <!-- Chart.js (Charts Library) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
+    <!-- Vis.js Standalone for Knowledge Graph -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.7">
 </head>
+
 <body>
-    <header class="app-header">
-        <div class="header-logo">
-            <i class="fa-solid fa-leaf text-emerald"></i>
-            <h1>Observatório <span>IA</span></h1>
-            <p>Classificação Semântica e Análise de Conflitos Agrários no Brasil</p>
+    <header class="bd-header">
+        <div class="bd-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
         </div>
-        <div class="header-actions">
+
+        <nav class="bd-nav">
+            <a href="#">Dados</a>
+            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+            <a href="{{ url_for('metodologia') }}">Metodologia</a>
+            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+            <a href="{{ url_for('sobre') }}">Sobre</a>
+        </nav>
+
+        <div class="bd-actions">
+            <div class="header-search-container bd-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="global-search" placeholder="Pesquisar dados">
+            </div>
             <button id="btn-train" class="btn btn-secondary">
-                <i class="fa-solid fa-rotate"></i> Treinar Classificador
+                <i class="fa-solid fa-rotate"></i> Treinar
             </button>
-            <span id="train-status-badge" class="badge bg-idle">Status: Ocioso</span>
+            <span id="train-status-badge" class="badge bg-idle" style="display: none;">Status: Ocioso</span>
+            <button class="bd-chatbot-btn">
+                Chatbot <span class="beta">Beta</span>
+            </button>
+            <div class="bd-profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
         </div>
     </header>
 
-    <main class="dashboard-grid">
-        <!-- TOP STATS -->
-        <section class="stat-card glass" id="card-total-conflitos">
-            <div class="stat-icon bg-emerald-glow">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="stat-info">
-                <h3>Total de Conflitos Registrados</h3>
-                <p class="stat-number">{{ stats.total_conflitos }}</p>
-            </div>
-        </section>
-        
-        <section class="stat-card glass" id="card-total-noticias">
-            <div class="stat-icon bg-gold-glow">
-                <i class="fa-solid fa-newspaper"></i>
-            </div>
-            <div class="stat-info">
-                <h3>Notícias Agrárias Processadas</h3>
-                <p class="stat-number">{{ stats.total_noticias }}</p>
-            </div>
-        </section>
 
-        <!-- MAPA DE CONFLITOS -->
-        <section class="grid-col-12 grid-row-2 card glass">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-earth-americas text-emerald"></i> Mapa Georreferenciado de Conflitos Agrários</h2>
-                <span class="card-subtitle">Hotspots de incidentes com visualização de dispersão por estado (Jittering)</span>
-            </div>
-            <div class="card-body">
-                <div id="map"></div>
-            </div>
-        </section>
 
-        <!-- TABELA DE NOTÍCIAS CADASTRADAS -->
-        <section class="grid-col-12 card glass">
-            <div class="card-header flex-header">
-                <div>
-                    <h2><i class="fa-solid fa-list-ul text-emerald"></i> Banco de Notícias Agrárias Processadas</h2>
-                    <span class="card-subtitle">Selecione uma notícia cadastrada para classificar automaticamente ou clique no link para visualizar o PDF original</span>
-                </div>
-                <div class="search-container">
-                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" id="search-news" placeholder="Buscar notícia por título, código, estado, pauta ou movimento...">
-                </div>
+    <div class="app-layout">
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fa-solid fa-sliders"></i> Filtrar</h3>
+                <span class="results-count">{{ stats.total_conflitos }} resultados</span>
             </div>
-            <div class="card-body" style="min-height: auto;">
-                <div class="table-scroll-container">
-                    <table class="news-table" id="table-news-list">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%; text-align: center;">#</th>
-                                <th style="width: 10%;">Código</th>
-                                <th style="width: 33%;">Título da Notícia</th>
-                                <th style="width: 12%;">Estado</th>
-                                <th style="width: 18%;">Movimento</th>
-                                <th style="width: 12%;">Pauta</th>
-                                <th style="width: 10%; text-align: center;">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="news-table-body">
-                            <tr>
-                                <td colspan="6" class="table-placeholder">
-                                    <div class="spinner inline-spinner"></div> Carregando banco de notícias...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-pagination-info" id="table-pagination">
-                    Mostrando <span id="table-showing-count">0</span> de <span id="table-total-count">0</span> notícias processadas no dataset
-                </div>
-            </div>
-        </section>
 
-        <!-- CLASSIFICADOR EM TEMPO REAL -->
-        <section class="grid-col-6 card glass card-interactive">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-brain text-emerald"></i> Classificador Semântico com RAG e ML</h2>
-                <span class="card-subtitle">Insira a notícia para a IA segmentar, buscar termos similares e classificar</span>
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">
+                    <h4>Tema</h4>
+                    <i class="fa-solid fa-chevron-up"></i>
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tema" value="agrario" onchange="handleThemeChange(this)" {% if
+                            current_category=='agrario' %}checked{% endif %}>
+                        <span class="custom-checkbox"></span>
+                        Agrário {% if category_sources and category_sources.get('agrario') %}- {{
+                        category_sources.get('agrario') }} {% endif %}({{ category_counts.get('agrario', 0) if
+                        category_counts is defined else 0 }})
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tema" value="urbano" onchange="handleThemeChange(this)" {% if
+                            current_category=='urbano' %}checked{% endif %}>
+                        <span class="custom-checkbox"></span>
+                        Urbano {% if category_sources and category_sources.get('urbano') %}- {{
+                        category_sources.get('urbano') }} {% endif %}({{ category_counts.get('urbano', 0) if
+                        category_counts is defined else 0 }})
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tema" value="aguas" onchange="handleThemeChange(this)" {% if
+                            current_category=='aguas' %}checked{% endif %}>
+                        <span class="custom-checkbox"></span>
+                        Águas {% if category_sources and category_sources.get('aguas') %}- {{
+                        category_sources.get('aguas') }} {% endif %}({{ category_counts.get('aguas', 0) if
+                        category_counts is defined else 0 }})
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="tema" value="floresta" onchange="handleThemeChange(this)" {% if
+                            current_category=='floresta' %}checked{% endif %}>
+                        <span class="custom-checkbox"></span>
+                        Floresta {% if category_sources and category_sources.get('floresta') %}- {{
+                        category_sources.get('floresta') }} {% endif %}({{ category_counts.get('floresta', 0) if
+                        category_counts is defined else 0 }})
+                    </label>
+                </div>
             </div>
-            <div class="card-body">
-                <form id="classify-form">
-                    <div class="form-group">
-                        <label for="news-text">Texto da Notícia Agrária:</label>
-                        <textarea id="news-text" placeholder="Cole aqui o texto completo ou trecho da notícia sobre ocupações, manifestações, notas de repúdio ou conflitos de terra..." required></textarea>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="meta-estado">Estado:</label>
-                            <select id="meta-estado">
-                                <option value="N.I">Não Informado (N.I)</option>
-                                <option value="Rondônia">Rondônia</option>
-                                <option value="Amazonas">Amazonas</option>
-                                <option value="Pernambuco">Pernambuco</option>
-                                <option value="Alagoas">Alagoas</option>
-                                <option value="Pará">Pará</option>
-                                <option value="Mato Grosso">Mato Grosso</option>
-                                <option value="Bahia">Bahia</option>
-                                <option value="São Paulo">São Paulo</option>
-                            </select>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">
+                    <h4>Mês de Ocorrência</h4>
+                    <i class="fa-solid fa-chevron-up"></i>
+                </div>
+                <div class="checkbox-group" style="max-height: 250px; overflow-y: auto; padding-right: 0.5rem;">
+                    <label class="checkbox-label">
+                        <input type="radio" name="filter-month-sidebar" value="ALL" checked
+                            onchange="document.getElementById('filter-month').value=this.value; document.getElementById('filter-month').dispatchEvent(new Event('change'));">
+                        <span class="custom-checkbox" style="border-radius: 50%;"></span>
+                        Todos os Meses
+                    </label>
+                    {% if unique_meses is defined %}
+                    {% for mes in unique_meses %}
+                    <label class="checkbox-label">
+                        <input type="radio" name="filter-month-sidebar" value="{{ mes }}"
+                            onchange="document.getElementById('filter-month').value=this.value; document.getElementById('filter-month').dispatchEvent(new Event('change'));">
+                        <span class="custom-checkbox" style="border-radius: 50%;"></span>
+                        {{ mes | capitalize }} ({{ month_counts.get(mes, 0) if month_counts else 0 }})
+                    </label>
+                    {% endfor %}
+                    {% endif %}
+                    {% if not unique_meses or unique_meses is not defined %}
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Nenhum mês detectado para este tema.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </aside>
+
+        <main class="dashboard-grid">
+            <!-- TOP STATS -->
+            <section class="stat-card glass" id="card-total-conflitos">
+                <div class="stat-icon bg-emerald-glow">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total de Conflitos Registrados</h3>
+                    <p class="stat-number">{{ stats.total_conflitos }}</p>
+                </div>
+            </section>
+
+            <section class="stat-card glass" id="card-total-noticias">
+                <div class="stat-icon bg-gold-glow">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Notícias Processadas</h3>
+                    <p class="stat-number">{{ stats.total_noticias }}</p>
+                </div>
+            </section>
+
+            <section class="stat-card glass" id="card-total-pdfs">
+                <div class="stat-icon"
+                    style="background: rgba(16, 185, 129, 0.1); color: var(--color-emerald); box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Documentos Brutos (PDFs)</h3>
+                    <p class="stat-number">{{ stats.total_pdfs }}</p>
+                </div>
+            </section>
+
+            <!-- MAPA DE CONFLITOS -->
+            <section class="grid-col-12 grid-row-2 card glass">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-earth-americas text-emerald"></i> Mapa Georreferenciado de Conflitos {{
+                        cat_name }}</h2>
+                    <span class="card-subtitle">Hotspots de incidentes com visualização de dispersão por estado
+                        (Jittering)</span>
+                </div>
+                <div class="card-body">
+                    <div id="map"></div>
+                </div>
+            </section>
+
+            <!-- GRAFO DE CONHECIMENTO -->
+            <section class="grid-col-12 card glass" id="secao-grafo-conhecimento">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-circle-nodes text-emerald"></i> Grafo de Conhecimento dos Conflitos {{
+                        cat_name }}</h2>
+                    <span class="card-subtitle">Rede interativa mostrando as conexões estruturais de coocorrência
+                        (mínimo 2 ocorrências) entre Atores, Territórios, Demandas e Ações de Conflito</span>
+                </div>
+                <div class="card-body"
+                    style="position: relative; min-height: 520px; display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="graph-legend"
+                        style="display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span
+                                style="width: 14px; height: 14px; border-radius: 50%; background-color: #3b82f6; display: inline-block; box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);"></span>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Movimento
+                                Social</span>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="meta-pauta">Pauta Provável:</label>
-                            <select id="meta-pauta">
-                                <option value="N.I">Não Informado (N.I)</option>
-                                <option value="luta pela terra;">Luta pela terra</option>
-                                <option value="despejo;">Ameaça de Despejo</option>
-                                <option value="violência no campo;">Violência no Campo</option>
-                                <option value="demarcação quilombola;">Demarcação Quilombola / Indígena</option>
-                            </select>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span
+                                style="width: 14px; height: 14px; border-radius: 50%; background-color: #10b981; display: inline-block; box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);"></span>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Território
+                                (Estado)</span>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="meta-movimento">Movimento Social:</label>
-                            <select id="meta-movimento">
-                                <option value="N.I">Não Informado (N.I)</option>
-                                <option value="Liga dos Camponeses Pobres (LCP)">Liga dos Camponeses Pobres (LCP)</option>
-                                <option value="Movimento dos Trabalhadores Sem Terra (MST)">Movimento Sem Terra (MST)</option>
-                                <option value="Comissão Pastoral da Terra (CPT)">Comissão Pastoral da Terra (CPT)</option>
-                                <option value="Comunidades Quilombolas">Comunidades Quilombolas / Indígenas</option>
-                            </select>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span
+                                style="width: 14px; height: 14px; border-radius: 50%; background-color: #f59e0b; display: inline-block; box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);"></span>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Demanda
+                                (Pauta)</span>
                         </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" id="btn-classify">
-                        <i class="fa-solid fa-bolt"></i> Processar e Classificar
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- RESULTADOS DA CLASSIFICAÇÃO -->
-        <section class="grid-col-6 card glass">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-chart-line text-gold"></i> Resultado da Classificação da IA</h2>
-                <span class="card-subtitle">Macro-categoria e Ação Derivada com níveis de confiança calculados</span>
-            </div>
-            <div class="card-body" id="classification-results-container">
-                <div class="placeholder-results">
-                    <i class="fa-solid fa-robot text-muted"></i>
-                    <p>Aguardando submissão da notícia para exibir predições da inteligência artificial...</p>
-                </div>
-                
-                <div id="loader" class="loader-container hidden">
-                    <div class="spinner"></div>
-                    <p>IA executando chunking semântico, gerando embeddings e aplicando modelos...</p>
-                </div>
-
-                <div id="results-content" class="hidden">
-                    <div class="result-box glass-accent">
-                        <h3>Ação Derivada Identificada</h3>
-                        <p id="res-derivada" class="res-highlight text-emerald">NOME DA AÇÃO</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill bg-emerald-glow" id="res-derivada-conf-bar" style="width: 0%;"></div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span
+                                style="width: 14px; height: 14px; border-radius: 50%; background-color: #ef4444; display: inline-block; box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);"></span>
+                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Ação de
+                                Conflito (Macro)</span>
                         </div>
-                        <span class="conf-text">Confiança do Classificador: <strong id="res-derivada-conf">0%</strong></span>
-                    </div>
-
-                    <div class="result-box glass-gold-accent">
-                        <h3>Ação Matriz (Macro Categoria)</h3>
-                        <p id="res-matriz" class="res-highlight text-gold">NOME DA MATRIZ</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill bg-gold-glow" id="res-matriz-conf-bar" style="width: 0%;"></div>
-                        </div>
-                        <span class="conf-text">Confiança do Classificador: <strong id="res-matriz-conf">0%</strong></span>
                     </div>
 
-                    <div class="chunks-breakdown">
-                        <h4><i class="fa-solid fa-list-check"></i> Detalhamento por Chunk Semântico</h4>
-                        <div id="chunks-list" class="chunks-scroll-list"></div>
+                    <div id="knowledge-graph"
+                        style="display: block; width: 100%; height: 500px; min-height: 500px; border-radius: 12px; background: rgba(15, 23, 42, 0.02); border: 1px dashed rgba(15, 23, 42, 0.1); position: relative; overflow: hidden;">
+                        <div class="graph-loader" id="graph-loader"
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 1rem; z-index: 5;">
+                            <div class="spinner"></div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 500;">Mapeando
+                                conexões semânticas...</p>
+                        </div>
+                    </div>
+
+                    <!-- Detalhes do Nó Selecionado -->
+                    <div id="graph-node-details" class="hidden"
+                        style="padding: 1rem; border-radius: 8px; background: rgba(255, 255, 255, 0.65); border: 1px solid rgba(15, 23, 42, 0.08); font-size: 0.9rem; display: flex; gap: 1rem; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+                        <div>
+                            <strong>Entidade Selecionada:</strong> <span id="graph-node-name" class="text-emerald"
+                                style="font-weight: 700;">-</span>
+                        </div>
+                        <span style="color: rgba(15, 23, 42, 0.15);">|</span>
+                        <div>
+                            <strong>Tipo:</strong> <span id="graph-node-type"
+                                style="font-weight: 600; color: var(--text-secondary); text-transform: capitalize;">-</span>
+                        </div>
+                        <span style="color: rgba(15, 23, 42, 0.15);">|</span>
+                        <div>
+                            <strong>Frequência no Dataset:</strong> <span id="graph-node-freq"
+                                style="font-weight: 700; color: var(--text-secondary);">-</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- GRÁFICOS ANALÍTICOS -->
-        <section class="grid-col-4 card glass">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-users text-emerald"></i> Top Movimentos Sociais</h2>
-                <span class="card-subtitle">Frequência absoluta no dataset</span>
-            </div>
-            <div class="card-body">
-                <canvas id="chart-movimentos"></canvas>
-            </div>
-        </section>
+            <!-- RANKING DE PDFs MAIS DENSOS -->
+            <section class="grid-col-12 card glass" style="margin-bottom: 1.5rem;">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-layer-group text-emerald"></i> Top PDFs Mais Densos (Ranking de Chunks)
+                    </h2>
+                    <span class="card-subtitle">As 5 notícias que geraram maior volume de fragmentos semânticos devido à
+                        sua extensão</span>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
+                        {% for item in stats.top_densos %}
+                        <div
+                            style="flex: 1; min-width: 180px; background: rgba(16, 185, 129, 0.04); border: 1px dashed rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 1.2rem 1rem; display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.2s;">
+                            <span style="font-size: 2rem; font-weight: 800; color: #059669; line-height: 1;">{{
+                                item.chunks }}</span>
+                            <span
+                                style="font-size: 0.75rem; font-weight: 700; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Chunks</span>
+                            <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">{{
+                                item.codigo }}</span>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                                title="{{ item.titulo }}">{{ item.titulo }}</div>
+                        </div>
+                        {% endfor %}
+                        {% if not stats.top_densos %}
+                        <p style="color: var(--text-secondary); text-align: center; width: 100%;">Nenhum dado de
+                            densidade disponível ainda.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
 
-        <section class="grid-col-4 card glass">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-map-location-dot text-gold"></i> Hotspots por Estado</h2>
-                <span class="card-subtitle">Estados com maior atividade</span>
-            </div>
-            <div class="card-body">
-                <canvas id="chart-estados"></canvas>
-            </div>
-        </section>
+            <!-- TABELA DE NOTÍCIAS CADASTRADAS -->
+            <section class="grid-col-12 card glass">
+                <div class="card-header flex-header">
+                    <div>
+                        <h2><i class="fa-solid fa-list-ul text-emerald"></i> Banco de Notícias de Conflitos {{ cat_name
+                            }}</h2>
+                        <span class="card-subtitle">Selecione uma notícia cadastrada para classificar automaticamente ou
+                            clique no link para visualizar o documento original</span>
+                    </div>
+                    <div class="search-container" style="display: flex; gap: 0.5rem; max-width: 600px; width: 100%;">
+                        <div style="position: relative; flex: 1;">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="search-news"
+                                placeholder="Buscar notícia por título, código, estado, pauta ou movimento..."
+                                style="width: 100%;">
+                        </div>
+                        <select id="filter-month" style="display: none;">
+                            <option value="ALL">Todos os Meses</option>
+                            {% if unique_meses is defined %}
+                            {% for mes in unique_meses %}
+                            <option value="{{ mes }}">{{ mes }}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body" style="min-height: auto;">
+                    <div class="table-scroll-container">
+                        <table class="news-table" id="table-news-list">
+                            <thead>
+                                <tr>
+                                    <th style="width: 4%; text-align: center;">#</th>
+                                    <th style="width: 9%;">Código</th>
+                                    <th style="width: 25%;">Título da Notícia</th>
+                                    <th style="width: 10%;">Estado</th>
+                                    <th style="width: 15%;">Movimento</th>
+                                    <th style="width: 11%;">Pauta</th>
+                                    <th style="width: 10%;">Mês</th>
+                                    <th style="width: 7%; text-align: center;">Qtd. Chunks por PDF</th>
+                                    <th style="width: 9%; text-align: center;">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="news-table-body">
+                                <tr>
+                                    <td colspan="8" class="table-placeholder">
+                                        <div class="spinner inline-spinner"></div> Carregando banco de notícias...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination-info" id="table-pagination">
+                        Mostrando <span id="table-showing-count">0</span> de <span id="table-total-count">0</span>
+                        notícias processadas no dataset
+                    </div>
+                </div>
+            </section>
 
-        <section class="grid-col-4 card glass">
-            <div class="card-header">
-                <h2><i class="fa-solid fa-flag text-emerald"></i> Distribuição das Pautas</h2>
-                <span class="card-subtitle">Temáticas mais frequentes</span>
+            <!-- REPOSITÓRIO DE PDFs BRUTOS -->
+            <section class="grid-col-12 card glass" id="secao-raw-pdfs" style="margin-bottom: 1.5rem;">
+                <div class="card-header flex-header">
+                    <div>
+                        <h2><i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Repositório de PDFs Brutos
+                            Originais</h2>
+                        <span class="card-subtitle">Todos os PDFs mapeados no arquivo ZIP. Clique para extrair o texto e
+                            enviar para a Inteligência Artificial.</span>
+                    </div>
+                    <div class="search-container" style="max-width: 400px; width: 100%;">
+                        <div style="position: relative; flex: 1;">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="search-raw-pdfs" placeholder="Buscar PDF por nome..."
+                                style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="min-height: auto; max-height: 400px; overflow-y: auto;">
+                    <div class="table-scroll-container">
+                        <table class="news-table" id="table-raw-pdfs">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%; text-align: center;">#</th>
+                                    <th style="width: 25%;">Nome do Arquivo PDF</th>
+                                    <th style="width: 10%; text-align: center;">Qtd. Chunks</th>
+                                    <th style="width: 25%;">Justificativa</th>
+                                    <th style="width: 10%; text-align: center;">Qtd. Páginas</th>
+                                    <th style="width: 10%; text-align: center;">Tamanho</th>
+                                    <th style="width: 15%; text-align: center;">Ações IA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="raw-pdfs-table-body">
+                                <tr>
+                                    <td colspan="4" class="table-placeholder">
+                                        <div class="spinner inline-spinner"></div> Carregando lista de PDFs do arquivo
+                                        ZIP original...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-pagination-info">
+                        Total de <span id="raw-pdfs-total-count">0</span> PDFs brutos mapeados
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLASSIFICADOR EM TEMPO REAL -->
+            <section class="grid-col-6 card glass card-interactive">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-brain text-emerald"></i> Classificador Semântico com RAG e ML</h2>
+                    <span class="card-subtitle">Insira a notícia para a IA segmentar, buscar termos similares e
+                        classificar</span>
+                </div>
+                <div class="card-body">
+                    <form id="classify-form">
+                        <div class="form-group" id="justificativa-container" style="display: none; margin-bottom: 1.2rem; padding: 1rem; border: 1px solid rgba(16, 185, 129, 0.2); border-left: 4px solid #10b981; border-radius: 8px; background: rgba(16, 185, 129, 0.03);">
+                            <label style="margin-bottom: 0.2rem; display: block; font-weight: 600; color: #059669;">
+                                <i class="fa-solid fa-circle-info"></i> Justificativa de Processamento:
+                            </label>
+                            <span id="justificativa-text" style="font-size: 0.95rem; color: var(--text-primary); font-weight: 500;"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="news-text">Texto Extraído da Notícia (Para IA Classificar):</label>
+                            <textarea id="news-text"
+                                placeholder="Cole aqui o texto ou clique em 'Processar IA' na tabela acima..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="meta-estado">Estado:</label>
+                                <select id="meta-estado">
+                                    <option value="N.I">Não Informado (N.I)</option>
+                                    {% for estado in unique_estados %}
+                                    <option value="{{ estado }}">{{ estado }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="meta-pauta">Pauta Provável:</label>
+                                <select id="meta-pauta">
+                                    <option value="N.I">Não Informado (N.I)</option>
+                                    {% for pauta in unique_pautas %}
+                                    <option value="{{ pauta }}">{{ pauta | capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="meta-movimento">Movimento Social:</label>
+                                <select id="meta-movimento">
+                                    <option value="N.I">Não Informado (N.I)</option>
+                                    {% for movimento in unique_movimentos %}
+                                    <option value="{{ movimento }}">{{ movimento }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="btn-classify">
+                            <i class="fa-solid fa-bolt"></i> Processar e Classificar
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- RESULTADOS DA CLASSIFICAÇÃO -->
+            <section class="grid-col-6 card glass">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-chart-line text-gold"></i> Resultado da Classificação da IA</h2>
+                    <span class="card-subtitle">Macro-categoria e Ação Derivada com níveis de confiança
+                        calculados</span>
+                </div>
+                <div class="card-body" id="classification-results-container">
+                    <div class="placeholder-results">
+                        <i class="fa-solid fa-robot text-muted"></i>
+                        <p>Aguardando submissão da notícia para exibir predições da inteligência artificial...</p>
+                    </div>
+
+                    <div id="loader" class="loader-container hidden">
+                        <div class="spinner"></div>
+                        <p>IA executando chunking semântico, gerando embeddings e aplicando modelos...</p>
+                    </div>
+
+                    <div id="results-content" class="hidden">
+                        <div class="result-box glass-accent">
+                            <h3>Ação Derivada Identificada</h3>
+                            <p id="res-derivada" class="res-highlight text-emerald">NOME DA AÇÃO</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill bg-emerald-glow" id="res-derivada-conf-bar"
+                                    style="width: 0%;"></div>
+                            </div>
+                            <span class="conf-text">Confiança do Classificador: <strong
+                                    id="res-derivada-conf">0%</strong></span>
+                        </div>
+
+                        <div class="result-box glass-gold-accent">
+                            <h3>Ação Matriz (Macro Categoria)</h3>
+                            <p id="res-matriz" class="res-highlight text-gold">NOME DA MATRIZ</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill bg-gold-glow" id="res-matriz-conf-bar" style="width: 0%;">
+                                </div>
+                            </div>
+                            <span class="conf-text">Confiança do Classificador: <strong
+                                    id="res-matriz-conf">0%</strong></span>
+                        </div>
+
+                        <div class="chunks-breakdown">
+                            <h4><i class="fa-solid fa-list-check"></i> Detalhamento por Chunk Semântico</h4>
+                            <div id="chunks-list" class="chunks-scroll-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESULTADOS DOS MODELOS DE CLASSIFICAÇÃO -->
+            <section class="grid-col-12 card glass" id="secao-resultados" style="margin-bottom: 0.5rem;">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-chart-simple text-gold"></i> Métricas de Desempenho dos Classificadores
+                    </h2>
+                    <span class="card-subtitle">Comparativo de acurácia entre abordagens de Machine Learning
+                        tradicionais e Aprendizado Profundo Multi-Tarefa (Multi-Task Learning)</span>
+                </div>
+                <div class="card-body" style="min-height: auto;">
+                    <div class="table-scroll-container">
+                        <table class="news-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%; text-align: left; padding: 12px 16px;">Abordagem / Modelo
+                                    </th>
+                                    <th style="width: 25%; text-align: center; padding: 12px 16px;">Acurácia Ação
+                                        Derivada (Micro)</th>
+                                    <th style="width: 25%; text-align: center; padding: 12px 16px;">Acurácia Ação Matriz
+                                        (Macro)</th>
+                                    <th style="width: 25%; text-align: left; padding: 12px 16px;">Principais
+                                        Diferenciais do Modelo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(15, 23, 42, 0.05);">
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        RandomForest (Original)
+                                    </td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 600; color: var(--text-secondary);">
+                                        51.71%</td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 600; color: var(--text-secondary);">
+                                        51.14%</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Baseline
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(15, 23, 42, 0.05);">
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        Rede Neural (Original)
+                                    </td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 600; color: var(--text-secondary);">
+                                        52.71%</td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 600; color: var(--text-secondary);">
+                                        63.00%</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">
+                                        Multi-Task simples</td>
+                                </tr>
+                                <tr
+                                    style="border-bottom: 1px solid rgba(15, 23, 42, 0.05); background: rgba(59, 130, 246, 0.02);">
+                                    <td style="font-weight: 600; color: #1e3a8a; padding: 16px;">
+                                        MT-DNN (Nova)
+                                    </td>
+                                    <td style="text-align: center; padding: 16px; font-weight: 600; color: #1e3a8a;">
+                                        57.29%</td>
+                                    <td style="text-align: center; padding: 16px; font-weight: 600; color: #1e3a8a;">
+                                        66.71%</td>
+                                    <td style="padding: 16px; color: #1e3a8a; line-height: 1.5;">SiLU backbone +
+                                        **Taxonomic Coherence Regularization Loss**</td>
+                                </tr>
+                                <tr
+                                    style="background: rgba(16, 185, 129, 0.04); border-bottom: 1px solid rgba(16, 185, 129, 0.1);">
+                                    <td style="font-weight: 700; color: #059669; padding: 16px;">
+                                        <i class="fa-solid fa-circle-check" style="margin-right: 0.25rem;"></i>
+                                        HistGradientBoosting (Novo)
+                                    </td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 700; color: #059669; font-size: 1.05rem;">
+                                        72.57%</td>
+                                    <td
+                                        style="text-align: center; padding: 16px; font-weight: 700; color: #059669; font-size: 1.05rem;">
+                                        76.29%</td>
+                                    <td style="padding: 16px; color: #065f46; font-weight: 500; line-height: 1.5;">
+                                        Balanceamento por pesos de amostra + Gradient Boosting</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- METODOLOGIA DE PROCESSAMENTO DE IA -->
+            <section class="grid-col-12 card glass" id="secao-metodologia">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-gears text-emerald"></i> Metodologia de Classificação Semântica (IA)</h2>
+                    <span class="card-subtitle">Como o sistema segmenta as notícias, extrai vetores semânticos e calcula
+                        a similaridade conceitual das ações</span>
+                </div>
+                <div class="card-body" style="min-height: auto;">
+                    <div class="table-scroll-container">
+                        <table class="news-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 18%; text-align: left; padding: 12px 16px;">Etapa do Processo</th>
+                                    <th style="width: 28%; text-align: left; padding: 12px 16px;">Objetivo Metodológico
+                                    </th>
+                                    <th style="width: 18%; text-align: left; padding: 12px 16px;">Código-Fonte Envolvido
+                                    </th>
+                                    <th style="width: 16%; text-align: left; padding: 12px 16px;">Tecnologias / Modelos
+                                    </th>
+                                    <th style="width: 20%; text-align: left; padding: 12px 16px;">Output Produzido</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(15, 23, 42, 0.05);">
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        <span
+                                            style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #059669; font-size: 0.85rem; margin-right: 0.5rem; font-weight: 700;">1</span>
+                                        Semantic Chunking
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Dividir
+                                        notícias longas em blocos semanticamente coerentes, preservando o contexto local
+                                        das ações de conflito e evitando diluição do vetor de embeddings.</td>
+                                    <td
+                                        style="padding: 16px; font-family: monospace; font-size: 0.85rem; font-weight: 600;">
+                                        <span style="color: #059669;"><i class="fa-regular fa-file-code"
+                                                style="margin-right: 0.25rem;"></i>text_preprocessor.py</span>
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-weight: 500;">spaCy
+                                        (pt_core_news_lg)</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Chunks
+                                        textuais sequenciais (Tamanho ~500 caracteres, Overlap ~50 caracteres), salvos
+                                        em <code>dataset_chunked.csv</code>.</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(15, 23, 42, 0.05);">
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        <span
+                                            style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #059669; font-size: 0.85rem; margin-right: 0.5rem; font-weight: 700;">2</span>
+                                        Extração de Embeddings
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">
+                                        Representar matematicamente o significado de cada chunk em um espaço vetorial
+                                        contínuo de alta dimensionalidade.</td>
+                                    <td
+                                        style="padding: 16px; font-family: monospace; font-size: 0.85rem; font-weight: 600;">
+                                        <span style="color: #059669;"><i class="fa-regular fa-file-code"
+                                                style="margin-right: 0.25rem;"></i>embedding_generator.py</span>
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-weight: 500;">
+                                        SentenceTransformers (distiluse-multilingual)</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Matriz
+                                        vetorial contínua de 512 dimensões por chunk (vetor &vec;v &in;
+                                        &reals;<sup>512</sup>), salva em <code>chunk_embeddings.npy</code>.</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(15, 23, 42, 0.05);">
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        <span
+                                            style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #059669; font-size: 0.85rem; margin-right: 0.5rem; font-weight: 700;">3</span>
+                                        Similaridade Bilateral
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Medir a
+                                        proximidade semântica de cada chunk contra descrições conceituais ricas das
+                                        classes de conflito (Macro e Micro).</td>
+                                    <td
+                                        style="padding: 16px; font-family: monospace; font-size: 0.85rem; font-weight: 600;">
+                                        <span style="color: #059669;"><i class="fa-regular fa-file-code"
+                                                style="margin-right: 0.25rem;"></i>embedding_generator.py</span>
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-weight: 500;">
+                                        Similaridade de Cosseno (Scikit-Learn)</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">58
+                                        atributos numéricos extras por chunk no banco de dados, mapeando a similaridade
+                                        direta contra cada classe.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600; color: var(--text-primary); padding: 16px;">
+                                        <span
+                                            style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #059669; font-size: 0.85rem; margin-right: 0.5rem; font-weight: 700;">4</span>
+                                        Classificação Multi-Tarefa
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">
+                                        Classificar de forma robusta a categoria geral (Ação Matriz) e a classe
+                                        detalhada (Ação Derivada) usando modelos preditivos avançados.</td>
+                                    <td
+                                        style="padding: 16px; font-family: monospace; font-size: 0.85rem; font-weight: 600; line-height: 1.6;">
+                                        <span style="color: #059669; display: block;"><i class="fa-regular fa-file-code"
+                                                style="margin-right: 0.25rem;"></i>classifier_trainer.py</span>
+                                        <span style="color: #059669; display: block;"><i class="fa-regular fa-file-code"
+                                                style="margin-right: 0.25rem;"></i>neural_network_trainer.py</span>
+                                    </td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-weight: 500;">
+                                        RandomForest + Rede Neural PyTorch (MT-DNN)</td>
+                                    <td style="padding: 16px; color: var(--text-secondary); line-height: 1.5;">Predições
+                                        simultâneas de Ação Derivada e Ação Matriz com pesos balanceados e cálculo de
+                                        coerência taxonômica.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div> <!-- End .app-layout -->
+
+    <!-- Chatbot Sidebar -->
+    <div id="chatbot-sidebar" class="chatbot-sidebar">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fa-solid fa-robot"></i> Agente Semântico <span>Beta</span>
             </div>
-            <div class="card-body">
-                <canvas id="chart-pautas"></canvas>
+            <button id="chatbot-close-btn" class="chatbot-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message ai-message">
+                <div class="message-content">
+                    Olá! Eu sou o Agente IA do DataLuta. Fui treinado para vasculhar os milhares de fragmentos (chunks) da nossa base. O que você gostaria de pesquisar?
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Pergunte sobre conflitos, locais, MST..." autocomplete="off">
+            <button id="chatbot-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <footer class="app-footer">
-        <p>© 2026 Observatório IA dos Conflitos Agrários no Brasil. Desenvolvido para pesquisa doutoral e monitoramento estratégico.</p>
+        <p>© 2026 Observatório IA dos Conflitos no Brasil. Desenvolvido para pesquisa doutoral e monitoramento
+            estratégico.</p>
     </footer>
 
     <!-- Passar dados de estatísticas do Python para o JS como variáveis globais de baseline -->
     <script>
         window.statsData = {
             top_movimentos: {{ stats.top_movimentos | tojson | safe }},
-            top_estados: {{ stats.top_estados | tojson | safe }},
-            top_pautas: {{ stats.top_pautas | tojson | safe }}
+        top_estados: { { stats.top_estados | tojson | safe } },
+        top_pautas: { { stats.top_pautas | tojson | safe } }
         };
     </script>
     <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/main.js') }}?v=1.4"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}?v=2.3"></script>
 </body>
+
 </html>

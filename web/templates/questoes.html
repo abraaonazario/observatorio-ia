@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questões de Pesquisa — Observatório IA</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.7">
+    
+    <style>
+        .metodologia-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+        .metodologia-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            border-bottom: 3px solid #2b7a4b;
+            padding-bottom: 1rem;
+        }
+        .metodologia-container h2 {
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2b7a4b;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .metodologia-container p {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+        }
+        .rq-box {
+            background: #fdfae5;
+            border-left: 5px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            font-weight: 500;
+            color: #5c3a00;
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+        .analysis-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+        .conclusion-quote {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #eef5ff;
+            border-left: 5px solid #1a73e8;
+            font-style: italic;
+            color: #0b4594;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="bd-header">
+        <div class="bd-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
+        </div>
+        
+        <nav class="bd-nav">
+            <a href="{{ url_for('dashboard') }}">Dados</a>
+            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+            <a href="{{ url_for('metodologia') }}">Metodologia</a>
+            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+            <a href="{{ url_for('sobre') }}">Sobre</a>
+        </nav>
+
+        <div class="bd-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+            <button class="bd-chatbot-btn">
+                Chatbot <span class="beta">Beta</span>
+            </button>
+            <div class="bd-profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="metodologia-container">
+        <h1>Análise Metodológica: Chunking, Embeddings e Associação Vetorial</h1>
+        <p>A decisão de quebrar o texto documental em janelas léxicas (chunks), extrair vetores dimensionais (embeddings) e associá-los via cálculo de distância às Ações Derivadas/Matriz não é apenas uma escolha de programação; é o <strong>coração metodológico</strong> da pesquisa.</p>
+        <p>Esta abordagem computacional levanta Questões de Pesquisa (Research Questions - RQs) inéditas no campo da Geografia Agrária/Urbana e Ciência de Dados.</p>
+
+        <h2><i class="fa-solid fa-scissors"></i> 1. O Problema da Fragmentação (Chunking)</h2>
+        <div class="rq-box">
+            <strong>Questão de Pesquisa 1:</strong> Como a fragmentação paramétrica (chunking) de documentos desestruturados impacta a preservação do contexto semântico em relatos de conflitos territoriais? Existe um tamanho ideal de "janela de texto" que capture o conflito sem diluir a ação principal?
+        </div>
+        <div class="analysis-box">
+            <strong>Análise Acadêmica:</strong> Textos jornalísticos e dossiês periciais possuem intenso "ruído" (ex: anúncios e menus rasgados durante o Web Scraping para PDF). O <em>chunking</em> funciona como filtro isolador. Contudo, se o chunk for pequeno demais, há perda do Sujeito da ação. Se grande demais, o ruído domina o sinal, diluindo a vetorização. O DataLuta testa a hipótese de que fragmentos de 500 caracteres representam o ponto ótimo para capturar a semântica de lutas espaciais.
+        </div>
+
+        <h2><i class="fa-solid fa-brain"></i> 2. Extração Vetorial (Embeddings) no Domínio Geográfico</h2>
+        <div class="rq-box">
+            <strong>Questão de Pesquisa 2:</strong> Em que medida modelos de linguagem pré-treinados generalistas (Transformers) são capazes de capturar e codificar as nuances semânticas específicas do domínio fundiário, agrário e urbano brasileiro?
+        </div>
+        <div class="analysis-box">
+            <strong>Análise Acadêmica:</strong> A Inteligência Artificial não foi concebida sabendo o que é "Grileiro" ou "Reintegração de Posse". A arquitetura do DataLuta demonstra se a <em>Atenção Multicabeça</em> dos Transformers consegue inferir a semântica de violência territorial pelas relações sintáticas latentes, vetorizando a sociologia e a geografia em matemática pura.
+        </div>
+
+        <h2><i class="fa-solid fa-arrows-to-circle"></i> 3. Associação via Distância Vetorial (Matching)</h2>
+        <div class="rq-box">
+            <strong>Questão de Pesquisa 3:</strong> Qual é a eficácia empírica da métrica de distância vetorial (Similaridade do Cosseno) na tarefa de mapear sentenças factuais jornalísticas para rótulos categóricos abstratos (Ações Matrizes)?
+        </div>
+        <div class="analysis-box">
+            <strong>Análise Acadêmica:</strong> Superamos o "Semantic Gap" (Diferença Semântica). A classe na planilha é sociológica ("Despejo"). O texto documental é cru ("A polícia derrubou os barracos"). Ao abandonar palavras-chave e utilizar a proximidade vetorial no espaço n-dimensional para associá-los, avalia-se a automação da catalogação epistemológica do banco de dados.
+        </div>
+
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> 4. O Paradoxo do Ruído Multi-Label</h2>
+        <div class="rq-box">
+            <strong>Questão de Pesquisa 4:</strong> Como a atribuição sistêmica de rótulos (labels) de conflito a todos os fragmentos de um mesmo documento introduz viés em arquiteturas de Redes Neurais Profundas (MT-DNN)?
+        </div>
+        <div class="analysis-box">
+            <strong>Análise Acadêmica:</strong> Este é um achado empírico central: ao treinar a Rede Neural associando fragmentos de "ruído" (ex: "Acidente de carro na rodovia") que vieram na lateral do PDF à etiqueta de "Ocupação de Terra", os pesos neurais sofrem distorção. A busca por distância vetorial no RAG resolve isso isolando os vetores ruidosos, mitigando as imperfeições da raspagem.
+        </div>
+
+        <div class="conclusion-quote">
+            "A presente tese propõe uma ruptura metodológica na análise de dados territoriais ao introduzir uma arquitetura de representação vetorial densa. Ao fragmentar documentos desestruturados em janelas de texto e submetê-los a Transformers, a pesquisa converte relatos qualitativos de conflitos espaciais em vetores matemáticos. O mapeamento empírico entre esses fatos e as categorias do DATALUTA é então avaliado não por correspondência léxica clássica, mas pela otimização da similaridade do cosseno em um espaço semântico latente."
+        </div>
+    </main>
+</body>
+</html>

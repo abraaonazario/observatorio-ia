@@ -1,0 +1,62 @@
+Rede Neural Multi-Task - Acurácia Matriz: 23.21%
+
+                                                                      precision    recall  f1-score   support
+
+Arrecadação de Recursos ou Execução de Serviços ; Agricultura Urbana       0.00      0.00      0.00         1
+          Arrecadação de Recursos ou Execução de Serviços ; Campanha       0.40      0.40      0.40         5
+            Arrecadação de Recursos ou Execução de Serviços ; Doação       0.17      0.50      0.25         2
+Arrecadação de Recursos ou Execução de Serviços ; Economia Solidária       0.00      0.00      0.00         1
+           Arrecadação de Recursos ou Execução de Serviços ; Mutirão       0.00      0.00      0.00         1
+                                                           Caminhada       0.00      0.00      0.00         1
+                                      Comunicativa ; Abaixo-assinado       0.00      0.00      0.00         0
+                                             Comunicativa ; Campanha       0.00      0.00      0.00         2
+                                                Comunicativa ; Carta       0.00      0.00      0.00         1
+                                           Comunicativa ; Entrevista       0.00      0.00      0.00         0
+                                             Comunicativa ; Escracho       1.00      1.00      1.00         3
+                                   Comunicativa ; Intervenção Urbana       0.00      0.00      0.00         2
+                                            Comunicativa ; Manifesto       0.00      0.00      0.00         1
+                                        Comunicativa ; Nota de Apoio       0.00      0.00      0.00         3
+                                        Comunicativa ; Nota de Pesar       0.00      0.00      0.00         1
+                                      Comunicativa ; Nota de Repúdio       0.25      0.11      0.15         9
+                                               Comunicativa ; Ofício       0.00      0.00      0.00         2
+                                                        Concentração       0.33      1.00      0.50         1
+                                 Deslocamentos Coletivos ; Caminhada       0.00      0.00      0.00         3
+                                  Deslocamentos Coletivos ; Carreata       0.67      0.67      0.67         3
+                                    Deslocamentos Coletivos ; Marcha       0.38      0.60      0.46         5
+                                  Deslocamentos Coletivos ; Passeata       0.60      0.50      0.55         6
+                      Encontros de Mediação ; Reunião de Articulação       0.00      0.00      0.00         5
+             Encontros de Mediação ; Reunião de Construção de Agenda       0.00      0.00      0.00         4
+                         Encontros de Mediação ; Reunião de Denúncia       0.00      0.00      0.00         1
+                       Encontros de Mediação ; Reunião de Negociação       0.10      0.20      0.13         5
+                    Encontros de Mediação ; Reunião de Reivindicação       0.00      0.00      0.00         2
+                                                Eventos ; Assembleia       0.00      0.00      0.00        12
+                                                Eventos ; Celebração       0.00      0.00      0.00         5
+                                              Eventos ; Concentração       0.62      0.38      0.48        13
+                                               Eventos ; Conferência       0.00      0.00      0.00         1
+                                                 Eventos ; Congresso       0.00      0.00      0.00         4
+                                                  Eventos ; Encontro       0.00      0.00      0.00         8
+                                                     Eventos ; Feira       0.50      1.00      0.67         2
+                                                  Eventos ; Festival       0.33      1.00      0.50         1
+                                                     Eventos ; Fórum       0.00      0.00      0.00         3
+                                                Eventos ; Lançamento       0.00      0.00      0.00         3
+                                                      Eventos ; Mesa       0.00      0.00      0.00         3
+                                                  Eventos ; Panelaço       0.00      0.00      0.00         0
+                                               Eventos ; Panfletagem       0.00      0.00      0.00         0
+                                                  Eventos ; Plenária       0.00      0.00      0.00         1
+                                          Eventos ; Roda de Conversa       0.25      1.00      0.40         1
+                                                     Eventos ; Sarau       0.00      0.00      0.00         1
+                                     Interrupção ; Desespacialização       0.00      0.00      0.00         0
+                                                 Interrupção ; Greve       0.44      0.50      0.47        14
+                                           Interrupção ; Paralisação       0.00      0.00      0.00         1
+               Interseccionalidade Institucional ; Audiência Pública       0.14      0.17      0.15         6
+                                                              Marcha       0.00      0.00      0.00         1
+                               Ocupação ; Ocupação de Espaço Privado       0.00      0.00      0.00         4
+                               Ocupação ; Ocupação de Espaço Público       0.23      0.27      0.25        11
+                                                  Ocupação ; Piquete       0.67      1.00      0.80         2
+                                     Ocupação ; Trancamento/Bloqueio       0.00      0.00      0.00         0
+                                                 Violação ; Agressão       0.00      0.00      0.00         1
+                                                Violação ; Opugnação       0.00      0.00      0.00         0
+
+                                                            accuracy                           0.23       168
+                                                           macro avg       0.13      0.19      0.14       168
+                                                        weighted avg       0.22      0.23      0.21       168

@@ -162,3 +162,23 @@ python run_pipeline.py --force
 ### Acessando o Painel
 Uma vez iniciado o servidor, abra o seu navegador e acesse:
 👉 **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
+
+---
+
+## 🎯 6. Resultados Objetivos Alcançados
+
+O desenvolvimento e a execução do pipeline de IA do **Observatório IA** alcançaram os seguintes resultados práticos e mensuráveis:
+
+1. **Processamento e Ingestão de Dados em Larga Escala:**
+   - Consolidou-se uma base de dados estruturada a partir de textos brutos. De um total de **483 registros iniciais**, o sistema foi capaz de extrair e acoplar com sucesso os textos em PDF de **410 registros**, atingindo uma **taxa de sucesso de processamento de 84,89%**.
+
+2. **Mitigação do Desbalanceamento de Dados:**
+   - O treinamento dos classificadores resultou em um **salto de 116% no F1-Score médio** do modelo de Ação Derivada.
+   - O sistema tornou possível prever corretamente classes altamente minoritárias que antes eram indetectáveis (como *Campanha*, *Deslocamento Coletivo*, e *Interseccionalidade Institucional*), muitas com 100% de precisão.
+
+3. **Arquitetura Reativa de Classificação Semântica:**
+   - A combinação de *Sentence Transformers* com Similaridade Cosseno permitiu uma busca vetorial (RAG) onde textos são matematicamente medidos contra um dicionário rico de 47 categorias, injetando contexto humano no modelo clássico de Random Forest.
+   - Implementou-se um filtro de probabilidade condicional hierárquica na inferência: o sistema garante a coesão ontológica barrando classificações contraditórias entre Ações Matrizes (Macro) e Derivadas (Micro).
+
+4. **Inteligência Geográfica Espacializada:**
+   - O servidor integrou com sucesso a IA com a exibição de mapas interativos (*Leaflet.js*), utilizando algoritmos de dispersão visual (*jittering*) para permitir a observação tática de múltiplas ocorrências em um mesmo polo urbano sem sobreposição, entregando um painel analítico pronto para o monitoramento estratégico.

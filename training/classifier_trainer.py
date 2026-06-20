@@ -3,7 +3,8 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
+from sklearn.utils.class_weight import compute_sample_weight
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, accuracy_score
 import logging
@@ -82,10 +83,10 @@ class ModelTrainer:
             X, y_derivada, test_size=0.2, random_state=42, stratify=stratify_safe
         )
         
-        logging.info("Treinando RandomForestClassifier para Ação Derivada...")
-        # n_estimators=100 e max_depth=15 para evitar overfitting e manter execução leve em CPU
-        clf_derivada = RandomForestClassifier(n_estimators=100, max_depth=20, class_weight='balanced', random_state=42, n_jobs=-1)
-        clf_derivada.fit(X_train, y_train)
+        logging.info("Treinando HistGradientBoostingClassifier para Ação Derivada...")
+        sample_weights = compute_sample_weight(class_weight='balanced', y=y_train)
+        clf_derivada = HistGradientBoostingClassifier(max_iter=150, max_depth=10, random_state=42)
+        clf_derivada.fit(X_train, y_train, sample_weight=sample_weights)
         
         # Avaliar
         y_pred = clf_derivada.predict(X_test)
@@ -112,9 +113,10 @@ class ModelTrainer:
             X, y_matriz, test_size=0.2, random_state=42, stratify=stratify_safe_m
         )
         
-        logging.info("Treinando RandomForestClassifier para Ação Matriz...")
-        clf_matriz = RandomForestClassifier(n_estimators=100, max_depth=15, class_weight='balanced', random_state=42, n_jobs=-1)
-        clf_matriz.fit(X_train_m, y_train_m)
+        logging.info("Treinando HistGradientBoostingClassifier para Ação Matriz...")
+        sample_weights_m = compute_sample_weight(class_weight='balanced', y=y_train_m)
+        clf_matriz = HistGradientBoostingClassifier(max_iter=150, max_depth=10, random_state=42)
+        clf_matriz.fit(X_train_m, y_train_m, sample_weight=sample_weights_m)
         
         # Avaliar
         y_pred_m = clf_matriz.predict(X_test_m)

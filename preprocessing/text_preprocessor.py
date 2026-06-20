@@ -9,7 +9,7 @@ from tqdm import tqdm
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class SemanticChunker:
-    def __init__(self, chunk_size=500, overlap=50):
+    def __init__(self, chunk_size=350, overlap=100):
         self.chunk_size = chunk_size
         self.overlap = overlap
         logging.info("Carregando modelo spaCy pt_core_news_lg...")
@@ -26,8 +26,22 @@ class SemanticChunker:
             return ""
         # Normalização unicode
         text = unicodedata.normalize("NFKC", text)
+        
+        # Remover menus comuns de sites que poluem o pdf
+        text = re.sub(r'(?i)(Versão digital|Buscar Menu Geral|Esportes Entretenimento|Polícia Política|ELEIÇÕES \d{4}).*?(?=\n|\.)', ' ', text)
+        
+        # Remover URLs residuais
+        text = re.sub(r'https?://[^\s]+', ' ', text)
+        
+        # Remover artefatos de codificação de PDF como (cid:0), (cid:1), (cid:10), etc.
+        text = re.sub(r'\(cid:\d+\)', ' ', text)
+        
         # Remover ruídos comuns de PDF e hifenação de quebras de linha
-        text = re.sub(r'-\n\s*', '', text)
+        # Palavras com hífen divididas em duas linhas: "rea-\n lizaram" -> "realizaram"
+        text = re.sub(r'-\s*\n\s*', '', text)
+        # Palavras quebradas sem hífen: "con \n taram" -> "contaram"
+        text = re.sub(r'([a-zçãõáéíóú])\s*\n\s*([a-zçãõáéíóú])', r'\1\2', text)
+        
         # Substituir múltiplas quebras de linha e espaços por um único espaço
         text = re.sub(r'\s+', ' ', text)
         return text.strip()
@@ -58,8 +72,9 @@ class SemanticChunker:
                 
             if current_len + sent_len + 1 > self.chunk_size:
                 chunks.append(" ".join(current_chunk))
-                # Cria overlap: mantém a última frase do chunk anterior se ela couber no overlap
-                if len(current_chunk) > 1 and len(current_chunk[-1]) <= self.overlap:
+                # Cria overlap: mantém a última frase do chunk anterior para preservar o contexto
+                # O limite agora permite frases normais (< 250 chars) fazerem overlap tranquilamente
+                if len(current_chunk) >= 1 and len(current_chunk[-1]) <= self.chunk_size // 2:
                     current_chunk = [current_chunk[-1], sentence]
                     current_len = len(current_chunk[0]) + sent_len + 1
                 else:
@@ -81,31 +96,64 @@ def preprocess_and_chunk_dataset(dataset_csv_path, output_dir="data/processed"):
     logging.info(f"Lendo dataset para preprocessamento: {dataset_csv_path}")
     df = pd.read_csv(dataset_csv_path)
     
-    chunker = SemanticChunker(chunk_size=500, overlap=50)
+    chunker = SemanticChunker(chunk_size=350, overlap=100)
     
     chunked_records = []
     
+    def find_col(row_index, keywords):
+        for col in row_index:
+            col_lower = unicodedata.normalize('NFKD', str(col)).encode('ASCII', 'ignore').decode('utf-8').lower()
+            if any(kw in col_lower for kw in keywords):
+                return col
+        return None
+# Incluir um proxy para filtra
+# Focar  mais na acurácia para limpar os dados 
+#processo tirar texto do PDF, gerar um novo PDF limpo
+# #  
     logging.info("Iniciando quebra semântica das notícias em chunks...")
     for idx, row in tqdm(df.iterrows(), total=len(df)):
-        news_code = row.get('C\u00f3digo da not\u00edcia 2024', '')
-        title = row.get('T\u00edtulo da not\u00edcia', '')
-        text = row.get('texto_noticia', '')
+        col_code = find_col(row.index, ['noticia', 'notícia', '2024'])
+        if not col_code:
+            col_code = find_col(row.index, ['codigo', 'código'])
+        col_title = find_col(row.index, ['titulo'])
+        col_state = find_col(row.index, ['estado', 'uf'])
+        col_city = find_col(row.index, ['municipio', 'cidade'])
+        col_matriz_derivada = find_col(row.index, ['matriz e', 'matriz_derivada'])
+        col_derivada = find_col(row.index, ['derivada'])
+        col_purpose = find_col(row.index, ['finalidade'])
+        col_pauta = find_col(row.index, ['pauta'])
+        col_movement = find_col(row.index, ['movimento'])
+        col_date = find_col(row.index, ['data'])
         
-        # Obter metadados relevantes
-        state = row.get('Estado', '')
-        city = row.get('Munic\u00edpio', '')
-        action_matriz_derivada = row.get('A\u00e7\u00e3o Matriz e A\u00e7\u00e3o derivada', '')
-        action_derivada = row.get('A\u00e7\u00e3o derivada', '')
-        purpose = row.get('Finalidade da a\u00e7ot', '')
-        pauta = row.get('Pauta da a\u00e7\u00e3o', '')
-        movement = row.get('Nome do movimento', '')
-        date = row.get('Data da not\u00edcia', '')
+        news_code = str(row.get(col_code, '')) if col_code else ''
+        title = str(row.get(col_title, '')) if col_title else ''
+        state = str(row.get(col_state, '')) if col_state else ''
+        city = str(row.get(col_city, '')) if col_city else ''
+        action_matriz_derivada = str(row.get(col_matriz_derivada, '')) if col_matriz_derivada else ''
+        action_derivada = str(row.get(col_derivada, '')) if col_derivada else ''
+        purpose = str(row.get(col_purpose, '')) if col_purpose else ''
+        pauta = str(row.get(col_pauta, '')) if col_pauta else ''
+        movement = str(row.get(col_movement, '')) if col_movement else 'N.I'
+        date = str(row.get(col_date, '')) if col_date else ''
+        
+        text = row.get('texto_noticia', '')
+        url_noticia = row.get('url_noticia', '')
+        mes_pasta = row.get('mes_pasta', 'N.I')
+        
+        if not movement or pd.isna(movement) or movement.strip() == '':
+            movement = 'N.I'
+        elif isinstance(movement, str):
+            movement = movement.strip()
+            
+        if movement == 'Não Consta na Listagem':
+            custom_mov = row.get('Cadastrar movimento não listado', '')
+            if isinstance(custom_mov, str) and custom_mov.strip() and not pd.isna(custom_mov):
+                movement = custom_mov.strip()
         
         # Se não houver texto extraído do PDF, usamos o título da notícia e a pauta como conteúdo
         content_to_chunk = text if (isinstance(text, str) and len(text.strip()) > 50) else f"{title}. Pauta: {pauta}."
         
         chunks = chunker.split_into_semantic_chunks(content_to_chunk)
-        
         for c_idx, chunk in enumerate(chunks):
             chunked_records.append({
                 'id_chunk': f"{news_code}_c{c_idx}",
@@ -119,7 +167,9 @@ def preprocess_and_chunk_dataset(dataset_csv_path, output_dir="data/processed"):
                 'finalidade_acao': purpose,
                 'pauta_acao': pauta,
                 'nome_movimento': movement,
-                'data_noticia': date
+                'data_noticia': date,
+                'mes_pasta': mes_pasta,
+                'url_noticia': url_noticia
             })
             
     chunked_df = pd.DataFrame(chunked_records)

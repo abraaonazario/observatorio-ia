@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodologia — Observatório IA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.7">
+
+    <style>
+        .metodologia-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .metodologia-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .metodologia-container h2 {
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2b7a4b;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .metodologia-container p {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+        }
+
+        .stats-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2b7a4b;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+        }
+
+        .stats-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .stats-box li {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .stats-box li i {
+            color: #2b7a4b;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bd-header">
+        <div class="bd-logo">
+            <span class="b">Data</span><span class="d">Luta</span>
+        </div>
+
+        <nav class="bd-nav">
+            <a href="{{ url_for('dashboard') }}">Dados</a>
+            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+            <a href="{{ url_for('metodologia') }}">Metodologia</a>
+            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+        </nav>
+
+        <div class="bd-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+            <button class="bd-chatbot-btn">
+                Chatbot <span class="beta">Beta</span>
+            </button>
+            <div class="bd-profile">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="metodologia-container">
+        <h1>Metodologia e Resultados</h1>
+        <p>Este documento detalha as técnicas de higienização textual, extração de metadados e algoritmos de integração
+            de dados utilizados na construção do corpus analítico do <strong>DataLuta</strong>.</p>
+
+        <h2>1. Metodologia de Higienização Textual de PDFs</h2>
+        <p>Textos extraídos de arquivos PDF brutos (como dossiês documentais e notas impressas de páginas web) contêm
+            alto grau de ruído léxico que enviesa o cálculo das matrizes vetoriais (<em>embeddings</em>). Para
+            contornar isso, o algoritmo de pré-processamento executa uma bateria de <strong>6 filtros de
+                limpeza baseados em Expressões Regulares (Regex) e heurísticas avançadas</strong> antes da segmentação
+            semântica (Chunking):</p>
+        
+        <ul style="line-height: 1.8; color: #4a4a4a; font-size: 1.1rem; margin-bottom: 2rem;">
+            <li><strong><i class="fa-solid fa-link" style="color: #2b7a4b;"></i> Exclusão de Links:</strong> Identifica cadeias de <code>http/https</code>, isolando a URL em uma variável independente (<code>url_noticia</code>) e eliminando o hiperlink do texto legível.</li>
+            <li><strong><i class="fa-solid fa-eraser" style="color: #2b7a4b;"></i> Remoção de NUL Bytes e CIDs:</strong> Varre e evapora bytes truncados (<code>\x00</code>) gerados por falhas de codificação na extração de texto, além de apagar "artefatos de sub-fonte" não mapeados (como <code>(cid:10)</code>).</li>
+            <li><strong><i class="fa-solid fa-object-ungroup" style="color: #2b7a4b;"></i> Eliminação de Menus:</strong> Detecta padrões clássicos de injeção de interface web (ex: "Versão digital", "Buscar Menu Geral", "Política") oriundos da "impressão para PDF" do navegador.</li>
+            <li><strong><i class="fa-solid fa-text-width" style="color: #2b7a4b;"></i> Resolução de Hifenização de Borda:</strong> Solda palavras quebradas por hífens devido à margem de colunas do documento (ex: reagrupa <code>rea-\n lizaram</code> para <code>realizaram</code>).</li>
+            <li><strong><i class="fa-solid fa-arrows-to-dot" style="color: #2b7a4b;"></i> Fusão de Sílabas Justificadas:</strong> Reconecta sílabas separadas por "quebra de linha" em textos forçados em justificação estreita.</li>
+            <li><strong><i class="fa-solid fa-font" style="color: #2b7a4b;"></i> Normalização Unicode (NFKC):</strong> Reduz múltiplos espaços/tabulações em branco e padroniza caracteres de fontes obscuras para a codificação universal da língua portuguesa.</li>
+        </ul>
+
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 3rem 2rem; margin: 3rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 650px; margin: 0 auto; font-family: 'Inter', sans-serif;">
+                
+                <!-- Nó Inicial -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 1rem; background: #f8fafc;">
+                    <div style="background: white; border: 3px solid #ef4444; color: #ef4444; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-right: 1.5rem; flex-shrink: 0; position: relative;">
+                        <i class="fa-solid fa-file"></i>
+                        <span style="position: absolute; bottom: 8px; font-size: 0.7rem; font-weight: bold; background: white; padding: 0 2px;">PDF</span>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 0.3rem 0; color: #0f172a; font-size: 1.2rem; text-transform: uppercase;">Arquivo PDF Original</h4>
+                        <p style="margin: 0; color: #334155; font-size: 1rem;">Documento fonte a ser processado pelo <strong style="color: #ef4444;">Algoritmo desenvolvido.</strong></p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 1 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #ef4444; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #ef4444; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <i class="fa-solid fa-arrow-down" style="position: absolute; font-size: 1.2rem; margin-top: 25px; margin-left: 20px;"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #ef4444; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">1</span>
+                            <h4 style="margin: 0; color: #ef4444; font-size: 1.2rem; line-height: 1.2;">COLETA DE DADOS<br><span style="font-size: 1.1rem;">(EXTRAÇÃO)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O Algoritmo extrai apenas o texto puro da notícia, ignorando o layout e as imagens.</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 2 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #2563eb; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #2563eb; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-broom"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #2563eb; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">2</span>
+                            <h4 style="margin: 0; color: #2563eb; font-size: 1.2rem; line-height: 1.2;">PROCESSAMENTO<br><span style="font-size: 1.1rem;">(LIMPEZA E CHUNKS)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O Algoritmo realiza limpeza de links/erros e divide o texto em blocos menores para leitura da IA.</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 3 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #eab308; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #eab308; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #eab308; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">3</span>
+                            <h4 style="margin: 0; color: #eab308; font-size: 1.2rem; line-height: 1.2;">EMBEDDINGS<br><span style="font-size: 1.1rem;">(VETORIZAÇÃO)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O Algoritmo converte cada bloco de texto em vetores numéricos (coordenadas matemáticas).</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 4 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #16a34a; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #16a34a; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #16a34a; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">4</span>
+                            <h4 style="margin: 0; color: #16a34a; font-size: 1.2rem; line-height: 1.2;">INDEXAÇÃO<br><span style="font-size: 1.1rem;">(ARMAZENAMENTO)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O Algoritmo armazena as coordenadas numéricas do PDF em um Banco de Dados de busca ultra-rápida.</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 5 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #7c3aed; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #7c3aed; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #7c3aed; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">5</span>
+                            <h4 style="margin: 0; color: #7c3aed; font-size: 1.2rem; line-height: 1.2;">CONSULTA IA<br><span style="font-size: 1.1rem;">(PREDIÇÃO)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O Algoritmo consulta a rede neural que lê a matemática do PDF, compara com a memória e classifica a Ação (Matriz/Derivada).</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Resultado -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #16a34a; border-radius: 12px; padding: 1.2rem; background: #f0fdf4; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: white; color: #16a34a; border: 3px solid #16a34a; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 0.3rem 0; color: #166534; font-size: 1.2rem; text-transform: uppercase;">Resultado Sociológico Estruturado</h4>
+                        <p style="margin: 0; color: #14532d; font-size: 1rem;">Resultado gerado pelo Algoritmo com informação classificada e organizada para análise e tomada de decisão.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <h2>2. Cruzamento de Chaves Primárias (Planilha vs PDF)</h2>
+        <p>A consistência relacional da base foi garantida através de uma técnica de <em>matching</em> determinístico. O
+            sistema cruzou as variáveis categóricas da planilha Excel utilizando a coluna "Código da Notícia" como chave
+            primária de junção com os textos desestruturados (arquivos em formato <code>.pdf</code> dentro dos
+            diretórios <code>.zip</code>).</p>
+
+        <div class="stats-box">
+            <h3 style="margin-top: 0; color: #1a1a1a; margin-bottom: 1rem;">Resultados do Cruzamento (Corpus Agrário)
+            </h3>
+            <ul>
+                <li><i class="fa-solid fa-file-excel"></i> <strong>Espaço Amostral:</strong> 483 registros na planilha
+                    estruturada.</li>
+                <li><i class="fa-solid fa-file-pdf"></i> <strong>Interseção Bem-sucedida:</strong> 410 PDFs localizados
+                    e extraídos.</li>
+                <li><i class="fa-solid fa-chart-line"></i> <strong>Taxa de Convergência:</strong> 84,89%</li>
+            </ul>
+        </div>
+
+        <p>A taxa de completude de 84,89% demonstra alta solidez para processos de extração heterogênea. A perda
+            amostral (cerca de 15%) deve-se unicamente a anomalias de nomenclatura ou à ausência física de arquivos
+            correspondentes na base documental.</p>
+
+        <h2>3. Arquitetura RAG (Retrieval-Augmented Generation)</h2>
+        <p>Para o processo de classificação e extração inteligente de metadados, o Observatório não depende apenas de aprendizado de máquina estático (ML). Nós implementamos um modelo híbrido com a arquitetura <strong>RAG</strong>.</p>
+        
+        <p>A funcionalidade do <em>Classificador Semântico com RAG e ML</em> atua como o cérebro interpretativo do sistema, operando na seguinte ordem lógica:</p>
+
+        <div style="background: #fdfdfd; border-left: 4px solid #3b82f6; padding: 1.5rem; border-radius: 4px; margin: 1.5rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+            <ol style="line-height: 1.8; color: #4a4a4a; font-size: 1.1rem; margin: 0; padding-left: 1.2rem;">
+                <li style="margin-bottom: 0.8rem;"><strong>Vetorização Base (Indexação):</strong> Todo o conhecimento das planilhas (Ações Matrizes e Derivadas) foi convertido em vetores matemáticos gigantes usando o modelo <code>distiluse-base-multilingual-cased-v1</code>. Isso cria nosso banco de dados vetorial de longo prazo.</li>
+                <li style="margin-bottom: 0.8rem;"><strong>Retrieval (Recuperação):</strong> Quando o sistema precisa classificar um PDF de notícia, ele vetoriza os "Chunks" dessa notícia e realiza uma busca de "Vizinhos Mais Próximos" (K-Nearest Neighbors) através da matemática de <em>Similaridade de Cosseno</em> contra o banco de conhecimento.</li>
+                <li style="margin-bottom: 0.8rem;"><strong>Augmented (Enriquecimento):</strong> Os trechos recuperados da base que têm a maior sintonia matemática com a notícia formam um "contexto enriquecido". Isso ancora o classificador na realidade da base em vez de fazê-lo "adivinhar" o resultado a partir do zero.</li>
+                <li><strong>Classificação ML (Machine Learning):</strong> Com o contexto resgatado nas mãos, a rede neural processa as evidências e sentencia, com alta precisão, se a notícia trata-se de uma <em>Ação Matriz</em>, qual a categoria de conflito, etc.</li>
+            </ol>
+        </div>
+
+        <p>A grande vantagem deste método é que ele mitiga severamente a "alucinação" da IA. Se o sistema não recupera documentos vetoriais suficientemente próximos ao PDF inserido, ele detecta a baixa confiança, evitando falsos-positivos na base sociológica.</p>
+
+        <h2>4. Tipologia das Ações: Matriz vs. Derivada</h2>
+        <p>O coração do <strong>DataLuta</strong> reside em mapear não apenas a existência de um conflito, mas o seu desdobramento ao longo do tempo. Para isso, nossa taxonomia divide os eventos em duas categorias centrais, que o modelo de Inteligência Artificial é treinado para reconhecer automaticamente:</p>
+
+        <div style="display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px; background: #fff; border-top: 4px solid #059669; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <h3 style="margin-top: 0; color: #064e3b; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fa-solid fa-seedling"></i> Ação Matriz
+                </h3>
+                <p style="margin-bottom: 0; font-size: 1.05rem; color: #475569; line-height: 1.6;">
+                    É o evento primário e originário. Trata-se da faísca inicial do movimento social ou do conflito em questão (ex: a primeira ocupação de uma terra, o acampamento inicial, a marcha de abertura). A <strong>Ação Matriz</strong> serve como o "tronco" da árvore genealógica de um conflito no banco de dados.
+                </p>
+            </div>
+
+            <div style="flex: 1; min-width: 300px; background: #fff; border-top: 4px solid #d97706; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <h3 style="margin-top: 0; color: #78350f; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fa-solid fa-code-branch"></i> Ação Derivada
+                </h3>
+                <p style="margin-bottom: 0; font-size: 1.05rem; color: #475569; line-height: 1.6;">
+                    São os eventos secundários que se desdobram como consequência direta ou indireta da Ação Matriz. Podem ser intervenções policiais, rodadas de negociação com o Estado, liminares de reintegração de posse ou protestos em solidariedade. O sistema conecta as <strong>Ações Derivadas</strong> à sua respectiva Matriz.
+                </p>
+            </div>
+        </div>
+
+        <p><strong>O Papel da IA nesta classificação:</strong><br>
+        Em vez do pesquisador humano ler centenas de parágrafos de um PDF para descobrir se a notícia fala de um evento novo (Matriz) ou do desdobramento de um evento passado (Derivada), a arquitetura RAG + ML cruza as entidades do texto (nomes, locais, datas) com o histórico de Matrizes conhecidas. Se houver correspondência semântica e histórica, a IA categoriza o texto automaticamente como uma <strong>Ação Derivada</strong>, vinculando-a à sua Matriz correspondente na base de conhecimento.</p>
+
+        <h2>5. Engenharia de Prompt Vetorial (Enriquecimento Semântico)</h2>
+        <p>Um dos grandes desafios no processamento de linguagem natural (NLP) em Ciências Sociais é a <strong>ambiguidade vocabular</strong>. Um rótulo de categoria muito curto, como "Arrecadação" ou "Comercialização", possui uma representação matemática fraca para a IA. Se o algoritmo buscar apenas a palavra "Arrecadação", ele poderá classificar erroneamente notícias sobre cobranças de impostos pelo Estado (Arrecadação Federal).</p>
+        
+        <p>Para resolver isso, o Observatório implementa a técnica de <strong>Enriquecimento Semântico de Labels</strong>. No código-fonte do sistema, cada categoria analítica foi substituída por um Dicionário Semântico — um parágrafo denso e descritivo que ancora a categoria no contexto exclusivo da luta agrária.</p>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem; margin: 2rem 0;">
+            <h4 style="margin-top: 0; color: #334155; margin-bottom: 1rem;"><i class="fa-solid fa-microscope" style="color: #64748b;"></i> Estudo de Caso prático na IA do DataLuta:</h4>
+            
+            <p style="color: #475569; margin-bottom: 0.5rem;"><strong>Em vez de a IA procurar matematicamente por:</strong><br>
+            <span style="color: #ef4444; background: #fee2e2; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;">"ARRECADAÇÃO DE RECURSOS OU EXECUÇÃO DE SERVIÇOS"</span></p>
+
+            <p style="color: #475569; margin-bottom: 0.5rem; margin-top: 1.5rem;"><strong>A IA é instruída a procurar pelos seguintes vetores:</strong><br>
+            <span style="color: #10b981; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace;">"Ações voltadas para a coleta de fundos, doações de recursos financeiros, campanhas de arrecadação ou prestação de serviços comunitários e apoio social no campo."</span></p>
+        </div>
+
+        <p><strong>Os três benefícios diretos desta técnica:</strong></p>
+        <ul style="line-height: 1.8; color: #4a4a4a; font-size: 1.1rem; margin-bottom: 2rem;">
+            <li><strong><i class="fa-solid fa-shield-halved" style="color: #2b7a4b;"></i> Blindagem do Contexto (Falsos-Positivos):</strong> Ao inserir o termo <em>"no campo"</em> e <em>"comunitários"</em>, o vetor matemático repele instâncias governamentais ou empresariais urbanas, restringindo o acerto ao escopo de movimentos sociais.</li>
+            <li><strong><i class="fa-solid fa-network-wired" style="color: #2b7a4b;"></i> Expansão de Sinônimos:</strong> A IA não depende que o jornalista tenha escrito a palavra exata "arrecadação". Se a notícia contiver <em>"campanha de doação de fundos"</em>, os vetores se alinham perfeitamente, garantindo o acerto (Classificação Zero-Shot).</li>
+            <li><strong><i class="fa-solid fa-brain" style="color: #2b7a4b;"></i> Robustez Sociológica:</strong> A taxonomia das Ciências Sociais é traduzida fidedignamente para a linguagem de máquina, garantindo que o algoritmo interprete os conflitos com a mesma precisão teórica de um pesquisador humano.</li>
+        </ul>
+
+        <h2>6. Arquitetura Semântica Multi-Domínio</h2>
+        <p>A pesquisa do DataLuta abrange 4 universos distintos: <strong>Agrário, Urbano, Águas e Floresta</strong>. Do ponto de vista sociológico, um conceito pode ter significados completamente diferentes dependendo do seu ecossistema. Por exemplo, a categoria analítica <em>"Ocupação"</em> no contexto Agrário refere-se à tomada de latifúndios, enquanto no Urbano refere-se à ocupação de prédios inativos ou vias públicas.</p>
+
+        <p>Para resolver este <strong>Gargalo de Domínio</strong>, o Observatório não utiliza um único dicionário de IA genérico. Nós adotamos uma <strong>Arquitetura de Embeddings Multi-Domínio</strong>. O classificador carrega em memória um dicionário isolado para cada escopo de pesquisa:</p>
+
+        <div style="display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap;">
+            <!-- Card Agrário -->
+            <div style="flex: 1; min-width: 200px; background: #fdfdfd; border: 1px solid #e2e8f0; border-top: 4px solid #84cc16; border-radius: 8px; padding: 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <i class="fa-solid fa-tractor" style="color: #65a30d; font-size: 2rem; margin-bottom: 0.8rem;"></i>
+                <h4 style="margin: 0 0 0.5rem 0; color: #3f6212;">Dicionário Agrário</h4>
+                <p style="font-size: 0.9rem; color: #64748b; margin: 0;">Focado em latifúndios, acampamentos e reforma agrária.</p>
+            </div>
+            
+            <!-- Card Urbano -->
+            <div style="flex: 1; min-width: 200px; background: #fdfdfd; border: 1px solid #e2e8f0; border-top: 4px solid #64748b; border-radius: 8px; padding: 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <i class="fa-solid fa-city" style="color: #475569; font-size: 2rem; margin-bottom: 0.8rem;"></i>
+                <h4 style="margin: 0 0 0.5rem 0; color: #1e293b;">Dicionário Urbano</h4>
+                <p style="font-size: 0.9rem; color: #64748b; margin: 0;">Focado em moradia, gentrificação e mobilidade urbana.</p>
+            </div>
+
+            <!-- Card Floresta -->
+            <div style="flex: 1; min-width: 200px; background: #fdfdfd; border: 1px solid #e2e8f0; border-top: 4px solid #10b981; border-radius: 8px; padding: 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <i class="fa-solid fa-tree" style="color: #059669; font-size: 2rem; margin-bottom: 0.8rem;"></i>
+                <h4 style="margin: 0 0 0.5rem 0; color: #064e3b;">Dicionário Floresta</h4>
+                <p style="font-size: 0.9rem; color: #64748b; margin: 0;">Focado em povos originários, extrativismo e desmatamento.</p>
+            </div>
+
+            <!-- Card Águas -->
+            <div style="flex: 1; min-width: 200px; background: #fdfdfd; border: 1px solid #e2e8f0; border-top: 4px solid #0ea5e9; border-radius: 8px; padding: 1rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                <i class="fa-solid fa-water" style="color: #0284c7; font-size: 2rem; margin-bottom: 0.8rem;"></i>
+                <h4 style="margin: 0 0 0.5rem 0; color: #0c4a6e;">Dicionário Águas</h4>
+                <p style="font-size: 0.9rem; color: #64748b; margin: 0;">Focado em ribeirinhos, pesca artesanal e barragens.</p>
+            </div>
+        </div>
+
+        <p><strong>Evitando a Contaminação Semântica:</strong><br>
+        Quando o pesquisador utiliza o painel da seção "Urbano", o sistema RAG "desliga" matematicamente os dicionários de Floresta, Águas e Agrário. A rede neural fará suas previsões baseada <em>exclusivamente</em> nas categorias urbanas predefinidas pelo projeto. Isso elimina a sobreposição conceitual (contaminação cruzada) e garante altíssima precisão estatística nas predições por eixo temático.</p>
+
+    </main>
+</body>
+
+</html>

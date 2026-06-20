@@ -39,23 +39,28 @@ class MultiTaskDNN(nn.Module):
     def __init__(self, input_dim, num_classes_derivada, num_classes_matriz):
         super(MultiTaskDNN, self).__init__()
         
-        # Backbone Compartilhado (Shared Representation Learning Layer)
+        # Backbone Compartilhado mais robusto
         self.shared_backbone = nn.Sequential(
-            nn.Linear(input_dim, 256),
+            nn.Linear(input_dim, 512),
+            nn.BatchNorm1d(512),
+            nn.SiLU(),
+            nn.Dropout(0.4),
+            
+            nn.Linear(512, 256),
             nn.BatchNorm1d(256),
-            nn.ReLU(),
-            nn.Dropout(0.3),
+            nn.SiLU(),
+            nn.Dropout(0.4),
             
             nn.Linear(256, 128),
             nn.BatchNorm1d(128),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Dropout(0.3)
         )
         
         # Cabeça de Classificação 1: Ação Derivada (Microclasse)
         self.head_derivada = nn.Sequential(
             nn.Linear(128, 64),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Dropout(0.2),
             nn.Linear(64, num_classes_derivada)
         )
@@ -63,19 +68,15 @@ class MultiTaskDNN(nn.Module):
         # Cabeça de Classificação 2: Ação Matriz (Macroclasse)
         self.head_matriz = nn.Sequential(
             nn.Linear(128, 64),
-            nn.ReLU(),
+            nn.SiLU(),
             nn.Dropout(0.2),
             nn.Linear(64, num_classes_matriz)
         )
         
     def forward(self, x):
-        # Passagem pelo backbone compartilhado
         shared_features = self.shared_backbone(x)
-        
-        # Divisão em duas predições paralelas (multi-task learning)
         out_derivada = self.head_derivada(shared_features)
         out_matriz = self.head_matriz(shared_features)
-        
         return out_derivada, out_matriz
 
 # ==========================================
@@ -146,7 +147,7 @@ class NeuralNetworkTrainer:
         
         return X, y_derivada_encoded, y_matriz_encoded, all_encoders
         
-    def train_and_evaluate(self, epochs=80, batch_size=64, lr=0.001):
+    def train_and_evaluate(self, epochs=100, batch_size=64, lr=0.002):
         # Carregar dados
         X, y_derivada, y_matriz, encoders = self.load_and_prepare_data()
         
@@ -154,6 +155,30 @@ class NeuralNetworkTrainer:
         input_dim = X.shape[1]
         num_classes_derivada = len(encoders['acao_derivada'].classes_)
         num_classes_matriz = len(encoders['acao_matriz_derivada'].classes_)
+        
+        # Build Hierarchical Matrix H
+        # H[i, j] = 1 if microclass i belongs to macroclass j
+        micro_to_macro = {}
+        df = pd.read_csv(self.data_csv_path)
+        df_clean = df.dropna(subset=['acao_derivada', 'acao_matriz_derivada'])
+        for idx, row in df_clean.iterrows():
+            micro = str(row['acao_derivada']).strip()
+            macro = str(row['acao_matriz_derivada']).strip()
+            if micro and macro and micro != 'nan' and macro != 'nan':
+                micro_to_macro[micro] = macro
+
+        H_np = np.zeros((num_classes_derivada, num_classes_matriz))
+        for micro_idx, micro_name in enumerate(encoders['acao_derivada'].classes_):
+            macro_name = micro_to_macro.get(micro_name)
+            if macro_name in encoders['acao_matriz_derivada'].classes_:
+                macro_idx = list(encoders['acao_matriz_derivada'].classes_).index(macro_name)
+                H_np[micro_idx, macro_idx] = 1.0
+            else:
+                if 'OUTROS' in encoders['acao_matriz_derivada'].classes_:
+                    macro_idx = list(encoders['acao_matriz_derivada'].classes_).index('OUTROS')
+                    H_np[micro_idx, macro_idx] = 1.0
+
+        H = torch.tensor(H_np, dtype=torch.float32)
         
         # Divisão em Treino e Teste (80% treino, 20% teste)
         # Usamos y_matriz para estratificação para garantir que todas as macroclasses estejam no treino e teste
@@ -165,13 +190,11 @@ class NeuralNetworkTrainer:
             X, y_derivada, y_matriz, test_size=0.2, random_state=42, stratify=stratify_safe
         )
         
-        # Calcular pesos de classes para lidar com desbalanceamento severo (Inverse Frequency Weighting)
-        # Classes mais raras receberão pesos exponencialmente maiores na loss
+        # Calcular pesos de classes suavizados (Square Root Inverse Frequency)
         def get_class_weights(y_targets, num_classes):
             counts = np.bincount(y_targets, minlength=num_classes)
-            # Evitar divisão por zero e suavizar pesos
-            weights = 1.0 / (counts + 1.0)
-            # Normalizar
+            # Suavização com raiz quadrada para evitar pesos muito extremos em conflitos raros
+            weights = 1.0 / np.sqrt(counts + 1.0)
             weights = weights / np.sum(weights) * num_classes
             return torch.tensor(weights, dtype=torch.float32)
             
@@ -188,15 +211,16 @@ class NeuralNetworkTrainer:
         # Instanciar a rede neural
         model = MultiTaskDNN(input_dim, num_classes_derivada, num_classes_matriz)
         
-        # Critérios de perda balanceados
+        # Critérios de perda balanceados e coerência
         criterion_derivada = nn.CrossEntropyLoss(weight=weights_derivada)
         criterion_matriz = nn.CrossEntropyLoss(weight=weights_matriz)
+        criterion_coherence = nn.MSELoss()
         
-        # Otimizador Adam com decaimento de peso para regularização L2
-        optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+        # Otimizador AdamW com decaimento de peso L2
+        optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-3)
         
-        # Scheduler para diminuir o learning rate quando a loss do treino estagnar
-        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
+        # Scheduler Cosine Annealing
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
         
         logging.info("Iniciando treinamento da Rede Neural Multi-Task no PyTorch...")
         
@@ -210,12 +234,19 @@ class NeuralNetworkTrainer:
                 # Forward
                 pred_deriv, pred_mat = model(inputs)
                 
-                # Calcular perdas das duas tarefas paralelas
+                # Calcular perdas
                 loss_deriv = criterion_derivada(pred_deriv, targets_deriv)
                 loss_mat = criterion_matriz(pred_mat, targets_mat)
                 
-                # Loss Total Combinada (Média ponderada: prioriza ligeiramente a tarefa mais complexa)
-                total_loss = 0.6 * loss_deriv + 0.4 * loss_mat
+                # Coerência Hierárquica Regularizada
+                p_deriv = torch.softmax(pred_deriv, dim=1)
+                p_mat = torch.softmax(pred_mat, dim=1)
+                p_mat_aggregated = torch.matmul(p_deriv, H)
+                
+                loss_coh = criterion_coherence(p_mat_aggregated, p_mat)
+                
+                # Loss total
+                total_loss = 0.5 * loss_deriv + 0.3 * loss_mat + 0.2 * loss_coh
                 
                 # Backward e Otimização
                 total_loss.backward()
@@ -224,7 +255,7 @@ class NeuralNetworkTrainer:
                 train_loss += total_loss.item() * inputs.size(0)
                 
             train_loss /= len(train_loader.dataset)
-            scheduler.step(train_loss)
+            scheduler.step()
             
             if epoch % 10 == 0 or epoch == 1:
                 logging.info(f"Epoch {epoch}/{epochs} | Loss de Treino: {train_loss:.4f} | LR: {optimizer.param_groups[0]['lr']:.6f}")
