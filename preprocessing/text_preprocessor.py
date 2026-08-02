@@ -5,6 +5,7 @@ import unicodedata
 import pandas as pd
 import logging
 from tqdm import tqdm
+from fpdf import FPDF
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -27,8 +28,17 @@ class SemanticChunker:
         # Normalização unicode
         text = unicodedata.normalize("NFKC", text)
         
-        # Remover menus comuns de sites que poluem o pdf
+        # Filtro: Ruído de Internet e LGPD (Cookies, Política de Privacidade)
+        text = re.sub(r'(?i)(Aceitar todos os cookies|Política de Privacidade|Este site usa cookies|Utilizamos cookies|Concordar e continuar|Preferências de cookies|Aviso de Cookies).*?(?=\n|\.)', ' ', text)
+        
+        # Filtro: Menus comuns de sites que poluem o pdf
         text = re.sub(r'(?i)(Versão digital|Buscar Menu Geral|Esportes Entretenimento|Polícia Política|ELEIÇÕES \d{4}).*?(?=\n|\.)', ' ', text)
+        
+        # Filtro: Paginação e Rodapés Institucionais
+        text = re.sub(r'(?i)(Página\s+\d+\s+de\s+\d+|\d+\s*/\s*\d+|Impresso por:?\s*.*?\n|Gerado em:?\s*.*?\n)', ' ', text)
+        
+        # Filtro: E-mails e Assinaturas (limpeza de contatos residuais)
+        text = re.sub(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', ' ', text)
         
         # Remover URLs residuais
         text = re.sub(r'https?://[^\s]+', ' ', text)
@@ -41,6 +51,9 @@ class SemanticChunker:
         text = re.sub(r'-\s*\n\s*', '', text)
         # Palavras quebradas sem hífen: "con \n taram" -> "contaram"
         text = re.sub(r'([a-zçãõáéíóú])\s*\n\s*([a-zçãõáéíóú])', r'\1\2', text)
+        
+        # Filtro: Limpeza de tabulações e caracteres de escape invisíveis
+        text = re.sub(r'[\t\r\v\f]', ' ', text)
         
         # Substituir múltiplas quebras de linha e espaços por um único espaço
         text = re.sub(r'\s+', ' ', text)
@@ -89,12 +102,43 @@ class SemanticChunker:
             
         return chunks
 
+def generate_clean_pdf(news_code, title, clean_text, output_dir):
+    """Generates a clean PDF from the processed text."""
+    try:
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        
+        pdf.set_font("Helvetica", size=16, style="B")
+        
+        # Garantir encoding seguro para o FPDF padrão (evitar travamentos com caracteres especiais)
+        safe_title = title.encode('latin-1', 'replace').decode('latin-1') if title else "Documento Sem Titulo"
+        pdf.multi_cell(0, 10, txt=safe_title, align="C")
+        pdf.ln(10)
+        
+        pdf.set_font("Helvetica", size=12)
+        safe_text = clean_text.encode('latin-1', 'replace').decode('latin-1') if clean_text else ""
+        
+        # Injetar quebras de parágrafo lógicas (após ponto final + espaço) para que o PDF gerado seja visualmente agradável
+        safe_text = re.sub(r'\.\s+', '.\n\n', safe_text)
+        
+        pdf.multi_cell(0, 8, txt=safe_text)
+        
+        safe_code = re.sub(r'[\\/*?:"<>|]', "", str(news_code)) if news_code else "sem_codigo"
+        file_path = os.path.join(output_dir, f"{safe_code}_clean.pdf")
+        pdf.output(file_path)
+    except Exception as e:
+        logging.warning(f"Erro ao gerar PDF limpo para {news_code}: {e}")
+
 def preprocess_and_chunk_dataset(dataset_csv_path, output_dir="data/processed"):
     """Loads the ingested dataset, cleans texts, segments them into semantic chunks, and saves the chunked dataset."""
     os.makedirs(output_dir, exist_ok=True)
     
     logging.info(f"Lendo dataset para preprocessamento: {dataset_csv_path}")
     df = pd.read_csv(dataset_csv_path)
+    
+    clean_pdfs_dir = os.path.join(output_dir, "clean_pdfs")
+    os.makedirs(clean_pdfs_dir, exist_ok=True)
     
     chunker = SemanticChunker(chunk_size=350, overlap=100)
     
@@ -153,7 +197,11 @@ def preprocess_and_chunk_dataset(dataset_csv_path, output_dir="data/processed"):
         # Se não houver texto extraído do PDF, usamos o título da notícia e a pauta como conteúdo
         content_to_chunk = text if (isinstance(text, str) and len(text.strip()) > 50) else f"{title}. Pauta: {pauta}."
         
-        chunks = chunker.split_into_semantic_chunks(content_to_chunk)
+        cleaned_full_text = chunker.clean_text(content_to_chunk)
+        if news_code and cleaned_full_text:
+            generate_clean_pdf(news_code, title, cleaned_full_text, clean_pdfs_dir)
+        
+        chunks = chunker.split_into_semantic_chunks(cleaned_full_text)
         for c_idx, chunk in enumerate(chunks):
             chunked_records.append({
                 'id_chunk': f"{news_code}_c{c_idx}",

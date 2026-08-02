@@ -369,6 +369,209 @@
         <p><strong>Evitando a Contaminação Semântica:</strong><br>
         Quando o pesquisador utiliza o painel da seção "Urbano", o sistema RAG "desliga" matematicamente os dicionários de Floresta, Águas e Agrário. A rede neural fará suas previsões baseada <em>exclusivamente</em> nas categorias urbanas predefinidas pelo projeto. Isso elimina a sobreposição conceitual (contaminação cruzada) e garante altíssima precisão estatística nas predições por eixo temático.</p>
 
+        <h2>7. Geração Automatizada de Dicionários Semânticos (IA Generativa)</h2>
+        <p>Para expandir a arquitetura semântica aos eixos Urbano, Floresta e Águas sem o custo de catalogação manual massiva, o Observatório adota um <em>Pipeline Dinâmico de Extração Generativa</em>. Utilizamos Modelos de Linguagem de Grande Escala (LLMs) como agentes sociológicos auxiliares.</p>
+        
+        <p>Em vez de escrever cada "Enriquecimento Semântico" à mão, o fluxo automatizado garante que qualquer nova classe detectada no banco de dados ganhe imediatamente uma representação vetorial robusta:</p>
+
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 3rem 2rem; margin: 3rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 650px; margin: 0 auto; font-family: 'Inter', sans-serif;">
+                
+                <!-- Passo 1 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #64748b; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #64748b; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #64748b; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">1</span>
+                            <h4 style="margin: 0; color: #334155; font-size: 1.2rem; line-height: 1.2;">VARREDURA DE DADOS<br><span style="font-size: 1.1rem;">(EXTRAÇÃO)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O script varre o CSV/Planilha e identifica todas as classes isoladas (Ex: <em>"Ocupação", "Reintegração"</em>) dentro de um tema novo.</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 2 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #8b5cf6; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #8b5cf6; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #8b5cf6; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">2</span>
+                            <h4 style="margin: 0; color: #6d28d9; font-size: 1.2rem; line-height: 1.2;">PROMPTING<br><span style="font-size: 1.1rem;">(IA GENERATIVA)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">O sistema envia um comando automatizado para a IA: <em>"Defina como sociólogo a ação 'Ocupação' no contexto de conflitos Urbanos".</em></p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 3 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #06b6d4; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #06b6d4; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-comment-dots"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #06b6d4; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">3</span>
+                            <h4 style="margin: 0; color: #0891b2; font-size: 1.2rem; line-height: 1.2;">SÍNTESE SOCIOLÓGICA<br><span style="font-size: 1.1rem;">(RESPOSTA)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">A IA gera um parágrafo denso e blindado contra viéses de outros domínios: <em>"Tomada pacífica ou forçada de prédios inativos para moradia."</em></p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 4 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #f97316; border-radius: 12px; padding: 1.2rem; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: #f97316; color: white; border-radius: 12px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-file-code"></i>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.4rem;">
+                            <span style="background: #f97316; color: white; font-weight: bold; border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 1.2rem;">4</span>
+                            <h4 style="margin: 0; color: #c2410c; font-size: 1.2rem; line-height: 1.2;">ARMAZENAMENTO JSON<br><span style="font-size: 1.1rem;">(PERSISTÊNCIA)</span></h4>
+                        </div>
+                        <p style="margin: 0; color: #0f172a; font-size: 1rem;">As definições de todos os temas (Florestal, Urbano, Águas) são consolidadas e salvas localmente no formato JSON.</p>
+                    </div>
+                </div>
+
+                <!-- Seta -->
+                <i class="fa-solid fa-arrow-down" style="color: #94a3b8; font-size: 2.5rem; margin: 0.5rem 0;"></i>
+
+                <!-- Passo 5 -->
+                <div style="display: flex; align-items: center; width: 100%; border: 2px solid #10b981; border-radius: 12px; padding: 1.2rem; background: #ecfdf5; box-shadow: 0 4px 10px rgba(0,0,0,0.04);">
+                    <div style="background: white; color: #10b981; border: 3px solid #10b981; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-right: 1.5rem; flex-shrink: 0;">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 0.3rem 0; color: #047857; font-size: 1.2rem; text-transform: uppercase;">INJEÇÃO DINÂMICA (RAG)</h4>
+                        <p style="margin: 0; color: #065f46; font-size: 1rem;">O script de Embeddings consome o JSON dinamicamente conforme o tema selecionado no Dashboard, vetorizando os novos conceitos de forma automática.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <h2>8. A Escada de Maturidade da Engenharia de Prompt</h2>
+        <p>A arquitetura RAG e o sistema de enriquecimento vetorial aplicados pelo Observatório colocam o DataLuta no nível mais alto de sofisticação tecnológica em manipulação de IA. Abaixo ilustramos a "Escada de Maturidade" na Engenharia de Prompt para compreensão metodológica:</p>
+
+        <!-- Diagrama Escada HTML/CSS -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; margin: 3rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            <div style="display: flex; flex-direction: column; gap: 1rem; position: relative;">
+                
+                <!-- Nível 1 -->
+                <div style="display: flex; align-items: stretch; background: white; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; width: 60%; align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                    <div style="background: #94a3b8; width: 8px; flex-shrink: 0;"></div>
+                    <div style="padding: 1rem 1.5rem; flex: 1;">
+                        <h4 style="margin: 0 0 0.2rem 0; color: #475569; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-ban" style="color: #64748b;"></i> 1. Zero-shot
+                        </h4>
+                        <p style="margin: 0; color: #64748b; font-size: 0.95rem;">Instrução nua. O modelo confia apenas na memória genérica, gerando alto índice de alucinação.</p>
+                    </div>
+                </div>
+
+                <!-- Nível 2 -->
+                <div style="display: flex; align-items: stretch; background: white; border: 1px solid #94a3b8; border-radius: 8px; overflow: hidden; width: 70%; align-self: flex-start; margin-left: 10%; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                    <div style="background: #3b82f6; width: 8px; flex-shrink: 0;"></div>
+                    <div style="padding: 1rem 1.5rem; flex: 1;">
+                        <h4 style="margin: 0 0 0.2rem 0; color: #1e40af; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-file" style="color: #3b82f6;"></i> 2. One-shot
+                        </h4>
+                        <p style="margin: 0; color: #475569; font-size: 0.95rem;">Um exemplo acoplado. Guia o formato da resposta, mas é raso para contextos sociológicos profundos.</p>
+                    </div>
+                </div>
+
+                <!-- Nível 3 -->
+                <div style="display: flex; align-items: stretch; background: white; border: 1px solid #3b82f6; border-radius: 8px; overflow: hidden; width: 80%; align-self: flex-start; margin-left: 20%; box-shadow: 0 2px 5px rgba(0,0,0,0.03);">
+                    <div style="background: #8b5cf6; width: 8px; flex-shrink: 0;"></div>
+                    <div style="padding: 1rem 1.5rem; flex: 1;">
+                        <h4 style="margin: 0 0 0.2rem 0; color: #5b21b6; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-copy" style="color: #8b5cf6;"></i> 3. Few-shot
+                        </h4>
+                        <p style="margin: 0; color: #475569; font-size: 0.95rem;">Múltiplos exemplos. Ativa o reconhecimento de padrões, mas sofre estrangulamento de limite de tokens.</p>
+                    </div>
+                </div>
+
+                <!-- Nível 4 -->
+                <div style="display: flex; align-items: stretch; background: white; border: 1px solid #8b5cf6; border-radius: 8px; overflow: hidden; width: 90%; align-self: flex-start; margin-left: 30%; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                    <div style="background: #ec4899; width: 8px; flex-shrink: 0;"></div>
+                    <div style="padding: 1rem 1.5rem; flex: 1;">
+                        <h4 style="margin: 0 0 0.2rem 0; color: #be185d; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-user-tie" style="color: #ec4899;"></i> 4. Role Prompting
+                        </h4>
+                        <p style="margin: 0; color: #475569; font-size: 0.95rem;">Atribuição de persona (Ex: "Atue como sociólogo"). Restringe o vocabulário, elevando o rigor técnico.</p>
+                    </div>
+                </div>
+
+                <!-- Nível 5 -->
+                <div style="display: flex; align-items: stretch; background: #f0fdf4; border: 2px solid #10b981; border-radius: 8px; overflow: hidden; width: 100%; align-self: flex-start; margin-left: 40%; width: calc(100% - 40%); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15);">
+                    <div style="background: #10b981; width: 12px; flex-shrink: 0;"></div>
+                    <div style="padding: 1.5rem; flex: 1;">
+                        <h4 style="margin: 0 0 0.4rem 0; color: #047857; font-size: 1.25rem; font-weight: bold; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-crown" style="color: #10b981;"></i> 5. Prompt Vetorial com RAG
+                        </h4>
+                        <p style="margin: 0 0 0.5rem 0; color: #065f46; font-size: 1rem; font-weight: 500;">(O Estado da Arte aplicado no DataLuta)</p>
+                        <p style="margin: 0; color: #14532d; font-size: 0.95rem;">Injeção dinâmica de dicionários matemáticos (Embeddings). A IA não usa apenas a memória; ela consulta uma base externa de regras metodológicas antes de agir.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p><strong>A Coroação do Nível 5: Ação Matriz vs. Derivada</strong></p>
+        <p>A funcionalidade do Observatório que separa os conflitos em <strong>Matriz</strong> e <strong>Derivada</strong> representa o limite superior do <em>Nível 5</em> da Engenharia de Prompt, incorporando a técnica de <em>Chain-of-Thought</em> (Pensamento em Cadeia) aos vetores matemáticos.</p>
+        
+        <p>Em vez de tentar adivinhar tudo de uma vez sob o risco de alucinação, a Inteligência Artificial é arquitetada para seguir perguntas sociológicas sequenciais e lógicas baseadas nos Dicionários Enriquecidos:</p>
+        
+        <ul style="line-height: 1.8; color: #4a4a4a; font-size: 1.1rem; margin-bottom: 2rem; background: #fffbeb; padding: 2rem 3rem; border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0;">
+            <li style="margin-bottom: 1rem;"><strong>1ª Decisão (Tronco):</strong> Isso é a origem (Matriz) ou um desdobramento (Derivada)? <em>O sistema consulta matematicamente o dicionário principal RAG para travar a natureza temporal do evento.</em></li>
+            <li><strong>2ª Decisão (Galho):</strong> Sabendo que é uma Derivada, qual subcategoria exata a define? <em>O modelo afunila a busca e recupera apenas as definições de derivadas (isoladas de matrizes ou temas como Urbano), zerando falsos-positivos e sobreposições estruturais.</em></li>
+        </ul>
+
+        <h2>9. Análise Comparativa: DataLuta vs. Modelos Tradicionais (RAFA)</h2>
+        <p>Para atestar o rigor científico e o pioneirismo do Observatório, estabelecemos um paralelo metodológico com o projeto de vanguarda da suprema corte brasileira: o modelo <strong>RAFA (Redes Artificiais Focadas na Agenda 2030)</strong> do STF. Embora ambos busquem a predição estruturada de PDFs complexos, o DataLuta representa uma quebra de paradigma tecnológico na solução dos mesmos gargalos institucionais.</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-radius: 12px; border: 1px solid #e2e8f0;">
+            <table style="width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; text-align: left; background: white;">
+                <thead>
+                    <tr style="background: #1e293b; color: white;">
+                        <th style="padding: 1.5rem; font-size: 1.1rem; border-bottom: 3px solid #334155; width: 25%;">Eixo de Avaliação</th>
+                        <th style="padding: 1.5rem; font-size: 1.1rem; border-bottom: 3px solid #334155; border-right: 1px solid #334155; width: 37.5%;">Modelo RAFA (Tradicional)</th>
+                        <th style="padding: 1.5rem; font-size: 1.1rem; border-bottom: 3px solid #10b981; color: #34d399; width: 37.5%;"><i class="fa-solid fa-rocket" style="margin-right: 0.5rem;"></i> Observatório DataLuta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                        <td style="padding: 1.2rem 1.5rem; font-weight: bold; color: #475569;">Ecossistema Base</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #64748b; border-right: 1px solid #e2e8f0;">Arquitetura legada e bilíngue (R integrado ao Python). Maior custo de manutenção.</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #047857; font-weight: 500;">Arquitetura Monolítica moderna (100% Python). Otimizada para escala e integração web via Flask/React.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 1.2rem 1.5rem; font-weight: bold; color: #475569;">Estratégia de Classificação</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #64748b; border-right: 1px solid #e2e8f0;"><strong>Multilabel (StarSpace):</strong> Tenta classificar o texto puro de uma só vez, sofrendo de "Explosão Combinatória" (poucos dados para muitas etiquetas matemáticas).</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #047857; font-weight: 500;"><strong>Prompt Vetorial (MCP/RAG):</strong> Injeta o dicionário sociológico via Embeddings (Sentence-Transformers). Resolve a escassez de dados ao ensinar a teoria metodológica para a IA em tempo real.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                        <td style="padding: 1.2rem 1.5rem; font-weight: bold; color: #475569;">Isolamento de Domínio</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #64748b; border-right: 1px solid #e2e8f0;"><strong>Tudo Junto:</strong> Processamento unificado de todos os ODS, criando altíssimo risco de sobreposição e contaminação semântica (dispersão conceitual).</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #047857; font-weight: 500;"><strong>Sandboxing:</strong> Cofres isolados. Ao prever eventos de conflitos Urbanos, a máquina matematicamente "desliga" as regras Agrárias e Florestais, eliminando as alucinações de falso-positivo.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1.2rem 1.5rem; font-weight: bold; color: #475569;">Taxonomia de Decisão</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #64748b; border-right: 1px solid #e2e8f0;">Predição por probabilidade de similaridade simples das etiquetas, sem lógica hierárquica atrelada.</td>
+                        <td style="padding: 1.2rem 1.5rem; color: #047857; font-weight: 500;"><strong>Chain-of-Thought (Matriz vs. Derivada):</strong> Rede neural atua em funil. Exige a classificação do Tronco Temporal (Matriz) antes de deliberar sociologicamente sobre os Galhos (Derivada).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
     </main>
 </body>
 

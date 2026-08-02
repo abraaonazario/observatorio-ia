@@ -2993,3 +2993,5 @@
 [UNCAUGHT] Uncaught SyntaxError: Unexpected token '{' at http://127.0.0.1:5000/:1248
 [UNCAUGHT] Uncaught SyntaxError: Unexpected token '{' at http://127.0.0.1:5000/:1248
 [UNCAUGHT] Uncaught SyntaxError: Unexpected token '{' at http://127.0.0.1:5000/?category=floresta:757
+[UNCAUGHT] Uncaught SyntaxError: Unexpected token '{' at http://127.0.0.1:5000/:1248
+[UNCAUGHT] Uncaught SyntaxError: Unexpected token '{' at http://127.0.0.1:5000/:1248

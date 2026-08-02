@@ -26,7 +26,13 @@ def extract_pdf_text_from_zip(zip_file_path, pdf_inner_path):
                         page_text = page.extract_text()
                         if page_text:
                             text += page_text + "\n"
-                    return text.replace('\x00', '').strip()
+                    cleaned_text = text.replace('\x00', '').strip()
+                    
+                    # Heurística: Sensor de Alarme de OCR (Item 1)
+                    if len(pdf.pages) > 0 and len(cleaned_text) < 50:
+                        logging.warning(f"⚠️ POSSÍVEL PDF IMAGEM OU SCANEADO - REQUER OCR FUTURO: {pdf_inner_path} (Texto muito curto: {len(cleaned_text)} chars)")
+                        
+                    return cleaned_text
     except Exception as e:
         logging.error(f"Erro ao extrair texto do PDF {pdf_inner_path}: {e}")
         return None
@@ -79,6 +85,11 @@ def ingest_from_pdfs_only(raw_dir, output_dir, progress_callback=None):
                     if t:
                         text += t + "\n"
             text = text.replace('\x00', '').strip()
+            
+            # Heurística: Sensor de Alarme de OCR (Item 1)
+            if len(text) < 50:
+                logging.warning(f"⚠️ POSSÍVEL PDF IMAGEM OU SCANEADO - REQUER OCR FUTURO: {filename} (Texto muito curto: {len(text)} chars)")
+                
             # Título = primeira linha não-vazia do PDF
             for line in text.splitlines():
                 if line.strip():

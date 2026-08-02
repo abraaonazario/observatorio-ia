@@ -4,6 +4,9 @@ O **Observatório IA** é uma plataforma de Inteligência Artificial voltada par
 
 Esta arquitetura foi desenvolvida como parte de uma pesquisa de doutorado, combinando técnicas avançadas de Processamento de Linguagem Natural (NLP), Recuperação de Informação (RAG - *Retrieval-Augmented Generation*) e Aprendizado de Máquina Supervisionado.
 
+> [!TIP]
+> **Vanguarda Metodológica (Comparativo RAFA/STF):** O pipeline do DataLuta atua com nível de complexidade muito superior aos modelos tradicionais (como o RAFA, utilizado no STF). Enquanto arquiteturas antigas tentam predizer todas as etiquetas simultaneamente (sofrendo de *explosão combinatória*), nossa IA utiliza o método *Chain-of-Thought* acoplado a Árvores Hierárquicas (Matriz vs. Derivada), alcançando um nível inédito de precisão na interpretação de textos institucionais e solucionando a escassez de dados.
+
 ---
 
 ## 🗺️ 1. Arquitetura do Sistema e Fluxo de Dados
@@ -56,20 +59,22 @@ graph TD
 
 ### 📂 A. Ingestão de Dados (`ingestion/ingestion_manager.py`)
 * **Objetivo:** Acoplar os dados geográficos e temporais da planilha Excel com o texto real de cada notícia.
-* **Mecanismo:** Varre o arquivo ZIP compactado e extrai o texto dos PDFs em tempo real sem a necessidade de descompactá-los em disco. Utiliza a biblioteca `pdfplumber` para decodificar fluxos de bytes na memória.
+* **Mecanismo:** Varre o arquivo ZIP compactado e extrai o texto dos PDFs em tempo real. Possui um **Sensor Heurístico de OCR Integrado** que identifica "PDFs Cegos" (imagens escaneadas) e dispara alertas automáticos em log de sistema para demandar processamento visual futuro, evitando que falsos negativos passem despercebidos pelo treinamento.
 * **Saída:** `data/processed/dataset_processado.csv`.
 
 ### 📂 B. Pré-processamento e Chunking (`preprocessing/text_preprocessor.py`)
 * **Objetivo:** Limpar ruídos de digitalização e dividir notícias longas em partes logicamente coerentes.
-* **Mecanismo:** Utiliza o modelo gramatical `pt_core_news_lg` do `spaCy` para separar o texto em sentenças. As sentenças são reagrupadas em fragmentos (chunks) de $\approx 500$ caracteres com $\approx 50$ caracteres de sobreposição (overlap) para manter a coesão nas bordas das divisões.
-* **Saída:** `data/processed/dataset_chunked.csv`.
+* **Mecanismo:** 
+  1. **"Vassoura Inteligente" (Regex Avançado):** O texto extraído passa por robustos proxys de filtragem, que removem ruídos corporativos e invisíveis (Banners de Cookies/LGPD, Paginação, Cabeçalhos e Assinaturas de Jornalistas), entregando apenas a "polpa sociológica" limpa e bem tipografada.
+  2. **Chunking Semântico:** Utiliza o modelo gramatical `pt_core_news_lg` do `spaCy` para separar o texto em sentenças de $\approx 500$ caracteres com sobreposição, mantendo a coesão nas bordas.
+* **Saída:** `data/processed/dataset_chunked.csv` e arquivos PDF higienizados em `clean_pdfs/`.
 
 ### 📂 C. Geração de Embeddings e RAG Semântico (`embeddings/embedding_generator.py`)
 * **Objetivo:** Vetorizar os textos e mapear a proximidade conceitual contra as categorias do observatório.
 * **Mecanismo:**
-  1. Converte os chunks em vetores densos de 512 dimensões usando o modelo multilíngue `sentence-transformers/distiluse-base-multilingual-cased-v1`.
-  2. Implementa um **RAG Semântico Local**: Calcula a similaridade cosseno das embeddings dos chunks contra descrições expandidas em português de 47 categorias de ações do campo (ex: detalhamentos sobre invasão de terra, audiência pública, nota de pesar).
-* **Saída:** `data/processed/chunk_embeddings.npy` (matriz de pesos textuais) e `data/processed/dataset_with_similarities.csv` (planilha enriquecida com as colunas de similaridades semânticas).
+  1. Converte os chunks em vetores densos usando o modelo multilíngue `sentence-transformers/distiluse-base-multilingual-cased-v1`.
+  2. **Arquitetura de Isolamento (Sandboxing MCP):** Funciona filosoficamente como um *Model Context Protocol (MCP)*. O RAG "liga e desliga" os dicionários conceituais baseados no Eixo Temático atual (Urbano, Agrário, Águas, Floresta). Ao isolar os conhecimentos em sandboxes (gavetas exclusivas), a IA evita contaminação cruzada e alucinações cognitivas entre domínios diferentes.
+* **Saída:** `data/processed/chunk_embeddings.npy` e `dataset_with_similarities.csv`.
 
 ### 📂 D. Treinamento de Classificadores (`training/classifier_trainer.py`)
 * **Objetivo:** Treinar os modelos de tomada de decisão final.
