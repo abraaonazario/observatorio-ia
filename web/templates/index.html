@@ -46,33 +46,38 @@
 </head>
 
 <body>
-    <header class="bd-header">
-        <div class="bd-logo">
-            <span class="b">Data</span><span class="d">Luta</span>
-        </div>
-
-        <nav class="bd-nav">
-            <a href="#">Dados</a>
-            <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
-            <a href="{{ url_for('metodologia') }}">Metodologia</a>
-            <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
-            <a href="{{ url_for('sobre') }}">Sobre</a>
-        </nav>
-
-        <div class="bd-actions">
-            <div class="header-search-container bd-search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="global-search" placeholder="Pesquisar dados">
+    <header class="bd-header" style="padding: 0; background: #fff; border-bottom: 1px solid #eaeaea; position: sticky; top: 0; z-index: 1000;">
+        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1600px; margin: 0 auto; width: 100%; padding: 1rem 2rem;">
+            <div class="header-left-section" style="display: flex; align-items: center; min-width: 280px;">
+                <div class="bd-logo">
+                    <span class="b">Data</span><span class="d">Luta</span>
+                </div>
             </div>
-            <button id="btn-train" class="btn btn-secondary">
-                <i class="fa-solid fa-rotate"></i> Treinar
-            </button>
-            <span id="train-status-badge" class="badge bg-idle" style="display: none;">Status: Ocioso</span>
-            <button class="bd-chatbot-btn">
-                Chatbot <span class="beta">Beta</span>
-            </button>
-            <div class="bd-profile">
-                <i class="fa-solid fa-user"></i>
+
+            <nav class="bd-nav" style="flex: 1; justify-content: flex-start; margin-left: 1rem;">
+                <a href="#">Dados</a>
+                <a href="{{ url_for('desenvolvimento') }}">Desenvolvimento</a>
+                <a href="{{ url_for('metodologia') }}">Metodologia</a>
+                <a href="{{ url_for('questoes') }}">Questões de Pesquisa</a>
+                <a href="{{ url_for('orientacoes') }}">Orientações</a>
+                <a href="{{ url_for('sobre') }}">Sobre</a>
+            </nav>
+
+            <div class="bd-actions">
+                <div class="header-search-container bd-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search" placeholder="Pesquisar dados">
+                </div>
+                <button id="btn-train" class="btn btn-secondary">
+                    <i class="fa-solid fa-rotate"></i> Treinar
+                </button>
+                <span id="train-status-badge" class="badge bg-idle" style="display: none;">Status: Ocioso</span>
+                <button class="bd-chatbot-btn">
+                    Chatbot <span class="beta">Beta</span>
+                </button>
+                <div class="bd-profile">
+                    <i class="fa-solid fa-user"></i>
+                </div>
             </div>
         </div>
     </header>
@@ -186,6 +191,26 @@
                 <div class="stat-info">
                     <h3>Documentos Brutos (PDFs)</h3>
                     <p class="stat-number">{{ stats.total_pdfs }}</p>
+                </div>
+            </section>
+
+            <section class="stat-card glass" id="card-total-chunks">
+                <div class="stat-icon bg-emerald-glow">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total de Chunks Semânticos</h3>
+                    <p class="stat-number">{{ stats.total_chunks if stats.total_chunks else '0' }}</p>
+                </div>
+            </section>
+
+            <section class="stat-card glass" id="card-media-chunks">
+                <div class="stat-icon bg-gold-glow">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Média Chunks/Página</h3>
+                    <p class="stat-number">{{ stats.media_chunks_pagina if stats.media_chunks_pagina else '0' }}</p>
                 </div>
             </section>
 

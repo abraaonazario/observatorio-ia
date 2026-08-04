@@ -63,6 +63,15 @@ def run_ml_pipeline(category, root_dir="."):
         category=category
     )
     
+    logging.info("Etapa 3.5/4: Geracao do Banco Vetorial FAISS para RAG...")
+    from embeddings.vector_store import build_faiss_index
+    build_faiss_index(
+        dataset_path=os.path.join(root_dir, f"data/processed/{category}/dataset_with_similarities.csv"),
+        embeddings_path=os.path.join(root_dir, f"data/processed/{category}/chunk_embeddings.npy"),
+        output_dir=os.path.join(root_dir, f"data/processed/{category}"),
+        category=category
+    )
+    
     logging.info("Etapa 4/4: Treinamento dos classificadores supervisionados (HistGradientBoosting + MT-DNN PyTorch)...")
     from training.classifier_trainer import ModelTrainer
     trainer = ModelTrainer(

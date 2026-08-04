@@ -17,7 +17,7 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(ROOT_DIR)
 # Importações dos nossos módulos
 from preprocessing.text_preprocessor import SemanticChunker
-from embeddings.embedding_generator import EmbeddingManager, ACAO_DERIVADA_ENRIQUECIDA
+from embeddings.embedding_generator import EmbeddingManager
 from training.classifier_trainer import ModelTrainer
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -104,7 +104,7 @@ def load_resources():
                 
                 from training.neural_network_trainer import MultiTaskDNN
                 sim_cols = [col for col in MODELS[cat]['DATASET'].columns if col.startswith('sim_score_')]
-                input_dim = 512 + len(sim_cols) + 3 
+                input_dim = 384 + len(sim_cols) + 3 
                 
                 num_classes_derivada = len(MODELS[cat]['NN_ENCODERS']['acao_derivada'].classes_)
                 num_classes_matriz = len(MODELS[cat]['NN_ENCODERS']['acao_matriz_derivada'].classes_)
@@ -240,6 +240,34 @@ def dashboard():
             month_counts = {}
 
         
+        # Add dynamic computation for chunks and pages
+        total_chunks = 0
+        media_chunks_pagina = 0.0
+        try:
+            import json
+            chunks_csv_path = os.path.join(ROOT_DIR, "chunks_por_pdf.csv")
+            paginas_json_path = os.path.join(ROOT_DIR, "paginas_por_pdf.json")
+            if os.path.exists(chunks_csv_path) and os.path.exists(paginas_json_path):
+                df_chunks = pd.read_csv(chunks_csv_path)
+                with open(paginas_json_path, 'r') as f:
+                    paginas_dict = json.load(f)
+                
+                sum_chunks = 0
+                sum_paginas = 0
+                for _, r in df_chunks.iterrows():
+                    codigo_csv = str(r.get('codigo_noticia', '')).strip()
+                    qtd_csv = r.get('Quantidade de Chunks (Fragmentos)', 0)
+                    qtd_paginas = paginas_dict.get(codigo_csv)
+                    if qtd_paginas is not None and str(qtd_paginas).isdigit():
+                        sum_chunks += qtd_csv
+                        sum_paginas += int(qtd_paginas)
+                
+                total_chunks = int(df_chunks['Quantidade de Chunks (Fragmentos)'].sum()) if 'Quantidade de Chunks (Fragmentos)' in df_chunks.columns else 0
+                if sum_paginas > 0:
+                    media_chunks_pagina = round(sum_chunks / sum_paginas, 2)
+        except Exception as e:
+            logging.error(f"Erro ao calcular media de chunks: {e}")
+
         stats = {
             'total_noticias': total_noticias,
             'total_conflitos': total_conflitos,
@@ -247,7 +275,9 @@ def dashboard():
             'top_pautas': top_pautas,
             'top_movimentos': top_movimentos,
             'top_estados': top_estados,
-            'top_densos': top_densos
+            'top_densos': top_densos,
+            'total_chunks': total_chunks,
+            'media_chunks_pagina': media_chunks_pagina
         }
     else:
         stats = {
@@ -289,6 +319,10 @@ def sobre():
 @app.route('/questoes')
 def questoes():
     return render_template('questoes.html')
+
+@app.route('/orientacoes')
+def orientacoes():
+    return render_template('orientacoes.html')
 
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -347,6 +381,26 @@ def chat():
         answer += f"\"{res['texto']}\"<br><br>"
 
     return jsonify({'answer': answer})
+
+@app.route('/api/ask_rag', methods=['POST'])
+def ask_rag():
+    """Endpoint LangChain RAG: Recebe pergunta, busca no FAISS e gera resposta com LLM via MCP Router."""
+    data = request.json
+    query = data.get('query', '')
+    cat = data.get('category', 'agrario')
+
+    if not query:
+        return jsonify({'error': 'A pergunta não pode estar vazia.'}), 400
+
+    from rag.qa_chain import ask_question
+    
+    # Executar RAG Chain
+    result = ask_question(query, category=cat)
+    
+    return jsonify({
+        'answer': result['answer'],
+        'sources': result['sources']
+    })
 
 @app.route('/api/map-data')
 def map_data():
@@ -1018,4 +1072,4 @@ def download_pdf_endpoint():
 
 if __name__ == '__main__':
     load_resources()
-    app.run(debug=True, use_reloader=False, host='127.0.0.1', port=5000)
+    app.run(debug=True, use_reloader=False, host='127.0.0.1', port=80)

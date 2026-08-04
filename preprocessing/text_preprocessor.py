@@ -6,6 +6,19 @@ import pandas as pd
 import logging
 from tqdm import tqdm
 from fpdf import FPDF
+import string
+import nltk
+from nltk.corpus import stopwords
+
+# Garantir que recursos do NLTK estão baixados
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords', quiet=True)
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt', quiet=True)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -60,13 +73,23 @@ class SemanticChunker:
         return text.strip()
 
     def split_into_semantic_chunks(self, text):
-        """Splits text into chunks at sentence boundaries using spaCy, trying to respect chunk_size."""
+        """Splits text into chunks at sentence boundaries using spaCy, applying NLP cleaning to each sentence."""
         cleaned = self.clean_text(text)
         if not cleaned:
             return []
             
         doc = self.nlp(cleaned)
-        sentences = [sent.text.strip() for sent in doc.sents if len(sent.text.strip()) > 3]
+        stop_words = set(stopwords.words('portuguese'))
+        
+        sentences = []
+        for sent in doc.sents:
+            s_text = sent.text.strip().lower()
+            # Remover pontuação
+            s_text = s_text.translate(str.maketrans('', '', string.punctuation))
+            # Remover stop words e números irrelevantes
+            s_text = " ".join([w for w in s_text.split() if w not in stop_words and not w.isnumeric()])
+            if len(s_text) > 3:
+                sentences.append(s_text)
         
         chunks = []
         current_chunk = []

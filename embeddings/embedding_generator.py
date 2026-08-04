@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Dicionário de Enriquecimento Semântico das Ações Derivadas em português
 #retirar a descrição 
-ACAO_DERIVADA_ENRIQUECIDA = {
+ACAO_DERIVADA_AGRARIO = {
     'ACAMPAMENTO': 'Formação de acampamento camponês provisório ou estabelecimento de acampados em terras reivindicadas para reforma agrária.',
     'ASSEMBLEIA/PLENÁRIA': 'Reunião de membros de movimentos sociais para tomada de decisões coletivas, plenárias organizativas ou planejamento de ações agrárias.',
     'ASSISTÊNCIA TÉCNICA E EXTENSÃO RURAL': 'Atividades de formação técnica, apoio agrícola, transição agroecológica ou extensão produtiva no campo.',
@@ -62,8 +62,8 @@ ACAO_DERIVADA_ENRIQUECIDA = {
     '': 'Sem classificação de ação derivada específica ou informação insuficiente nos registros.'
 }
 
-# Dicionário de Enriquecimento Semântico das Ações Matrizes (Macroclasses) em português
-ACAO_MATRIZ_ENRIQUECIDA = {
+# Dicionário de Enriquecimento Semântico das Ações Matrizes (Macroclasses) em português (Agrário)
+ACAO_MATRIZ_AGRARIO = {
     'ARRECADAÇÃO DE RECURSOS OU EXECUÇÃO DE SERVIÇOS': 'Ações voltadas para a coleta de fundos, doações de recursos financeiros, campanhas de arrecadação ou prestação de serviços comunitários e apoio social no campo.',
     'COMERCIALIZAÇÃO': 'Atividades de venda, feiras agrícolas, circuitos curtos de comércio, mercados institucionais e canais de escoamento da produção da agricultura familiar e camponesa.',
     'COMUNICATIVA': 'Ações de comunicação, publicação de notas públicas, manifestos, cartas abertas, comunicados, entrevistas coletivas e divulgação de informações pelos movimentos sociais.',
@@ -77,8 +77,139 @@ ACAO_MATRIZ_ENRIQUECIDA = {
     'PRODUÇÃO': 'Atividades produtivas diretas, cultivo agrícola, produção de alimentos saudáveis e agroecológicos, criação de tecnologias sociais e reflorestamento no campo.'
 }
 
+# Dicionários de Eixos Urbanos
+ACAO_DERIVADA_URBANO = {
+    'MARCHA': 'Caminhada coletiva pelas ruas da cidade para reivindicar direitos urbanos, moradia ou melhoria no transporte público.',
+    'ASSEMBLEIA': 'Reunião de moradores ou trabalhadores urbanos para tomada de decisões coletivas sobre o movimento.',
+    'REUNIÃO DE ARTICULAÇÃO': 'Encontro estratégico entre lideranças comunitárias e movimentos sociais urbanos para planejamento de ações.',
+    'FEIRA': 'Exposição e comércio solidário de produtos e serviços em espaços públicos urbanos.',
+    'CONCENTRAÇÃO': 'Reunião de manifestantes em um ponto específico da cidade antes de uma marcha ou protesto.',
+    'LANÇAMENTO': 'Evento de apresentação de campanhas, livros ou projetos ligados ao movimento urbano.',
+    'GREVE': 'Paralisação coletiva do trabalho ou de serviços essenciais como transporte público para exigir direitos trabalhistas ou sociais.',
+    'HOMENAGEM': 'Ato público de reconhecimento e memória a lideranças sociais urbanas ou vítimas de violência de estado.',
+    'DOAÇÃO': 'Entrega de mantimentos, roupas e recursos para famílias em situação de rua ou vulnerabilidade urbana.',
+    'ENCONTRO': 'Reunião periódica de movimentos de moradia e coletivos urbanos para troca de experiências.',
+    'NOTA DE REPÚDIO': 'Manifestação formal e pública contra abusos policiais, remoções forçadas ou cortes de políticas públicas urbanas.',
+    'NOTA DE APOIO': 'Documento de solidariedade a outras lutas sociais, sindicatos ou ocupações sob ameaça de despejo.',
+    'CAMPANHA': 'Mobilização de conscientização pública sobre direito à cidade, tarifa zero ou combate à gentrificação.',
+    'CELEBRAÇÃO': 'Festa comunitária celebrando vitórias populares, como a suspensão de um despejo ou entrega de moradias.',
+    'AGRESSÃO': 'Ato de violência física ou moral sofrida por ativistas urbanos, moradores de rua ou membros de ocupações.',
+    'FESTIVAL': 'Evento cultural urbano de grande porte com música e arte para engajar a população nas pautas do movimento.',
+    'WORKSHOP': 'Oficina prática de formação para moradores sobre direitos urbanos, prevenção de incêndios em ocupações ou cooperativismo.',
+    'RODA DE CONVERSA': 'Espaço de diálogo horizontal nas periferias sobre questões sociais, racismo, feminismo e direito à cidade.',
+    'OCUPAÇÃO DE ESPAÇO PÚBLICO': 'Instalação temporária ou acampamento em praças, parques ou calçadas para pressionar o poder público local.',
+    'AUDIÊNCIA PÚBLICA': 'Participação em sessões das câmaras municipais para debater plano diretor, zoneamento ou habitação social.',
+    'ENTREVISTA': 'Depoimento de lideranças urbanas à imprensa para visibilizar a luta por moradia e infraestrutura.',
+    'OCUPAÇÃO DE ESPAÇO PRIVADO': 'Entrada organizada de famílias sem-teto em imóveis abandonados que não cumprem função social.',
+    'CONFERÊNCIA': 'Participação em conferências das cidades para elaboração de diretrizes de planejamento urbano.',
+    'SARAU': 'Encontro de poesia e música nas periferias e ocupações para afirmação cultural e resistência.',
+    'CARREATA': 'Manifestação em veículos pelas vias da cidade buzinando e exibindo faixas de protesto.',
+    'CONGRESSO': 'Reunião nacional de delegados dos movimentos por moradia para definição de diretrizes políticas.',
+    'CARTA': 'Documento escrito por coletivos urbanos contendo denúncias ou pautas entregue aos prefeitos e vereadores.',
+    'PARALISAÇÃO': 'Interrupção temporária de vias ou serviços para chamar atenção imediata a uma pauta.',
+    'PLENÁRIA': 'Reunião ampla de coletivos e moradores para organizar resistências a remoções e plano de lutas.',
+    'FÓRUM': 'Espaço permanente de articulação entre diversas entidades que defendem a reforma urbana.',
+    'MESA': 'Participação em mesas de negociação com secretarias de habitação ou governos estaduais.',
+    'REUNIÃO DE NEGOCIAÇÃO': 'Diálogo direto com proprietários de imóveis ou poder público para evitar reintegração de posse.',
+    'OFÍCIO': 'Documento protocolado em órgãos da prefeitura cobrando infraestrutura, saneamento ou habitação.',
+    'CAMINHADA': 'Ato de protesto caminhando por bairros afetados por problemas de infraestrutura ou enchentes.',
+    'REUNIÃO DE CONSTRUÇÃO DE AGENDA': 'Planejamento tático de calendário de manifestações e reuniões comunitárias.',
+    'MANIFESTO': 'Declaração pública de princípios e exigências urgentes sobre a política urbana da cidade.',
+    'REUNIÃO DE REIVINDICAÇÃO': 'Encontro com secretários ou prefeitos para entregar pautas concretas de saneamento e transporte.',
+    'PASSEATA': 'Mobilização de rua semelhante à marcha, geralmente focada em vias de grande circulação.',
+    'LIVE': 'Transmissão ao vivo pela internet para denunciar ameaças de despejo ou atualizar apoiadores.',
+    'BLOQUEIO': 'Fechamento de vias urbanas importantes com pneus queimados ou faixas para exigir infraestrutura em bairros periféricos.',
+    'PIQUETE': 'Formação de barreira humana em portas de fábricas ou órgãos públicos para garantir adesão a greves e protestos.',
+    'AGRICULTURA URBANA': 'Implementação de hortas comunitárias em terrenos baldios ou ocupações nas cidades.',
+    'ECONOMIA SOLIDÁRIA': 'Criação de cooperativas de catadores de recicláveis ou cozinhas solidárias em áreas urbanas vulneráveis.',
+    'PANFLETAGEM': 'Distribuição de material impresso em terminais de ônibus e metrô para dialogar com a população sobre as pautas urbanas.',
+    'CARAVANA': 'Deslocamento de ônibus de militantes urbanos até capitais ou Brasília para grandes atos unificados.',
+    'INTERVENÇÃO URBANA': 'Ato artístico de protesto como projeções em prédios, grafites ou performances em vias públicas.',
+    'ESCRACHO': 'Protesto ruidoso na porta da casa ou escritório de políticos ou empresários que causam danos aos direitos urbanos.',
+    'REUNIÃO DE DENÚNCIA': 'Encontro com Ministério Público ou Defensoria Pública para relatar violência policial ou remoções arbitrárias.',
+    'OPUGNAÇÃO': 'Ação legal ou protesto visando invalidar licitações, leilões ou projetos de lei prejudiciais ao tecido urbano.',
+    'ABAIXO-ASSINADO': 'Coleta de assinaturas de moradores para pressionar pela construção de postos de saúde ou asfalto.',
+    'TRANCAMENTO/BLOQUEIO': 'Fechamento de pontes e avenidas principais gerando impacto no trânsito para forçar o governo a negociar.',
+    'PANELAÇO': 'Protesto sonoro feito por moradores em janelas de prédios e casas contra governantes ou medidas impopulares.',
+    'DESESPACIALIZAÇÃO': 'Ação de remoção forçada e destruição de vínculos comunitários devido à especulação imobiliária ou gentrificação.',
+    'MUTIRÃO': 'Trabalho voluntário coletivo para reformar prédios ocupados, consertar telhados ou limpar áreas de uso comum.',
+    'GRUPO DE TRABALHO': 'Formação de equipes técnicas de arquitetos e moradores para elaborar projetos habitacionais alternativos.',
+    'PEDALADA': 'Manifestação de ciclistas cobrando ciclovias, mobilidade urbana ativa e redução de acidentes de trânsito.',
+    'NOTA DE PESAR': 'Comunicação lamentando a morte de moradores de rua devido ao frio ou de ativistas vítimas de violência urbana.',
+    'N.I': 'Ação não identificada ou sem informações suficientes no registro urbano.'
+}
+
+ACAO_MATRIZ_URBANO = {
+    'DESLOCAMENTOS COLETIVOS': 'Marchas, passeatas, carreatas e caravanas envolvendo grande número de manifestantes no ambiente urbano.',
+    'EVENTOS': 'Assembleias, congressos, festivais, plenárias e atividades de concentração de movimentos urbanos.',
+    'ENCONTROS DE MEDIAÇÃO': 'Reuniões de negociação, denúncia e articulação com prefeituras, promotorias e secretarias.',
+    'INTERRUPÇÃO': 'Greves, paralisações, bloqueios de vias e piquetes que interrompem o fluxo normal da cidade.',
+    'ARRECADAÇÃO DE RECURSOS OU EXECUÇÃO DE SERVIÇOS': 'Campanhas doação, mutirões comunitários, hortas urbanas e práticas de economia solidária.',
+    'COMUNICATIVA': 'Notas de repúdio, manifestos, cartas, escrachos, panfletagens e entrevistas à mídia.',
+    'VIOLAÇÃO': 'Agressões, remoções forçadas (desespacialização) e violências institucionais contra movimentos ou populações vulneráveis.',
+    'OCUPAÇÃO': 'Apropriação política de imóveis privados abandonados ou de espaços públicos para reivindicação de moradia e direito à cidade.',
+    'INTERSECCIONALIDADE INSTITUCIONAL': 'Participação em audiências públicas, grupos de trabalho e inserção nos conselhos de política urbana.',
+    'N.I': 'Matriz não identificada.'
+}
+
+# Dicionários de Eixos Floresta
+ACAO_DERIVADA_FLORESTA = {
+    'RETOMADA DE TERRITÓRIO': 'Ocupação ou reingresso de povos indígenas e comunidades tradicionais em suas terras originárias ou territórios ancestrais reivindicados.',
+    'ATENTADO E VIOLÊNCIA FÍSICA': 'Ataques com armas de fogo, ameaças de morte ou assassinatos direcionados a indígenas, seringueiros e defensores da floresta.',
+    'DESPEJO E REPRESSÃO POLICIAL': 'Ação de força policial (com ou sem mandado judicial) para retirada forçada ou prisão de indígenas e extrativistas de áreas retomadas.',
+    'DEMARCAÇÃO E RECONHECIMENTO': 'Processos governamentais ou judiciais determinando a demarcação de terras indígenas ou reconhecimento de comunidades quilombolas.',
+    'CRIACÃO DE COMITÊS E FRENTES': 'Estabelecimento de frentes parlamentares, comitês de proteção ou grupos institucionais voltados aos povos da floresta.',
+    'PROTESTO E MANIFESTAÇÃO': 'Mobilizações públicas, marchas ou manifestações cobrando visibilidade e direitos para mulheres indígenas e povos tradicionais.',
+    'REUNIÃO DE REIVINDICAÇÃO': 'Encontros de lideranças indígenas com prefeituras, Funai ou Ministério Público cobrando saúde, segurança ou mediação de conflitos.',
+    'SOLIDARIEDADE E DOAÇÃO': 'Ações de apoio emergencial, como a distribuição de cestas básicas para comunidades indígenas em vulnerabilidade.',
+    'ENCONTRO E ARTICULAÇÃO': 'Reuniões, teias e encontros de extrativistas, seringueiros e comunidades tradicionais para planejamento e fortalecimento da categoria.',
+    'DESMATAMENTO ILEGAL': 'Supressão não autorizada de vegetação nativa para grilagem, expansão pecuária ou especulação de terras em áreas florestais.',
+    'EXTRAÇÃO ILEGAL DE MADEIRA': 'Corte seletivo e roubo de espécies madeireiras valiosas de dentro de unidades de conservação ou terras indígenas.',
+    'INCÊNDIO CRIMINOSO': 'Fogo ateado intencionalmente para limpar o solo da floresta, frequentemente usado após o desmatamento.',
+    'GARIMPO ILEGAL': 'Exploração mineral sem licença dentro da floresta, causando destruição do solo e contaminação de rios com mercúrio.',
+    'FISCALIZAÇÃO AMBIENTAL': 'Operações do IBAMA, ICMBio ou polícias ambientais para combater crimes ambientais na floresta.',
+    'MULTA E APREENSÃO': 'Aplicação de sanções e confisco de tratores e equipamentos utilizados em crimes contra a floresta.',
+    'MANEJO SUSTENTÁVEL': 'Exploração racional e legal dos recursos madeireiros e não-madeireiros (como açaí e castanha) sem destruir a floresta.',
+    'N.I': 'Ação não identificada ou sem informações suficientes no registro.'
+}
+
+ACAO_MATRIZ_FLORESTA = {
+    'CONFLITO TERRITORIAL E RETOMADA': 'Ações diretas de ocupação, reingresso em terras ancestrais e disputas fundiárias em fazendas ou áreas de preservação.',
+    'VIOLÊNCIA E REPRESSÃO': 'Ataques armados, prisões arbitrárias, assassinatos e ações de despejo contra povos da floresta.',
+    'INTERSECCIONALIDADE INSTITUCIONAL': 'Nomeação de coordenadores indígenas, criação de comitês governamentais, demarcação de terras e reuniões com o Estado.',
+    'MOBILIZAÇÃO E ARTICULAÇÃO': 'Protestos, encontros de extrativistas, lançamentos de frentes e atividades de unificação dos movimentos.',
+    'EXPLORAÇÃO ILEGAL E GRILAGEM': 'Desmatamento, extração ilegal de madeira, garimpo e incêndios criminosos na floresta.',
+    'FISCALIZAÇÃO E CONSERVAÇÃO': 'Manejo sustentável, multas ambientais, apreensão de maquinário e fiscalização de UCs.',
+    'N.I': 'Matriz não identificada.'
+}
+
+# Dicionários de Eixos de Águas
+ACAO_DERIVADA_AGUAS = {
+    'CONSTRUÇÃO DE HIDRELÉTRICA': 'Implementação de barragens para usinas hidrelétricas gerando alagamento de terras produtivas e remoção de populações ribeirinhas.',
+    'ROMPIMENTO DE BARRAGEM': 'Colapso de represas de rejeitos de mineração ou de água, causando desastres socioambientais, contaminação severa e mortes.',
+    'CONTAMINAÇÃO DE RIO': 'Despejo de metais pesados (como mercúrio do garimpo), agrotóxicos ou resíduos industriais em cursos d\'água.',
+    'POLUIÇÃO POR ESGOTO': 'Lançamento de efluentes domésticos sem tratamento nos rios e lagos, inviabilizando o consumo e a pesca.',
+    'OCUPAÇÃO DE BARRAGEM': 'Protesto de movimentos de atingidos que ocupam os canteiros de obras de barragens exigindo indenizações e reassentamentos.',
+    'PRIVATIZAÇÃO DO SANEAMENTO': 'Concessão dos serviços públicos de água e esgoto para empresas privadas, gerando protestos contra o aumento de tarifas.',
+    'CONCESSÃO DE OUTORGA': 'Aprovação pelo Estado para captação em grande volume de água por empresas do agronegócio ou indústria.',
+    'REDUÇÃO DE VAZÃO': 'Seca de nascentes, diminuição do volume de rios ou crise hídrica agravada pelo desmatamento e captação excessiva.',
+    'PROTEÇÃO DE NASCENTES': 'Ações comunitárias de plantio de matas ciliares e cercamento para recuperação de fontes de água.',
+    'CONSTRUÇÃO DE CISTERNAS': 'Implementação de tecnologias sociais de captação de água da chuva para convivência com a seca no semiárido.',
+    'PESCA ARTESANAL': 'Atividade tradicional de subsistência ameaçada por grandes obras e poluição nos corpos hídricos.',
+    'N.I': 'Ação não identificada ou sem informações suficientes no registro.'
+}
+
+ACAO_MATRIZ_AGUAS = {
+    'USO E PRIVATIZAÇÃO': 'Grandes captações industriais, outorgas para irrigação do agronegócio e privatização do acesso e saneamento básico.',
+    'VIOLAÇÃO E CONTAMINAÇÃO': 'Rompimentos de barragens, derramamento de tóxicos, secagem de nascentes e poluição de bacias hidrográficas.',
+    'INFRAESTRUTURA E BARRAGENS': 'Obras de hidrelétricas, transposição de rios, hidrovia e grandes intervenções estatais nos corpos d\'água.',
+    'DEFESA E CONSERVAÇÃO': 'Proteção de nascentes, construção de cisternas, manutenção da pesca artesanal e atos contra poluição hídrica.',
+    'INSTITUCIONAL E CONFLITOS': 'Ocupações de protesto contra barragens, ações judiciais de indenização, e atuação de comitês de bacia hidrográfica.',
+    'N.I': 'Matriz não identificada.'
+}
+
 class EmbeddingManager:
-    def __init__(self, model_name='sentence-transformers/distiluse-base-multilingual-cased-v1', category='agrario'):
+    def __init__(self, model_name='sentence-transformers/all-MiniLM-L6-v2', category='agrario'):
         self.model_name = model_name
         self.category = category
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -87,8 +218,17 @@ class EmbeddingManager:
         logging.info("Modelo de embeddings carregado com sucesso.")
         
         if category == 'agrario':
-            derivada_dict = ACAO_DERIVADA_ENRIQUECIDA
-            matriz_dict = ACAO_MATRIZ_ENRIQUECIDA
+            derivada_dict = ACAO_DERIVADA_AGRARIO
+            matriz_dict = ACAO_MATRIZ_AGRARIO
+        elif category == 'urbano':
+            derivada_dict = ACAO_DERIVADA_URBANO
+            matriz_dict = ACAO_MATRIZ_URBANO
+        elif category == 'floresta':
+            derivada_dict = ACAO_DERIVADA_FLORESTA
+            matriz_dict = ACAO_MATRIZ_FLORESTA
+        elif category == 'aguas':
+            derivada_dict = ACAO_DERIVADA_AGUAS
+            matriz_dict = ACAO_MATRIZ_AGUAS
         else:
             derivada_dict = {'Ação Indefinida': 'Nenhuma classe definida'}
             matriz_dict = {'Matriz Indefinida': 'Nenhuma matriz definida'}

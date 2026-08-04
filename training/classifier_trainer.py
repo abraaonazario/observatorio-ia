@@ -55,7 +55,7 @@ class ModelTrainer:
         
         logging.info(f"Extraídas {len(sim_cols)} colunas de similaridade.")
         
-        # Concatenar: Embeddings (512d) + Scores de Similaridade (47d) + Metadados Encodados (3d)
+        # Concatenar: Embeddings (384d) + Scores de Similaridade (47d) + Metadados Encodados (3d)
         X = np.hstack([embeddings, sim_features] + encoded_feats)
         logging.info(f"Feature matrix X construída com shape: {X.shape}")
         

@@ -38,8 +38,8 @@ graph TD
     end
 
     subgraph Vetores ["3. Camada Vetorial & Similaridade (embedding_generator.py)"]
-        embed_model["SentenceTransformer (LaBSE / Distiluse)"]
-        chunk_embs["Embeddings dos Chunks (512d)"]
+        embed_model["SentenceTransformer (all-MiniLM-L6-v2)"]
+        chunk_embs["Embeddings dos Chunks (384d)"]
         enrich_dict["Descrições Enriquecidas das Ações (47 Classes)"]
         action_embs["Embeddings das Ações Enriquecidas"]
         cosine_sim["Similaridade Cosseno (sklearn)"]
@@ -56,7 +56,7 @@ graph TD
 
     subgraph ML ["4. Classificação Supervisionada (classifier_trainer.py)"]
         cat_meta["Categorias Encodadas (Estado, Pauta, Movimento - 3d)"]
-        feature_fusion["Fusão de Atributos (X = 512d + 47d + 3d = 562d)"]
+        feature_fusion["Fusão de Atributos (X = 384d + 47d + 3d = 434d)"]
         rf_derivada["RandomForest (Ação Derivada - Target)"]
         rf_matriz["RandomForest (Ação Matriz - Target)"]
         eval_metrics["Métricas (Precision, Recall, F1, Matriz Confusão)"]
@@ -116,7 +116,7 @@ Diferente do chunking tradicional por caracteres (que corta palavras ao meio e d
 
 ### 3. Vetorização Semântica e Cálculo de Proximidade (RAG Semântico)
 Em vez de depender apenas de embeddings puras para classificação (que exigem muitos dados de treino), utilizamos as descrições semânticas das ações como âncoras conceituais:
-- **Modelo de Embeddings:** `distiluse-base-multilingual-cased-v1` da biblioteca `sentence-transformers`. Ele gera vetores de 512 dimensões.
+- **Modelo de Embeddings:** `all-MiniLM-L6-v2` da biblioteca `sentence-transformers`. Ele gera vetores de 384 dimensões.
 - **RAG Local / Cosseno:**
   $$Similaridade(\vec{u}, \vec{v}) = \frac{\vec{u} \cdot \vec{v}}{\|\vec{u}\| \|\vec{v}\|}$$
   Para cada chunk de texto da notícia, calculamos sua similaridade contra cada uma das 47 ações derivadas pré-cadastradas no dicionário. Isso gera um vetor de 47 dimensões de similaridades semânticas que atua como um forte sinal de classificação (Feature Enrichment).
@@ -126,10 +126,10 @@ A grande inovação desta arquitetura é a **Fusão de Atributos** (Feature Fusi
 
 | Tipo de Atributo | Origem | Dimensões | Finalidade |
 |---|---|---|---|
-| **Embedding Densa** | Codificação SentenceTransformers | 512 | Captura nuances de sentimentos, jargões e contextos textuais. |
+| **Embedding Densa** | Codificação SentenceTransformers | 384 | Captura nuances de sentimentos, jargões e contextos textuais. |
 | **Similaridade Semântica** | Cosseno contra descrições das Ações | 47 | Fornece proximidade explícita com os alvos cadastrados (RAG). |
 | **Metadados Estruturados** | Encoders (Estado, Pauta, Movimento) | 3 | Fornece contexto geográfico, histórico e sociopolítico do evento. |
-| **Vetor de Entrada Final (X)** | Concatenação de todos os anteriores | **562** | Representação unificada para o classificador supervisionado. |
+| **Vetor de Entrada Final (X)** | Concatenação de todos os anteriores | **434** | Representação unificada para o classificador supervisionado. |
 
 Treinamos dois modelos `RandomForestClassifier` em paralelo:
 - **Classificador de Ação Derivada:** Classifica entre as 47 classes finais de alta granularidade.
