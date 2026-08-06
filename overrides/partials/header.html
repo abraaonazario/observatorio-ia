@@ -1,0 +1,24 @@
+<header class="custom-top-nav">
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1000px; margin: 0 auto;">
+    <div class="nav-brand">
+      <div class="nav-logo" style="background: linear-gradient(135deg, #0ea5e9, #10b981);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="18" y="3" width="4" height="18"></rect><rect x="10" y="8" width="4" height="13"></rect><rect x="2" y="13" width="4" height="8"></rect></svg>
+      </div>
+      <div class="nav-titles">
+        <a href="{{ base_url }}/paineis-indicadores/" style="text-decoration: none; color: inherit; display: block;">
+          <div class="nav-main-title" style="letter-spacing: 0.5px; font-weight: 800;">MT 360º</div>
+          <div class="nav-sub-title" style="font-size: 0.6rem; color: #64748b; letter-spacing: 0.5px;">PAINEL DE INDICADORES - EST. 2024</div>
+        </a>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="{{ base_url }}/" class="{% if page.url == '' %}active{% endif %}">Home</a>
+      <a href="{{ base_url }}/paineis-indicadores/" class="{% if page.url == 'paineis-indicadores/' %}active{% endif %}">MT 360º</a>
+      <a href="{{ base_url }}/mapa-ativos/" class="{% if page.url == 'mapa-ativos/' %}active{% endif %}">Mapa</a>
+      <a href="{{ base_url }}/perfil-municipios/" class="{% if page.url == 'perfil-municipios/' %}active{% endif %}">Municípios</a>
+      <a href="{{ base_url }}/assistente-ia/" class="{% if page.url == 'assistente-ia/' %}active{% endif %}">Assistente IA</a>
+      <a href="{{ base_url }}/camada1-datalake/" class="{% if page.url == 'camada1-datalake/' %}active{% endif %}">Metodologia</a>
+    </nav>
+  </div>
+
+</header>

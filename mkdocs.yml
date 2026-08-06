@@ -1,0 +1,54 @@
+site_name: MT 360º
+site_description: Documentação Técnica e Governança de Dados do Governo
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - search.suggest
+    - search.highlight
+    - navigation.top
+  palette:
+    primary: custom
+    accent: custom
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/agent-widget.css
+  - stylesheets/home.css
+  - stylesheets/dashboard.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/chart.js
+  - javascripts/chart-datalabels.js
+  - javascripts/theme-toggle.js
+  - javascripts/agent-widget.js
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - MT 360º:
+      - Observatório de IA: observatorio-ia-dashboard.md
+      - Painéis de Indicadores: paineis-indicadores.md
+      - Dados Abertos (MT): painel-mt.md
+  - Mapa: mapa-ativos.md
+  - Municípios:
+      - Visão Geral: perfil-municipios.md
+      - Água Boa: cidade-agua-boa.md
+      - São José do Povo: cidade-sao-jose-do-povo.md
+  - Assistente IA: assistente-ia.md
+  - Metodologia:
+      - Visão Geral do Data Lake: camada1-datalake.md
+      - Integração de Secretarias: camada2-secretarias.md
+      - Arquitetura de Atualização de Dados: arquitetura-atualizacao-dados.md
+      - Metodologia de IA: camada3-observatorio-ia.md
+      - Projeto Agente Executivo: projeto-agente-executivo.md

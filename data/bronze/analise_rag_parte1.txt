@@ -1,0 +1,655 @@
+﻿
+=== PAGINA 18 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ 
+APRESENTA??O 
+ 
+O Governo do Estado de Mato Grosso submete ? Assembleia Legislativa, ao Tribunal de Contas do 
+Estado (TCE-MT) e ? sociedade mato-grossense o Relat?rio Anual de Gest?o (RAG) relativo ao exerc?cio 
+de 2025. Este documento integra o processo de presta??o de contas governamental, atendendo aos 
+seguintes preceitos legais: 
+? 
+Plano Plurianual (PPA1 2024-2027): Artigo 23, inciso I da Lei n? 12.432/2024; 
+? 
+Lei de Diretrizes Or?ament?rias (LDO2 2025): Artigo 42 da Lei n? 12.702/2024; 
+? 
+Constitui??o do Estado de Mato Grosso: Artigo 66, inciso X; 
+? 
+Lei de Responsabilidade Fiscal (LRF): Artigo 4?, inciso I, al?nea ?e? da Lei Complementar 
+Federal n? 101/2000. 
+ 
+ O RAG consolida a avalia??o da gest?o sobre a execu??o f?sica e financeira dos programas e a??es 
+- compreendendo Projetos, Atividades e Opera??es Especiais (PAOE) - previstos no PPA 2024-2027 e 
+operacionalizados por meio da Lei Or?ament?ria Anual (LOA) e de seus respectivos Planos de Trabalho 
+Anuais (PTA3).  
+ 
+Foco Estrat?gico e Transpar?ncia 
+Este instrumento visa apresentar, de forma clara e tecnicamente fundamentada, a performance das 
+pol?ticas p?blicas estaduais. Para tanto, detalha o desempenho das entregas governamentais e os 
+resultados dos indicadores aferidos no exerc?cio, essenciais para o monitoramento e o aperfei?oamento das 
+a??es do Estado. 
+Al?m de fortalecer a transpar?ncia e o controle social, o RAG constitui-se como insumo primordial 
+
+
+=== PAGINA 19 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+Dentre estes, seis eixos estruturam a estrat?gia direta do Poder Executivo, enquanto o eixo "Outros 
+Poderes" contempla os resultados dos demais Poderes e ?rg?os Aut?nomos. Cabe destacar que, conforme 
+a LDO 2025 (Art. 42, ?? 2?, 3? e 4?), cada Poder ? respons?vel pela elabora??o e entrega de seu respectivo 
+RAG, sendo a Defensoria P?blica a exce??o que permanece sob a responsabilidade do Executivo. 
+Este RAG 2025, referente ao segundo ano do ciclo do PPA 2024-2027, est? dispon?vel para acesso 
+p?blico no portal da Secretaria de Estado de Planejamento e Gest?o (SEPLAG-MT), reafirmando o 
+compromisso deste Governo com o livre acesso ? informa??o e a transpar?ncia p?blica.    
+ 
+ 
+19
+CASACIVILDIC202603869
+Assinado com senha por SANDRO LUIS BRANDAO CAMPOS - SECRETARIO ADJUNTO / GSAPGD - 09/03/2026 ?s 13:17:04,
+BASILIO BEZERRA GUIMARAES DOS SANTOS - SEC DE ESTADO / GSEPG - 09/03/2026 ?s 13:25:44 e MAURO MENDES
+FERREIRA - GOVERNADOR / GGOV - 09/03/2026 ?s 20:14:46.
+Documento N?: 35045568-9223 - consulta ? autenticidade em
+https://www.sigadoc.mt.gov.br/sigaex/public/app/autenticar?n=35045568-9223
+Governo de Mato Grosso
+CASA CIVIL
+
+
+=== PAGINA 20 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ 
+METODOLOGIA DO RAG 2025 
+ 
+Fundamenta??o Te?rica e Conceitual 
+A avalia??o das pol?ticas p?blicas ? um pilar essencial da governan?a democr?tica. Conforme a 
+doutrina de Maria Paula Dallari Bucci (2002), as pol?ticas p?blicas configuram-se como arranjos institucionais 
+complexos, compostos por normas e regras que fundamentam a a??o governamental para o alcance de 
+objetivos coletivos. 
+Nesse contexto, o planejamento n?o ? apenas uma atividade t?cnica, mas um processo cont?nuo 
+que envolve atores pol?ticos e sociais na busca por solu??es para os desafios da sociedade. A avalia??o, 
+etapa final deste ciclo, ? definida como uma an?lise sistem?tica que confere valor e utilidade aos programas, 
+servindo como um mecanismo cr?tico para a melhoria do processo de tomada de decis?o e para a presta??o 
+de contas (Ala-Harja & Helgason apud GUGEL, 2004). 
+ 
+Processo de Elabora??o e Ferramentas Tecnol?gicas 
+A elabora??o do RAG 2025 baseou-se no registro de an?lises e avalia??es inseridas no M?dulo RAG 
+do Sistema Monitora. Esta ferramenta integra dados de performance f?sica e or?ament?rio-financeira 
+provenientes de: 
+? 
+Administra??o P?blica: informa??es gerenciais fornecidas pelos ?rg?os da Administra??o Direta, 
+Indireta e Defensoria P?blica. 
+? 
+Sistema FIPLAN4: fonte prim?ria de planejamento e execu??o financeira do Estado de Mato Grosso. 
+ 
+Etapas do Rito Metodol?gico 
+A consolida??o deste relat?rio seguiu um cronograma rigoroso, dividi
+
+=== PAGINA 21 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ 
+PLANEJAMENTO ESTRAT?GICO E PPA 2024-2027 
+ 
+O planejamento governamental constitui um processo decis?rio estruturado sobre o futuro desejado 
+para o Estado e os caminhos necess?rios para sua concretiza??o. Conforme as Constitui??es Federal e 
+Estadual, o planejamento p?blico deve ser formalizado por meio de instrumentos legais espec?ficos. A 
+din?mica de gest?o desses instrumentos exige sensibilidade ?s transforma??es dos cen?rios sociais, 
+pol?ticos e econ?micos, tratando o planejamento n?o como uma estrutura r?gida, mas como um processo 
+din?mico sujeito ? revis?o e ao aperfei?oamento cont?nuo. 
+No Governo do Estado de Mato Grosso, o modelo de Gest?o Estrat?gica ? fundamentado na Lei n? 
+12.432, de 09/02/2024, que instituiu o PPA 2024-2027 e, em seu artigo 17, o Plano Estrat?gico. Estes dois 
+instrumentos integram-se de forma sist?mica para assegurar o alcance das metas planejadas e a presta??o 
+de servi?os p?blicos de excel?ncia ? sociedade. 
+ 
+O Plano Estrat?gico e o Mapa da Estrat?gia 
+O Plano Estrat?gico consolida os objetivos e resultados esperados para um horizonte de 10 anos, 
+atuando como o principal alicerce e orientador das pol?ticas p?blicas contidas no PPA 2024-2027. Elaborado 
+exclusivamente para o Poder Executivo com base em diretrizes de longo prazo, este plano materializa-se 
+no Mapa da Estrat?gia, ferramenta essencial para a comunica??o eficaz dos desafios e metas da 
+administra??o p?blica.  
+Os elementos estru
+
+=== PAGINA 22 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+Figura 01 - Mapa da Estrat?gia do Governo de Mato Grosso - PPA 2024-2027 (Poder Executivo) 
+ 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 2024-2027). 
+22
+CASACIVILDIC202603869
+Assinado com senha por SANDRO LUIS BRANDAO CAMPOS - SECRETARIO ADJUNTO / GSAPGD - 09/03/2026 ?s 13:17:04,
+BASILIO BEZERRA GUIMARAES DOS SANTOS - SEC DE ESTADO / GSEPG - 09/03/2026 ?s 13:25:44 e MAURO MENDES
+FERREIRA - GOVERNADOR / GGOV - 09/03/2026 ?s 20:14:46.
+Documento N?: 35045568-9223 - consulta ? autenticidade em
+https://www.sigadoc.mt.gov.br/sigaex/public/app/autenticar?n=35045568-9223
+Governo de Mato Grosso
+CASA CIVIL
+
+
+=== PAGINA 23 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ 
+ESTRUTURA PROGRAM?TICA DO PPA 2024-2027 E RAG 2025 
+ 
+A vis?o de futuro do Estado de Mato Grosso projeta uma unidade federativa moderna, sustent?vel, 
+competitiva e socialmente justa. Para materializar esse prop?sito, o Governo do Estado estrutura sua 
+atua??o em pol?ticas p?blicas voltadas ? melhoria da qualidade de vida da popula??o e ao desenvolvimento 
+sustent?vel.  
+Essa atua??o ? organizada de forma sist?mica em Eixos Estrat?gicos, que agrupam programas e 
+a??es voltados ao alcance dos objetivos definidos na dimens?o estrat?gica do PPA 2024-2027. O RAG 2025 
+mant?m rigorosa ader?ncia a essa estrutura para viabilizar a continuidade das an?lises e a avalia??o do 
+desempenho governamental ao longo do ciclo plurianual. 
+ 
+OS EIXOS NO RAG 2025 
+Conforme a estrutura do PPA, os resultados do exerc?cio de 2025 foram consolidados em 8 (oito) 
+eixos. Enquanto seis eixos organizam as pol?ticas final?sticas do Poder Executivo, um eixo ? dedicado ? 
+Defensoria P?blica (dentro da categoria "Outros Poderes") e outro ?s A??es Padronizadas. 
+Durante a elabora??o do PPA, os eixos s?o desdobrados em Objetivos Estrat?gicos, que d?o origem 
+aos programas e a??es no n?vel t?tico. No ciclo anual, essas diretrizes s?o detalhadas no Plano de Trabalho 
+Anual (PTA) e operacionalizadas atrav?s da execu??o or?ament?ria. 
+ 
+Composi??o dos Eixos Estrat?gicos 
+ 
+A seguir, detalha-se o escopo de cada eixo considerado no RAG 2025: 
+? Eixo 1 - Social: contem
+
+=== PAGINA 24 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+Quadro 01 - Objetivo Estrat?gico e Programas do Eixo 1 ? Social 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+Deve-se destacar neste eixo o Programa 540-Gest?o de Parques, que foi inserido na Lei n? 12.633, 
+de 01/08/2024, lei de altera??o do PPA 2024-2027, com vig?ncia a partir do exerc?cio de 2024, por?m, como 
+n?o houve execu??o naquele exerc?cio, o mesmo foi analisado a partir do RAG 2025. 
+ 
+? Eixo 2 - Econ?mico: re?ne a??es para o fomento ao desenvolvimento, gera??o de emprego e 
+renda, e aumento da competitividade estadual. Orienta as pol?ticas de desenvolvimento 
+econ?mico e agricultura familiar.  
+  
+No quadro abaixo verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Econ?mico: 
+ 
+Eixo Estrat?gico
+Objetivo Estrat?gico
+Programa
+521-Amplia??o do acesso ao esporte e lazer
+523-Amplia??o do acesso ? cultura
+532-Desenvolvimento da Economia Criativa
+540-Gest?o de Parques
+533-Educa??o 10 Anos
+534-Infraestrutura Educacional
+533-Educa??o 10 Anos
+534-Infraestrutura Educacional
+411-Prote??o e defesa do consumidor
+512-Promo??o da cidadania, seguran?a alimentar e inclus?o 
+social
+513-Programa estadual de direitos humanos
+522-Prote??o social e fortalecimento do Sistema ?nico de 
+Assist?ncia Social - SUAS
+Melhorar a sa?de da popula??o mato-
+grossense, fortalecendo o acesso ? rede 
+assi
+
+=== PAGINA 25 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ Quadro 02 - Objetivo Estrat?gico e Programas do Eixo 2 - Econ?mico 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+? Eixo 3 - Ambiental: agrupa estrat?gias para a conserva??o dos biomas mato-grossenses e 
+recursos naturais, visando o equil?brio entre o desenvolvimento socioecon?mico e a 
+sustentabilidade.  
+  
+No quadro abaixo verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Ambiental: 
+Quadro 03 - Objetivo Estrat?gico e Programas do Eixo 3 - Ambiental 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+? Eixo 4 - Infraestrutura: organiza os compromissos estatais voltados ao desenvolvimento da 
+log?stica, infraestrutura regional e integra??o de transportes.  
+  
+No quadro abaixo verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Infraestrutura: 
+ 
+Quadro 04 - Objetivo Estrat?gico e Programas do Eixo 4 - Infraestrutura 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+Deve-se destacar neste eixo os Programas 538-Gest?o da Log?stica Hidrovi?ria e 539-Concess?es 
+e Servi?os, que foram inseridos na Lei n? 12.633, de 01/08/2024, lei de altera??o d
+
+=== PAGINA 26 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+vig?ncia a partir do exerc?cio de 2024, com vig?ncia a partir do exerc?cio de 2024, por?m, como n?o houve 
+execu??o naquele exerc?cio, o mesmo foi analisado a partir do RAG 2025. 
+? Eixo 5 - Digital: Foca na moderniza??o do acesso aos servi?os p?blicos atrav?s da inova??o, 
+desenvolvimento cient?fico e recursos de Tecnologia da Informa??o (TI). 
+ 
+No quadro abaixo verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Digital: 
+ 
+Quadro 05 - Objetivo Estrat?gico e Programas do Eixo 5 - Digital 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+? Eixo 6 - Institucional: voltado ? efici?ncia da pr?pria m?quina p?blica, abrangendo 
+transpar?ncia, governan?a, equil?brio fiscal e gest?o de pessoas. 
+  
+No quadro a seguir verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Institucional: 
+ 
+Quadro 06 - Objetivo Estrat?gico e Programas do Eixo 6 - Institucional 
+ 
+ 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+? Eixo 7 - Outros Poderes: dedicado especificamente aos programas e a??es da Defensoria 
+P?blica. De acordo com a LDO 2025, os demais Poderes e ?rg?os Aut?nomos elaboram seus 
+pr?prios relat?rios, sendo a Defensoria a ?nica unidade dest
+
+=== PAGINA 27 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+No quadro a seguir verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo Outros Poderes: 
+ 
+Quadro 07 - Objetivo Estrat?gico e Programas do Eixo 7 - Outros Poderes 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+? Eixo 8 - Programas e A??es Padronizados: agrega a??es de natureza continuada e recorrente 
+em todas as unidades setoriais, como a Manuten??o Administrativa e Opera??es Especiais, 
+garantindo uniformidade ? gest?o operacional do Estado. 
+  
+No quadro a seguir verifica-se o alinhamento entre eixo estrat?gico, objetivo estrat?gico e programa 
+de governo, agrupados no Eixo programas e a??es padronizados: 
+ 
+Quadro 08 - Objetivo Estrat?gico e Programas do Eixo 8 - Programas e a??es padronizados 
+ 
+Fonte: Lei n? 12.432, de 09/02/2024 (PPA 2024-2027), e atualizado pela Lei n? 12.633, de 01/08/2024 (Lei de altera??o do PPA 
+2024-2027). 
+ 
+Eixo Estrat?gico
+Objetivo Estrat?gico
+Programa
+146-Fiscaliza??o da gest?o dos recursos p?blicos
+372-Gest?o Legislativa 
+399-Presta??o Jurisdicional inclusiva, moderna e resolutiva
+400-Desenvolvimento humano e qualidade de vida
+405-Defesa da cidadania e inclus?o social por meio do 
+acesso a direitos
+537-Defender a ordem jur?dica, o regime democr?tico e os 
+interesses sociais e individuais indispon?veis 
+7 - Atua??o  
+dos demais 
+Poderes e 
+?rg?os 
+
+
+=== PAGINA 28 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+OS PROGRAMAS DE GOVERNO NO RAG 2025 
+Os programas de governo constituem os principais instrumentos de organiza??o da atua??o estatal, 
+orientando a entrega de bens e servi?os para a concretiza??o dos objetivos estrat?gicos. Eles articulam um 
+conjunto de a??es - or?ament?rias ou n?o-or?ament?rias - integradas para o alcance de um prop?sito 
+comum. 
+No fluxo do planejamento, o programa atua como o elo entre a dimens?o estrat?gica (longo prazo) e 
+a t?tica (m?dio prazo), expressando os resultados esperados da execu??o das pol?ticas p?blicas. Os meios 
+para atingir tais objetivos s?o operacionalizados atrav?s da modelagem de a??es e produtos espec?ficos. 
+ 
+Atributos dos Programas 
+Para viabilizar a gest?o e a comunica??o transparente, cada programa no PPA 2024-2027 ? definido pelos 
+seguintes atributos t?cnicos: 
+? 
+Identifica??o do Programa: indica o nome do programa (c?digo e descri??o), apontando para 
+seu objeto ou resultado esperado. Pode ser utilizado um nome ?fantasia?, que facilite a 
+memoriza??o e a comunica??o do programa; 
+? 
+Tipo do programa9: classifica??o quanto ao p?blico benefici?rio, dividindo-se em Final?sticos 
+(benef?cio direto ? sociedade) ou de Gest?o, Manuten??o e Servi?os ao Estado (foco na estrutura 
+administrativa); 
+? 
+P?blico-alvo: identifica claramente quem ? o benefici?rio direto dos resultados.  
+? 
+Unidade Or?ament?ria (UO) respons?vel: indica a unidade or?ament?ria (c?digo e descri??o) 
+que responde p
+
+=== PAGINA 29 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+A Import?ncia dos Indicadores 
+O monitoramento sistem?tico dos indicadores ? vital para a apura??o de resultados e para a melhoria 
+cont?nua da gest?o p?blica. Eles s?o utilizados para fundamentar an?lises cr?ticas, subsidiar tomadas de 
+decis?o e facilitar o controle de desempenho atrav?s da identifica??o de desvios. 
+Os indicadores no RAG 2025 s?o descritos pelos seguintes elementos:  
+? 
+C?digo e descri??o: forma de apresenta??o oficial do indicador ? sociedade;    
+? 
+Polaridade:  a polaridade ou sentido do indicador ajuda a interpretar corretamente a apura??o 
+do mesmo. Demonstra se o objetivo ? aumentar ou diminuir o valor do indicador para alcan?ar o 
+resultado desejado, ou seja, quanto maior o resultado do indicador, melhor ? seu desempenho, 
+bem como, quanto menor o resultado do indicador, melhor ? seu desempenho. 
+? 
+Periodicidade: intervalo definido para apura??o e divulga??o; 
+? 
+Meta prevista: desempenho desejado para o exerc?cio, para cada um dos anos do quadri?nio 
+2024-2027; 
+? 
+Valor realizado: valor efetivamente alcan?ado no per?odo; 
+? 
+Data da apura??o: data da ?ltima atualiza??o dispon?vel. 
+Nota sobre a disponibilidade de dados: para os casos de dados indispon?veis no momento da 
+consolida??o, seguiu-se a orienta??o da SEPLAG de registrar a apura??o mais recente dispon?vel, 
+assegurando a continuidade da s?rie hist?rica do relat?rio. 
+ 
+Ressalva: Eixo de Programas Padronizados 
+Cabe destacar que o RAG 2025 n?o
+
+=== PAGINA 30 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+? 
+Tipos de a??o11: no RAG ? considerada a classifica??o quanto ao crit?rio do produto: 
+? 
+Projeto: contempla a execu??o de bens ou servi?os ?nicos (individualizados) que 
+ainda n?o tenham sido executados, com prazo de conclus?o limitado no tempo; 
+? 
+Atividade: contempla a execu??o de bens ou servi?os de modo cont?nuo; 
+? 
+Opera??es Especiais: contemplam opera??es que n?o geram contrapresta??o direta 
+sob a forma de bens ou servi?os. 
+? 
+Objetivo espec?fico: indica o resultado imediato produzido pela realiza??o da a??o, 
+descrevendo seu prop?sito, ou seja, o que se pretende alcan?ar com a entrega do(s) produto(s) 
+nela previsto(s); 
+? 
+A??o priorit?ria: classificada como priorit?ria ou n?o, conforme definido na Lei de Diretrizes 
+Or?ament?rias - LDO 2025; 
+? 
+Unidade Or?ament?ria - UO respons?vel: indica a unidade or?ament?ria (c?digo e descri??o) 
+que responde pela execu??o a??o; 
+? 
+Respons?vel pela a??o: nome do respons?vel t?cnico pela execu??o a??o; 
+? 
+ODS vinculados ? a??o: as a??es desenvolvidas durante o exerc?cio podem estar alinhadas 
+com um ou mais dos 17 (dezessete) Objetivos de Desenvolvimento Sustent?vel - ODS definidos 
+na Agenda 2030 da ONU, conforme Lei n? 11.606, de 09/12/21 e premissas de alinhamento 
+utilizadas na elabora??o do PPA 2024-202712; 
+? 
+Produto:  ? um bem ou servi?o que resulta diretamente dos esfor?os empreendidos pela 
+Administra??o P?blica. Cada a??o pode agregar mais de um produto, que indica 
+
+=== PAGINA 31 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+? 
+Realizado: quantidade f?sica realizada no exerc?cio. 
+? 
+Valores or?ament?rios: s?o os montantes de recursos que financiam determinada a??o, 
+aqueles previstos originalmente na LOA e os demais realizados ao longo do exerc?cio ap?s os 
+cr?ditos e contingenciamentos. 
+Para acompanhamento da execu??o f?sica em rela??o ?s metas previstas para as a??es 
+governamentais, o RAG 2025 apresenta nos Quadros de Execu??o F?sica da A??o, al?m das informa??es 
+sobre as metas de cada produto, os c?lculos dos seguintes ?ndices: 
+? 
+Desempenho inicial (% realizado em rela??o ? meta f?sica prevista): representa a rela??o 
+percentual entre a meta f?sica realizada e a estimada na LOA, ou seja, demonstra a capacidade 
+que o ?rg?o tem de planejar sua meta f?sica, comparando a meta que foi prevista na LOA com a 
+efetivamente realizada;  
+? 
+Desempenho final (% realizado em rela??o ? meta f?sica ap?s cr?ditos): representa a rela??o 
+percentual entre a meta f?sica realizada e a meta f?sica prevista ap?s os cr?ditos adicionais, ou 
+seja, demonstra a capacidade de realiza??o da meta f?sica, comparando a meta que foi prevista 
++ os cr?ditos (suplementa??o ou anula??o), com a realizada.  
+A exce??o para o acompanhamento do desempenho f?sico das metas das a??es governamentais, 
+atrav?s dos Quadros de Execu??o F?sica da A??o e crit?rios apresentados acima, ? o caso das 
+?a??es padronizadas?, que 
+devido 
+? 
+organiza??o 
+institucional 
+do 
+Estado, 
+tem 
+program
+
+=== PAGINA 32 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+apresentando apenas custos indiretos (recursos gerenciais, tecnol?gicos, humanos, materiais e outros), por 
+estarem detalhadas apenas nos instrumentos gerenciais e de planejamento, a exemplo do PTA, 
+apresentar?o informa??es do desempenho f?sico no RAG, mas n?o or?ament?rio-financeiro. 
+Ressalta-se, que para avalia??o do programa no que se refere a an?lise do desempenho 
+or?ament?rio-financeiro, s?o utilizados os mesmos conceitos e informa??es considerados para an?lise da 
+execu??o or?ament?ria e financeira das respectivas a??es governamentais que o integram. 
+Ainda no sentido de subsidiar a avalia??o da efici?ncia e da efic?cia dos resultados finais da 
+execu??o f?sica e or?ament?rio-financeira, realizados anualmente no RAG, foi disponibilizado ao longo do 
+processo, aos respons?veis por a??o e programa das Unidades Setoriais, a r?gua de par?metros, para 
+enquadramento do desempenho alcan?ado pelo ?rg?o/entidade na sua realiza??o/execu??o da meta f?sica 
+(a??o), financeira e or?ament?ria (programa e a??o). 
+De acordo com a r?gua, os desempenhos s?o considerados melhores quanto mais pr?ximos de 
+100%, conforme ilustrado no desenho a seguir. 
+ 
+R?GUA DE PAR?METROS 
+Figura 02 - R?gua de Par?metros 
+ 
+ 
+A r?gua traz os seguintes par?metros para medir o grau de desempenho alcan?ado na execu??o do 
+planejamento do Unidade Setorial, ser? indicado como: 
+? 
+?TIMO se atingir a faixa de 90,01% a 110,00%; 
+? 
+BOM se atingir a faixa entre 80,
+
+=== PAGINA 33 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+Quadro 09 - Execu??o Or?ament?ria por Eixo - Exerc?cio 2025 (R$) 
+ 
+Fonte: Elabora??o pr?pria com dados extra?dos do Sistema Monitora-RAG 2025 e Fiplan - relat?rio Demonstrativo Despesa Or?ament?ria UO 
+Fonte Grupo (Plan72/Fiplan), extra?do em 09/02/2026. 
+Ressalta-se que o Eixo 7 - Atua??o dos demais Poderes e ?rg?os Aut?nomos (ou Outros Poderes), 
+conforme LDO 2025 s? apresenta as informa??es da Defensoria P?blica. 
+Dos 52 (quarenta e nove) programas apresentados no RAG 2025, 7 (sete) s?o programas 
+padronizados e, portanto, n?o apresentam avalia??o como explicado anteriormente. Os 45 (quarenta e 
+cinco) programas restantes, podem ser analisados conforme a classifica??o quanto ao p?blico benefici?rio, 
+podendo ser do tipo Final?sticos (33 programas), direcionados ? sociedade ou programas do tipo Gest?o, 
+Manuten??o e Servi?os ao Estado (16 programas), que beneficiam a estrutura e organiza??o do Estado. 
+Esta distribui??o definida no PPA 2024-2027 pode ser visualizada no gr?fico 01 e a execu??o or?ament?ria 
+de 2025, a partir deste crit?rio, est? demonstrada quadro 10, ambos relacionados a seguir. 
+Gr?fico 01 - Programas por Tipo (Final?stico ou Gest?o) - PPA 2024-2027 
+ 
+Fonte: Elabora??o pr?pria com dados extra?dos do Sistema Monitora-RAG 2025. 
+Quadro 10 - Execu??o Or?ament?ria por Tipo de Programa - Exerc?cio 2025 (R$) 
+Fonte: Demonstrativo Despesa Or?ament?ria UO Fonte Grupo ? Plan72/Fiplan, 09/02/2026. 
+EIXO
+Dota??o Inicial 
+
+=== PAGINA 34 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+Abaixo apresenta-se os dados or?ament?rios conforme o Poder P?blico ou ?rg?o. 
+Quadro 11 - Execu??o Or?ament?ria por Poder/?rg?o - Exerc?cio 2025 (R$) 
+ 
+Fonte: Demonstrativo Despesa Or?ament?ria UO Fonte Grupo ? Plan72/Fiplan, extra?do em 09/02/2026. 
+E por fim, o quadro 12 e o gr?fico 02 abaixo apresentam de forma consolidada os n?meros e 
+resultados dos 8 Eixos de atua??o do governo de Mato Grosso, referente ao exerc?cio de 2025. 
+Quadro 12 - N?meros e resultados dos Eixos - Exerc?cio 2025 
+ 
+Gr?fico 02 - N?meros e resultados dos Eixos - Exerc?cio 2025 
+ 
+Fonte: Elabora??o pr?pria com dados extra?dos do Sistema Monitora-RAG 2025. 
+ 
+Poder / ?rg?o
+Or?ado Inicial
+Or?ado Final
+Empenhado
+Defensoria P?blica
+354.135.941,00
+             
+463.215.354,72
+             
+413.958.968,96
+             
+Poder Executivo
+31.129.255.687,00
+       
+38.477.604.736,66
+       
+35.376.411.666,04
+       
+Total
+31.483.391.628,00
+       
+38.940.820.091,38
+       
+35.790.370.635,00
+       
+Programas
+Indicadores
+A??es
+Produtos
+ 1 - SOCIAL 
+Seduc, Ses, Sesp, Sejus, Detran, 
+Setasc, Secel e MT-Parques 
+17
+            
+117
+          
+152
+          
+333
+          
+100%
+96%
+98%
+ 2 - ECON?MICO 
+ Sedec, Seaf, Casa Civil e Intermat 
+5
+              
+46
+            
+78
+            
+87
+            
+87%
+90%
+97%
+ 3 - AMBIENTAL 
+ Sema 
+1
+              
+5
+              
+32
+            
+32
+            
+90%
+97%
+93%
+ 4 - INFRAESTRUTURA 
+Sinfra, MT-Par, MT-Par 
+Concess?es, T
+
+=== PAGINA 35 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+ 
+CONSIDERA??ES FINAIS 
+ 
+O Relat?rio Anual de Gest?o de 2025 demonstra que o Governo de Mato Grosso avan?ou na consolida??o das 
+metas estabelecidas no PPA 2024-2027, pautando-se por um modelo de Gest?o Estrat?gica orientada para resultados. 
+A execu??o f?sica e financeira do per?odo reflete o equil?brio entre o fomento ao desenvolvimento econ?mico e o 
+fortalecimento das pol?ticas sociais e institucionais. 
+Os resultados de 2025 ratificam que o Governo n?o apenas executou seu planejamento, mas aprendeu com 
+os ajustes de percurso do primeiro ano (2024), resultando em uma gest?o mais precisa e eficaz. O Estado encerra o 
+segundo ano do ciclo do PPA com alta solidez fiscal e entrega efetiva de produtos ? sociedade, mantendo-se fiel ? 
+vis?o de ser um Mato Grosso moderno e socialmente justo. 
+Gr?fico 03 ? Comparativo dos resultados dos Eixos - Exerc?cios 2024 x 2025 
+ 
+ 
+PERFORMANCE GLOBAL E EFICI?NCIA FINANCEIRA 
+O Estado alcan?ou ?ndices de desempenho robustos, evidenciando alta capacidade de planejamento e 
+execu??o: 
+? 
+Execu??o Financeira Global: o ?ndice m?dio de desempenho da execu??o financeira atingiu 97%, com 
+o empenho total de R$ 35,79 bilh?es frente a uma dota??o final de R$ 38,94 bilh?es. 
+? 
+Desempenho dos Indicadores: a performance das metas dos indicadores final?sticos foi de 97%, 
+demonstrando a efic?cia das pol?ticas p?blicas em atingir os resultados sociais e econ?micos 
+pretendidos. 
+? 
+Execu??o F?sica das A??es
+
+=== PAGINA 36 ===
+RELAT?RIO ANUAL DE GEST?O -  RAG 2025 
+ 
+ 
+ 
+DESTAQUES POR EIXOS ESTRAT?GICOS 
+ 
+A an?lise segmentada pelos eixos do PPA revela prioridades claras da gest?o: 
+? 
+Eixo Social: Apresentou a maior mobiliza??o de recursos (R$ 11,23 bilh?es empenhados) e um 
+desempenho m?dio de 100% nos indicadores, com foco em sa?de, educa??o e seguran?a. 
+? 
+Eixo Institucional: Destacou-se pela efici?ncia operacional, atingindo 100% de execu??o financeira e 
+superando as metas de indicadores com 109% de desempenho m?dio. 
+? 
+Eixo Ambiental: Manteve uma performance s?lida com 97% de desempenho nas a??es, conciliando a 
+conserva??o dos biomas com o desenvolvimento sustent?vel. 
+ 
+INOVA??O METODOL?GICA E TRANSPAR?NCIA 
+ 
+A elabora??o deste RAG ? marcada desde o ano de 2020 pela integra??o tecnol?gica entre o Sistema Monitora 
+e o Sistema FIPLAN, garantindo a rastreabilidade e a integridade dos dados or?ament?rio-financeiros. Al?m disso, a 
+inser??o dos Objetivos de Desenvolvimento Sustent?vel (ODS) e do atendimento ao P?blico-Alvo Transversal no 
+planejamento refor?a o compromisso do Estado com a Agenda 2030 e com a promo??o universal dos direitos 
+humanos. 
+Em suma, os resultados de 2025 ratificam a trajet?ria de Mato Grosso rumo ? vis?o de um estado moderno, 
+sustent?vel e socialmente justo, utilizando a avalia??o sistem?tica como insumo primordial para o cont?nuo 
+aprimoramento da m?quina p?blica. 
+ 
+36
+CASACIVILDIC202603869
+Assinado com senha por SANDRO LUIS BRANDAO CAMPOS - SECRETARIO ADJUNTO 

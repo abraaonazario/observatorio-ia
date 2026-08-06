@@ -1,0 +1,218 @@
+/* Floating Agent Button */
+#govdata-agent-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0055a4, #3b82f6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 85, 164, 0.4);
+  z-index: 9999;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+}
+
+#govdata-agent-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 85, 164, 0.6);
+}
+
+/* Chat Window */
+#govdata-agent-window {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 380px;
+  height: 550px;
+  background: #09090b;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Inter', Roboto, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform-origin: bottom right;
+}
+
+#govdata-agent-window.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* Chat Header */
+.agent-header {
+  background: linear-gradient(90deg, #111827, #0f172a);
+  padding: 1rem;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agent-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agent-header .avatar {
+  width: 36px;
+  height: 36px;
+  background: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.agent-header-title {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.agent-header-status {
+  font-size: 0.7rem;
+  color: #34d399;
+}
+
+.agent-close-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.agent-close-btn:hover {
+  color: #fff;
+}
+
+/* Chat Body */
+.agent-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #09090b;
+}
+
+.agent-msg {
+  max-width: 85%;
+  padding: 0.85rem;
+  border-radius: 8px;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  color: #f8fafc;
+}
+
+.agent-msg.user {
+  background: #334155;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.agent-msg.ai {
+  background: rgba(30, 58, 138, 0.3);
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+  border: 1px solid #1e3a8a;
+}
+
+.agent-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Chat Input */
+.agent-input-area {
+  padding: 1rem;
+  background: #111827;
+  border-top: 1px solid #1f2937;
+  display: flex;
+  gap: 8px;
+}
+
+.agent-input {
+  flex: 1;
+  background: #1f2937;
+  border: 1px solid #374151;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.agent-input:focus {
+  border-color: #3b82f6;
+}
+
+.agent-btn-send {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  width: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agent-btn-send:hover {
+  background: #2563eb;
+}
+
+.agent-typing {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin: 0 1rem 0.5rem 1rem;
+  display: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  #govdata-agent-window {
+    width: calc(100% - 32px);
+    height: 80vh;
+    bottom: 90px;
+    right: 16px;
+  }
+  #govdata-agent-btn {
+    bottom: 16px;
+    right: 16px;
+  }
+}

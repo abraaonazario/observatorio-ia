@@ -1,0 +1,430 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<script>document.body.classList.add('dashboard-page');</script>
+
+<style>
+  :root {
+    --theme-color: #8b5cf6; /* Roxo para Municípios */
+  }
+  .dashboard-container {
+    padding-top: 80px !important; /* Espaço para o menu superior */
+  }
+  .kpi-value {
+    color: #f8fafc !important; /* Força cor branca nos valores para contraste */
+  }
+</style>
+
+<!-- Menu Lateral do Dashboard -->
+<aside class="pbi-sidebar">
+  <!-- Home -->
+  <div class="pbi-nav-btn" title="Início" onclick="window.location.href='../'" style="cursor:pointer;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span class="nav-label">Início</span>
+  </div>
+  <div style="width:52px; height:1px; background:rgba(255,255,255,0.15); margin: 2px 0;"></div>
+  
+  <!-- Saúde -->
+  <div class="pbi-nav-btn theme-saude" title="Saúde" onclick="window.location.href='../saude/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+    <span class="nav-label" style="color:#22d3ee;">Saúde</span>
+  </div>
+  
+  <!-- Educação -->
+  <div class="pbi-nav-btn theme-edu" title="Educação" onclick="window.location.href='../educacao/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+    <span class="nav-label" style="color:#a78bfa;">Educação</span>
+  </div>
+  
+  <!-- Segurança -->
+  <div class="pbi-nav-btn theme-seg" title="Segurança" onclick="window.location.href='../seguranca/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    <span class="nav-label" style="color:#fb923c;">Segurança</span>
+  </div>
+
+  <!-- Municípios (NOVO) -->
+  <div class="pbi-nav-btn active" title="Municípios" onclick="window.location.href='../perfil-municipios/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5"><path d="M3 21h18"></path><path d="M9 8h1"></path><path d="M9 12h1"></path><path d="M9 16h1"></path><path d="M14 8h1"></path><path d="M14 12h1"></path><path d="M14 16h1"></path><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"></path></svg>
+    <span class="nav-label" style="color:#8b5cf6;">Cidades</span>
+  </div>
+  
+  <!-- Settings at bottom -->
+  <div class="pbi-nav-btn" style="margin-bottom:6px; margin-top: auto;" title="Configurações">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    <span class="nav-label">Config.</span>
+  </div>
+</aside>
+
+<div class="dashboard-container">
+  
+  <div class="dash-header">
+    <div class="dash-title-group">
+      <h1>Perfil dos Municípios</h1>
+      <p>Mato Grosso · Indicadores Regionais</p>
+    </div>
+    <div class="dash-actions">
+      <div class="dash-nav-time">
+      <span>Última atualização</span>
+      <strong>Hoje - 18:00</strong>
+    </div>
+      <!-- Menu de Cidades -->
+      <select id="citySelect" class="dash-btn" style="appearance: auto; cursor: pointer; padding-right: 1.5rem; outline: none; border-color: #38bdf8; color: #38bdf8; font-weight: 600; background: #0f172a;">
+        <option value="" selected disabled>🗺️ Selecionar Cidade ▼</option>
+        <!-- Options geradas via JS -->
+      </select>
+      <button class="dash-btn">↻ Atualizar</button>
+    </div>
+  </div>
+
+  <script>
+    const municipiosMT = [
+      "Acorizal", "Água Boa", "Alta Floresta", "Alto Araguaia", "Alto Boa Vista", "Alto Garças", "Alto Paraguai", "Alto Taquari", "Apiacás", "Araguaiana", "Araguainha", "Araputanga", "Arenápolis", "Aripuanã", "Barão de Melgaço", "Barra do Bugres", "Barra do Garças", "Bom Jesus do Araguaia", "Brasnorte", "Cáceres", "Campinápolis", "Campo Novo do Parecis", "Campo Verde", "Campos de Júlio", "Canabrava do Norte", "Canarana", "Carlinda", "Castanheira", "Chapada dos Guimarães", "Cláudia", "Cocalinho", "Colíder", "Colniza", "Comodoro", "Confresa", "Conquista D'Oeste", "Cotriguaçu", "Cuiabá", "Curvelândia", "Denise", "Diamantino", "Dom Aquino", "Feliz Natal", "Figueirópolis D'Oeste", "Gaúcha do Norte", "General Carneiro", "Glória D'Oeste", "Guarantã do Norte", "Guiratinga", "Indiavaí", "Ipiranga do Norte", "Itanhangá", "Itaúba", "Itiquira", "Jaciara", "Jangada", "Jauru", "Juara", "Juína", "Juruena", "Juscimeira", "Lambari D'Oeste", "Lucas do Rio Verde", "Luciára", "Marcelândia", "Matupá", "Mirassol d'Oeste", "Nobres", "Nortelândia", "Nossa Senhora do Livramento", "Nova Bandeirantes", "Nova Brasilândia", "Nova Canaã do Norte", "Nova Guarita", "Nova Lacerda", "Nova Marilândia", "Nova Maringá", "Nova Monte Verde", "Nova Mutum", "Nova Nazaré", "Nova Olímpia", "Nova Santa Helena", "Nova Ubiratã", "Nova Xavantina", "Novo Horizonte do Norte", "Novo Mundo", "Novo Santo Antônio", "Novo São Joaquim", "Paranaíta", "Paranatinga", "Pedra Preta", "Peixoto de Azevedo", "Planalto da Serra", "Poconé", "Pontal do Araguaia", "Ponte Branca", "Pontes e Lacerda", "Porto Alegre do Norte", "Porto dos Gaúchos", "Porto Esperidião", "Porto Estrela", "Poxoréu", "Primavera do Leste", "Querência", "Reserva do Cabaçal", "Ribeirão Cascalheira", "Ribeirãozinho", "Rio Branco", "Rondolândia", "Rondonópolis", "Rosário Oeste", "Salto do Céu", "Santa Carmem", "Santa Cruz do Xingu", "Santa Rita do Trivelato", "Santa Terezinha", "Santo Afonso", "Santo Antônio do Leste", "Santo Antônio do Leverger", "São Félix do Araguaia", "São José do Povo", "São José do Rio Claro", "São José dos Quatro Marcos", "São Pedro da Cipa", "Sapezal", "Serra Nova Dourada", "Sinop", "Sorriso", "Tabaporã", "Tangará da Serra", "Tapurah", "Terra Nova do Norte", "Tesouro", "Torixoréu", "União do Sul", "Vale de São Domingos", "Várzea Grande", "Vera", "Vila Bela da Santíssima Trindade", "Vila Rica"
+    ];
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const select = document.getElementById('citySelect');
+      municipiosMT.forEach(cidade => {
+        const opt = document.createElement('option');
+        opt.value = cidade;
+        opt.textContent = cidade;
+        select.appendChild(opt);
+      });
+
+      select.addEventListener('change', function() {
+        const val = this.value;
+        if(val === "Água Boa") {
+          window.location.href = '../cidade-agua-boa/';
+        } else if(val === "São José do Povo") {
+          window.location.href = '../cidade-sao-jose-do-povo/';
+        } else {
+          alert("🚧 O painel de indicadores da cidade de " + val + " está em construção e será integrado na próxima fase do Data Lake.");
+          this.value = ""; // reseta o select
+        }
+      });
+    });
+  </script>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">🏙️</div>
+      <span class="kpi-title">MUNICÍPIOS</span>
+      <h3 class="kpi-value">142</h3>
+      <span class="kpi-trend positive">100% integrados</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">👥</div>
+      <span class="kpi-title">POPULAÇÃO ESTIMADA</span>
+      <h3 class="kpi-value">3.89 M</h3>
+      <span class="kpi-trend positive">Estimativa IBGE</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <span class="kpi-title">PIB ESTADUAL</span>
+      <h3 class="kpi-value">R$ 233 Bi</h3>
+      <span class="kpi-trend positive">+8.5% ano/ano</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📈</div>
+      <span class="kpi-title">ÍNDICE DE DESENVOLV.</span>
+      <h3 class="kpi-value">0.725</h3>
+      <span class="kpi-trend positive">IDH Médio</span>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Mapa Interativo</div>
+          <div class="chart-subtitle">Selecione uma região para ver indicadores detalhados</div>
+        </div>
+      </div>
+      <div class="chart-body" style="height: 350px; background: #0f172a; border-radius: 8px; overflow: hidden; position: relative;">
+        <!-- Container do Mapa -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <div id="map" style="width: 100%; height: 100%; z-index: 1;"></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Top 10 População</div>
+          <div class="chart-subtitle">Maiores cidades do estado</div>
+        </div>
+        <div class="chart-badge">IBGE</div>
+      </div>
+      <div class="chart-body" style="overflow-y: auto; max-height: 350px;">
+        <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="border-bottom: 1px solid #1e293b; color: #94a3b8;">
+              <th style="padding: 0.5rem 0;">#</th>
+              <th style="padding: 0.5rem 0;">Município</th>
+              <th style="padding: 0.5rem 0; text-align: right;">Habitantes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">1</td>
+              <td style="padding: 0.5rem 0; color: white;">Cuiabá</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">691.875</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">2</td>
+              <td style="padding: 0.5rem 0; color: white;">Várzea Grande</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">318.922</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">3</td>
+              <td style="padding: 0.5rem 0; color: white;">Rondonópolis</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">263.708</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">4</td>
+              <td style="padding: 0.5rem 0; color: white;">Sinop</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">223.780</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">5</td>
+              <td style="padding: 0.5rem 0; color: white;">Sorriso</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">124.665</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">6</td>
+              <td style="padding: 0.5rem 0; color: white;">Tangará da Serra</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">114.603</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">7</td>
+              <td style="padding: 0.5rem 0; color: white;">Primavera do Leste</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">96.006</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">8</td>
+              <td style="padding: 0.5rem 0; color: white;">Lucas do Rio Verde</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">95.792</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">9</td>
+              <td style="padding: 0.5rem 0; color: white;">Cáceres</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">91.767</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.5rem 0; font-weight: bold; color: var(--theme-color);">10</td>
+              <td style="padding: 0.5rem 0; color: white;">Barra do Garças</td>
+              <td style="padding: 0.5rem 0; text-align: right; color: #cbd5e1;">73.878</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid" style="margin-top: 1.5rem;">
+    <!-- Gráfico 1: Evolução Econômica -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Evolução do PIB & Arrecadação</div>
+          <div class="chart-subtitle">Crescimento Estadual (Bi R$) — 2019 a 2023</div>
+        </div>
+        <div class="chart-badge">IBGE</div>
+      </div>
+      <div class="chart-body" style="height: 250px; position: relative;">
+        <canvas id="chartEvolucao"></canvas>
+      </div>
+    </div>
+
+    <!-- Alertas e Status -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Status & Alertas Regionais</div>
+          <div class="chart-subtitle">Monitoramento de Municípios</div>
+        </div>
+      </div>
+      <div class="alert-list">
+        <div class="alert-item">
+          <div class="alert-label">
+            <span class="alert-icon ok">✓</span> Integração ao Data Lake
+          </div>
+          <div class="alert-meta">Concluído: <span class="alert-value">142/142</span></div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-label">
+            <span class="alert-icon warn">⚠️</span> Regularidade Fiscal (CAPAG)
+          </div>
+          <div class="alert-meta">Nota C ou D: <span class="alert-value" style="color:#f59e0b">21 Mun.</span></div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-label">
+            <span class="alert-icon ok">✓</span> Acesso Saneamento Básico
+          </div>
+          <div class="alert-meta">Evolução anual: <span class="alert-value">+4,2%</span></div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-label">
+            <span class="alert-icon warn">⚠️</span> Crescimento Populacional
+          </div>
+          <div class="alert-meta">Alta Pressão (Norte): <span class="alert-value" style="color:#f59e0b">5 Cidades</span></div>
+        </div>
+        <div class="alert-item">
+          <div class="alert-label">
+            <span class="alert-icon crit">!</span> Queda Sec. Primário
+          </div>
+          <div class="alert-meta">Queda em Agro: <span class="alert-value" style="color:#ef4444">12 Cidades</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Inclusão do Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Configurações Globais do Chart.js para Dark Mode
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+
+  // Gráfico: Evolução do PIB e Arrecadação
+  const ctxEvolucao = document.getElementById('chartEvolucao').getContext('2d');
+  new Chart(ctxEvolucao, {
+    type: 'line',
+    data: {
+      labels: ['2019', '2020', '2021', '2022', '2023'],
+      datasets: [{
+        label: 'PIB (R$ Bi)',
+        data: [142, 137, 168, 204, 233],
+        borderColor: '#8b5cf6', // Roxo (Tema Cidades)
+        backgroundColor: 'rgba(139, 92, 246, 0.15)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#0b0f19',
+        pointBorderColor: '#8b5cf6',
+        pointBorderWidth: 2
+      }, {
+        label: 'Arrecadação (R$ Bi)',
+        data: [28, 25, 34, 45, 52],
+        borderColor: '#10b981', // Verde
+        borderWidth: 2,
+        tension: 0.4,
+        pointBackgroundColor: '#0b0f19',
+        pointBorderColor: '#10b981'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+</script>
+
+<!-- Scripts do Mapa (Leaflet) -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Inicializar o mapa centrado em Mato Grosso
+  const map = L.map('map', {
+    center: [-12.64, -55.42], // Coordenadas centrais de MT
+    zoom: 5,
+    zoomControl: false // Remove botões de zoom para um visual mais limpo (dashboard)
+  });
+
+  // Camada Base Escura (CartoDB Dark Matter)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB'
+  }).addTo(map);
+
+  // Estilo padrão dos municípios
+  const defaultStyle = {
+    color: "#6366f1", // Borda azul/roxa
+    weight: 1,
+    fillColor: "#4f46e5",
+    fillOpacity: 0.1
+  };
+
+  // Estilo ao passar o mouse (Hover)
+  const highlightStyle = {
+    color: "#a855f7", // Borda mais brilhante
+    weight: 2,
+    fillColor: "#a855f7",
+    fillOpacity: 0.4
+  };
+
+  // Buscar malha de municípios do Github (geodata-br)
+  fetch('https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-51-mun.json')
+    .then(response => response.json())
+    .then(data => {
+      const geojsonLayer = L.geoJSON(data, {
+        style: defaultStyle,
+        onEachFeature: function(feature, layer) {
+          // Tooltip com nome do município
+          if(feature.properties && feature.properties.description) {
+            layer.bindTooltip(feature.properties.description, {
+              className: 'map-tooltip',
+              direction: 'top'
+            });
+          }
+
+          // Interatividade Hover
+          layer.on({
+            mouseover: function(e) {
+              const layer = e.target;
+              layer.setStyle(highlightStyle);
+              if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+              }
+            },
+            mouseout: function(e) {
+              const layer = e.target;
+              layer.setStyle(defaultStyle);
+            },
+            click: function(e) {
+              alert('Município selecionado: ' + feature.properties.description);
+            }
+          });
+        }
+      }).addTo(map);
+
+      // Ajustar o zoom perfeitamente para mostrar todo o Mato Grosso
+      map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+    })
+    .catch(error => console.error('Erro ao carregar o mapa:', error));
+</script>
+
+<style>
+/* Corrige o conflito de imagens do MkDocs com o Leaflet (remove faixas brancas) */
+.leaflet-container img {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.leaflet-container {
+  background: #0f172a !important; /* Fundo do mapa da mesma cor do dashboard */
+}
+
+/* Ajuste de tooltip do mapa para combinar com o Dark Mode */
+.map-tooltip {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  border-radius: 4px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+.leaflet-tooltip-top:before {
+  border-top-color: #1e293b;
+}
+</style>

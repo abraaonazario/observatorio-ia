@@ -1,0 +1,868 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>document.body.classList.add('dashboard-page');</script>
+
+<style>
+  :root {
+    --theme-color: #8b5cf6; /* Violet/Purple for Anuário */
+    --bg-dark: #0b0f19;
+    --panel-bg: #0f172a;
+    --border-color: #1e293b;
+  }
+  
+  .dashboard-container {
+    padding: 0 2rem 2rem calc(78px + 2rem) !important;
+    margin-top: 90px !important;
+    min-height: calc(100vh - 90px);
+    background: var(--bg-dark);
+    font-family: 'Inter', sans-serif;
+    color: #e2e8f0;
+    box-sizing: border-box;
+  }
+  
+  .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+  }
+  
+  .dash-title-group h1 {
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    margin: 0 0 0.4rem 0 !important;
+  }
+  
+  .dash-title-group p {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+  }
+  
+  /* Tab Navigation */
+  .anuario-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+  }
+  
+  .anuario-tab-btn {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  
+  .anuario-tab-btn:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,0.03);
+  }
+  
+  .anuario-tab-btn.active {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.25);
+    color: #ffffff;
+    box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.1);
+  }
+  
+  /* Section View Management */
+  .anuario-view {
+    display: none;
+    animation: viewFadeIn 0.3s ease;
+  }
+  .anuario-view.active {
+    display: block;
+  }
+  
+  @keyframes viewFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Grid de KPIs */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .kpi-card {
+    background: rgba(30, 41, 59, 0.45);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .kpi-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .kpi-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .kpi-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+  
+  .kpi-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  
+  /* Local Dashboard Charts */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 992px) {
+    .charts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .chart-card {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chart-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  
+  .chart-subtitle {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 0.2rem;
+  }
+  
+  .chart-body {
+    position: relative;
+    min-height: 260px;
+    width: 100%;
+  }
+  
+  /* Alerts List for Dashboard */
+  .alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  
+  .alert-item {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .alert-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+  }
+  
+  .alert-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .alert-icon.ok { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+  .alert-icon.warn { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+  
+  .alert-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+  
+  .alert-value {
+    font-weight: 700;
+    color: #ffffff;
+    margin-left: 0.5rem;
+  }
+  
+  /* Filters Bar */
+  .filters-bar {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(8px);
+  }
+  
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  
+  .filter-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+  
+  .filter-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .filter-btn:hover {
+    border-color: var(--theme-color);
+    color: #ffffff;
+  }
+  
+  .filter-btn.active {
+    background: var(--theme-color);
+    border-color: var(--theme-color);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  }
+  
+  .search-box {
+    position: relative;
+    min-width: 280px;
+    flex-grow: 1;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #ffffff;
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .search-input:focus {
+    border-color: var(--theme-color);
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+  }
+  
+  /* Grid de Itens */
+  .anuario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .anuario-card {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .anuario-card:hover {
+    border-color: rgba(139, 92, 246, 0.3);
+    background: rgba(30, 41, 59, 0.3);
+    transform: translateX(4px);
+  }
+  
+  .dimensao-badge-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  .badge-ambiental { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+  .badge-economica { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+  .badge-social { background: rgba(244, 114, 182, 0.1); color: #f472b6; }
+  
+  .card-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .card-top-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  
+  .capitulo-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+  }
+  
+  .dimensao-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .tag-ambiental { border: 1px solid rgba(16, 185, 129, 0.2); color: #34d399; }
+  .tag-economica { border: 1px solid rgba(59, 130, 246, 0.2); color: #60a5fa; }
+  .tag-social { border: 1px solid rgba(244, 114, 182, 0.2); color: #f472b6; }
+  
+  .subcapitulo-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+  
+  .card-desc {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    margin: 0;
+  }
+  
+  .card-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  
+  .status-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .status-disponivel { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .status-atualizacao { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .status-sem-dados { background: rgba(100, 116, 139, 0.15); color: #94a3b8; border: 1px solid rgba(100, 116, 139, 0.3); }
+  
+  .access-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    border: none;
+    color: #ffffff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none !important;
+  }
+  
+  .access-btn:hover {
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    transform: scale(1.03);
+  }
+  
+  .access-btn.disabled {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #64748b;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  .no-results {
+    background: rgba(30, 41, 59, 0.2);
+    border: 1px dashed var(--border-color);
+    padding: 3rem;
+    text-align: center;
+    border-radius: 12px;
+    color: #64748b;
+    display: none;
+  }
+  
+  /* Responsive Grid Card */
+  @media (max-width: 820px) {
+    .anuario-card {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .card-actions {
+      align-items: flex-start;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>
+
+<!-- Menu Lateral do Dashboard -->
+<aside class="pbi-sidebar">
+  <!-- Home -->
+  <div class="pbi-nav-btn" title="Início" onclick="window.location.href='../'" style="cursor:pointer;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span class="nav-label">Início</span>
+  </div>
+  <div style="width:52px; height:1px; background:rgba(255,255,255,0.15); margin: 2px 0;"></div>
+  
+  <!-- Saúde -->
+  <div class="pbi-nav-btn theme-saude" title="Saúde" onclick="window.location.href='../saude/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+    <span class="nav-label" style="color:#22d3ee;">Saúde</span>
+  </div>
+  
+  <!-- Educação -->
+  <div class="pbi-nav-btn theme-edu" title="Educação" onclick="window.location.href='../educacao/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+    <span class="nav-label" style="color:#a78bfa;">Educação</span>
+  </div>
+  
+  <!-- Segurança -->
+  <div class="pbi-nav-btn theme-seg" title="Segurança" onclick="window.location.href='../seguranca/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    <span class="nav-label" style="color:#fb923c;">Segurança</span>
+  </div>
+  
+  <!-- Infraestrutura -->
+  <div class="pbi-nav-btn theme-inf" title="Infraestrutura" onclick="window.location.href='../infraestrutura/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+    <span class="nav-label" style="color:#facc15;">Infraest.</span>
+  </div>
+  
+  <!-- Finanças -->
+  <div class="pbi-nav-btn theme-fin" title="Finanças" onclick="window.location.href='../financas/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    <span class="nav-label" style="color:#4ade80;">Finanças</span>
+  </div>
+  
+  <!-- Social -->
+  <div class="pbi-nav-btn theme-soc" title="Social" onclick="window.location.href='../assistencia/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    <span class="nav-label" style="color:#f472b6;">Social</span>
+  </div>
+  
+  <!-- Assistente IA -->
+  <div class="pbi-nav-btn theme-saude" title="Assistente IA" onclick="window.location.href='../assistente-ia/'" style="cursor:pointer; margin-top: auto;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+    <span class="nav-label" style="color:#22d3ee;">Assis. IA</span>
+  </div>
+  
+  <!-- Mapa -->
+  <div class="pbi-nav-btn theme-fin" title="Mapa de Ativos" onclick="window.location.href='../mapa-ativos/'" style="cursor:pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+    <span class="nav-label" style="color:#4ade80;">Mapa</span>
+  </div>
+  
+  <!-- Settings at bottom -->
+  <div class="pbi-nav-btn" style="margin-bottom:6px;" title="Configurações">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    <span class="nav-label">Config.</span>
+  </div>
+</aside>
+
+<div class="dashboard-container">
+  
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="dash-title-group">
+      <h1>Anuário Estatístico de Mato Grosso</h1>
+      <p>Dados consolidados das Dimensões Ambiental, Social e Econômica · Ano Base 2025</p>
+    </div>
+    <div style="text-align: right;">
+      <span style="font-size: 0.75rem; color: #64748b; text-transform: uppercase;">Fonte Oficial</span><br>
+      <strong style="color: var(--theme-color); font-weight: 700;">SEPLAG-MT</strong>
+    </div>
+  </div>
+  
+
+  
+  <!-- VIEW 1: Painel de Indicadores Local -->
+  <div id="anuario-dashboard-view" class="anuario-view active">
+    
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(34, 211, 238, 0.15); color: #22d3ee;">👥</div>
+        <div class="kpi-info">
+          <span class="kpi-num">3,65 M</span>
+          <span class="kpi-label">População Residente</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">🚢</div>
+        <div class="kpi-info">
+          <span class="kpi-num">US$ 28.5 B</span>
+          <span class="kpi-label">Saldo Comercial</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(74, 222, 128, 0.15); color: #4ade80;">🌾</div>
+        <div class="kpi-info">
+          <span class="kpi-num">43.2 M Ton</span>
+          <span class="kpi-label">Produção de Soja</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(244, 114, 182, 0.15); color: #f472b6;">🛡️</div>
+        <div class="kpi-info">
+          <span class="kpi-num">-6,5%</span>
+          <span class="kpi-label">Roubos e Furtos</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Crescimento Populacional Histórico</div>
+            <div class="chart-subtitle">Evolução da população residente (Censos IBGE 1872-2022) · Em milhares</div>
+          </div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartAnuarioPop"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Composição da Safra de Grãos</div>
+            <div class="chart-subtitle">Participação das principais culturas vegetais (%)</div>
+          </div>
+        </div>
+        <div class="chart-body" style="display:flex; align-items:center; justify-content:center;">
+          <canvas id="chartAnuarioCrops"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Balança Comercial Externa (US$ Bilhões)</div>
+            <div class="chart-subtitle">Evolução das Exportações vs. Importações de Mato Grosso (FOB)</div>
+          </div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartAnuarioTrade"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Status e Alertas Socioeconômicos</div>
+            <div class="chart-subtitle">Indicadores estratégicos monitorados</div>
+          </div>
+        </div>
+        <div class="alert-list">
+          <div class="alert-item">
+            <div class="alert-label"><span class="alert-icon ok">✓</span> Taxa de Evasão Escolar</div>
+            <div class="alert-meta">Meta: < 2.5% <span class="alert-value">2,1%</span></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-label"><span class="alert-icon warn">⚠️</span> Mortalidade Infantil</div>
+            <div class="alert-meta">Meta: < 10% <span class="alert-value" style="color:#f59e0b">12,3%</span></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-label"><span class="alert-icon ok">✓</span> Ocupação de Leitos UTI</div>
+            <div class="alert-meta">Meta: < 80% <span class="alert-value">72%</span></div>
+          </div>
+          <div class="alert-item">
+            <div class="alert-label"><span class="alert-icon ok">✓</span> Comarcas com Defensoria</div>
+            <div class="alert-meta">Meta: > 75% <span class="alert-value">83%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+<script>
+const anuarioData = [{"status": "Disponível", "dimensao": "Dimensão Ambiental e Territorial", "capitulo": "Capítulo 1 - Características gerais do Estado", "subcapitulo": "1.1 - Cartogramas", "descricao": "Conjunto de mapas e representações gráficas que detalham a malha territorial de Mato Grosso, incluindo divisões regionais e áreas legalmente protegidas. \n\nFonte: SEPLAG, INTERMAT, IBGE.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-ambiental/caracter%C3%ADsticas-gerais-do-estado/cartogramas"}, {"status": "Em Atualização", "dimensao": "Dimensão Ambiental e Territorial", "capitulo": "Capítulo 1 - Características gerais do Estado", "subcapitulo": "1.2 - Localização geográfica, divisão Político-administrativa", "descricao": "Estatísticas sobre a organização territorial e administrativa, apresentando a regionalização dos municípios, pontos extremos, áreas totais, bacias hidrográficas e o histórico de criação das unidades políticas em Mato Grosso.\n\nFontes: IBGE, SEPLAG-MT.", "link": ""}, {"status": "Disponível", "dimensao": "Dimensão Ambiental e Territorial", "capitulo": "Capítulo 1 - Características gerais do Estado", "subcapitulo": "1.3 -  Observações metereológicas", "descricao": "Dados consolidados sobre o clima no estado, apresentando séries históricas de temperatura, pluviosidade e fenômenos atmosféricos por região. \n\nFonte: INMET.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-ambiental/caracter%C3%ADsticas-gerais-do-estado/observa%C3%A7%C3%B5es-meteorol%C3%B3gicas?authuser=0"}, {"status": "Em Atualização", "dimensao": "Dimensão Ambiental e Territorial", "capitulo": "Capítulo 1 - Características gerais do Estado", "subcapitulo": "1.4 - Áreas legalmente protegidas", "descricao": "", "link": ""}, {"status": "Em Atualização", "dimensao": "Dimensão Ambiental e Territorial", "capitulo": "Capítulo 1 - Características gerais do Estado", "subcapitulo": "1.5 - Controle e fiscalização da ação antrópica", "descricao": "", "link": ""}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 2 - População e domicílio", "subcapitulo": "2.1", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/popula%C3%A7%C3%A3o-e-domic%C3%ADlio/popula%C3%A7%C3%A3o-e-domic%C3%ADlio-01?authuser=0"}, {"status": "Em Atualização", "dimensao": "Dimensão Social", "capitulo": "Capítulo 3 - Saúde e previdência social", "subcapitulo": "3.1 - Saúde", "descricao": "Indicadores de infraestrutura hospitalar, leitos, profissionais e capacidade ambulatorial, além de dados epidemiológicos e de vacinação nos municípios.\nFonte: Datasus / Ministério da Saúde.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/sa%C3%BAde-e-previd%C3%AAncia-social/sa%C3%BAde?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 3 - Saúde e previdência social", "subcapitulo": "3.2 - Previdência social", "descricao": "Estatísticas sobre benefícios previdenciários, aposentadorias, auxílios e pensões concedidos, estratificados por microrregiões.\n\nFonte: INSS.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/sa%C3%BAde-e-previd%C3%AAncia-social/previd%C3%AAncia-social?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.1 - Educação Geral", "descricao": "Apresenta o perfil de alfabetização da população por sexo, cor e faixa etária, além do levantamento geral de estabelecimentos de ensino fundamental no estado.\nFonte: IBGE.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-geral?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.2 - Educação Infantil", "descricao": "Detalha a estrutura da primeira etapa da educação básica, informando o número de unidades escolares, docentes e matrículas por município.\nFonte: INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-infantil?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.3 - Ensino Fundamental", "descricao": "Consolida estatísticas sobre escolas, professores e matrículas, além das taxas de rendimento escolar (aprovação, reprovação e abandono) nos municípios.\nFonte: INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ensino-fundamental?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.4 - Ensino médio", "descricao": "Panorama do ensino médio, abrangendo infraestrutura, quadro docente, total de matrículas e dados de desempenho escolar.\nFonte: MEC / INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ensino-m%C3%A9dio?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.6 - Educação profissional", "descricao": "Informações sobre a rede de ensino técnico e profissionalizante, detalhando o número de escolas, professores e alunos matriculados nesta modalidade.\nFonte: MEC / INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-profissional?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.7 - Educação de jovens e adultos", "descricao": "Estatísticas sobre a EJA presencial e semipresencial, com foco na oferta de unidades escolares, corpo docente e matrículas para o público adulto.\nFonte: MEC / INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-de-jovens-e-adultos?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.9 - Educação especial", "descricao": "Dados sobre a inclusão escolar em classes comuns e exclusivas, abrangendo matrículas desde a educação infantil até a EJA e o ensino médio.\nFonte: MEC / INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-especial?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 4 - Educação", "subcapitulo": "4.10 - IDEB", "descricao": "Reúne os resultados do Índice de Desenvolvimento da Educação Básica (IDEB), apresentando séries históricas das redes estadual, municipal e pública.\nFonte: MEC / INEP.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ideb?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 5 - Organização da sociedade civil e Política", "subcapitulo": "5.1 - Organização da sociedade civil", "descricao": "Estatísticas sobre a estrutura do cooperativismo e o impacto das organizações sociais, apresentando séries históricas de demografia, indicadores financeiros, iniciativas sustentáveis (ODS) e a localização de OSCs em Mato Grosso.\n\nFontes: SistemaOCB e Mapa das Organizações da Sociedade Civil (OSCs).", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/organiza%C3%A7%C3%A3o-da-sociedade-civil-e-pol%C3%ADtica/organiza%C3%A7%C3%A3o-da-sociedade-civil?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 5 - Organização da sociedade civil e Política", "subcapitulo": "5.2 - Política", "descricao": "Estatísticas sobre o cenário eleitoral e a representatividade política, apresentando séries históricas de prefeitos, vereadores e deputados eleitos por partido, sexo, cor/raça e escolaridade, além do perfil do eleitorado e índices de abstenção em Mato Grosso.\n\nFontes: TSE", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/organiza%C3%A7%C3%A3o-da-sociedade-civil-e-pol%C3%ADtica/pol%C3%ADtica?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.1 - Polícia militar", "descricao": "Reúne dados sobre a estrutura organizacional, efetivo por patente e frota da PM-MT. Consolida estatísticas criminais de homicídios, feminicídios, roubos, furtos e apreensões de tráfico nos municípios.\nFonte: MJSP", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-militar?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.2 - Polícia Judiciária Civil", "descricao": "Apresenta dados sobre a estrutura administrativa, quadro de pessoal por cargo, frota de veículos e o balanço das principais atividades investigativas realizadas pela Polícia Civil no estado.\nFonte: MJSP", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-judici%C3%A1ria-civil?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.3 - Polícia rodoviária federal", "descricao": "Consolida informações sobre o efetivo da PRF em Mato Grosso, estatísticas de acidentes e mortes em rodovias federais, além do registro de infrações e multas aplicadas.\nFonte: MJSP; PRF", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-rodovi%C3%A1ria-federal?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.4 - Secretaria de justiça", "descricao": "Detalha a realidade do sistema prisional e socioeducativo: capacidade das unidades, população carcerária por regime e tipificação, além do efetivo de agentes penitenciários.\nFonte: SENAPPEN", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/secretaria-de-justi%C3%A7a-e-direitos-humanos?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.5 - Poder judiciário", "descricao": "Panorama da estrutura jurídica estadual, abrangendo a distribuição das comarcas, o andamento de processos judiciais e a atuação da Defensoria Pública na área criminal.\nFonte: TJMT; DATAJUD; Defensoria Pública", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/poder-judici%C3%A1rio?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.6 - Bombeiros", "descricao": "Informações sobre a estrutura do Corpo de Bombeiros, efetivo por patente, frota de salvamento e o relatório das principais atividades de combate a incêndio e resgate.\nFonte: MJSP", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/bombeiros?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.7 - Politec", "descricao": "Dados sobre os órgãos oficiais de perícia criminal e identificação técnica, detalhando a estrutura administrativa, o corpo de peritos e as principais atividades realizadas.\nFonte: MJSP", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/politec?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 6 - Segurança pública", "subcapitulo": "6.8 - Defesa Civil", "descricao": "Dados sobre monitoramento ambiental e preventivo, destacando os focos de incêndio registrados no estado e o balanço de julgamentos de infrações ambientais pela SEMA.\nFonte: INPE; SEMA-MT.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/defesa-civil?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 7 - Produção mineral", "subcapitulo": "7.1", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-mineral/produ%C3%A7%C3%A3o-mineral?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 8 - Produção extrativa vegetal e silvicultura", "subcapitulo": "8.1 - Produção extrativa vegetal", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-extrativa-vegetal-e-silvicultura/produ%C3%A7%C3%A3o-extrativa-vegetal?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 8 - Produção extrativa vegetal e silvicultura", "subcapitulo": "8.2 - Silvicultura", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-extrativa-vegetal-e-silvicultura/silvicultura?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem", "subcapitulo": "9.1 - Máquinas e equipamentos", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/m%C3%A1quinas-equipamentos-insumos-agropecu%C3%A1rios-e-armazenagem/m%C3%A1quinas-e-equipamentos?authuser=0"}, {"status": "não terá dados", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem", "subcapitulo": "9.2.   Insumos agropecuários", "descricao": "", "link": ""}, {"status": "não terá dados", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem", "subcapitulo": "9.3 - Armazenagem", "descricao": "", "link": ""}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 10 - Produção vegetal", "subcapitulo": "10.1 - Culturas temporárias em Mato Grosso", "descricao": "Evolução e séries históricas da produção vegetal de ciclo curto (como soja e milho), detalhando área plantada e produtividade estadual.\nFonte: IBGE / SIDRA.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-tempor%C3%A1rias-em-mato-grosso?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 10 - Produção vegetal", "subcapitulo": "10.2 - Culturas permanentes em Mato Grosso", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-permanentes-em-mato-grosso?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 10 - Produção vegetal", "subcapitulo": "10.3 - Culturas temporárias e permanentes por município", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-tempor%C3%A1rias-e-permanentes-por-munic%C3%ADpio?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal", "subcapitulo": "11.1 - Efetivos", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/efetivos-produ%C3%A7%C3%A3o-e-sanidade-animal/efetivos?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal", "subcapitulo": "11.2 - Produção", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/efetivos-produ%C3%A7%C3%A3o-e-sanidade-animal/produ%C3%A7%C3%A3o?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal", "subcapitulo": "11.3 - Sanidade Animal", "descricao": "", "link": ""}, {"status": "Em Atualização", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 12 - Energia", "subcapitulo": "12.1", "descricao": "Dados consolidados sobre o mercado de energia elétrica no estado, apresentando o número de consumidores e o volume de consumo (kWh) por classe e categoria em cada município de Mato Grosso entre 2020 e 2023.\n\nFontes: Energisa MT.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/energia/energia-01?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 13 - Indústria", "subcapitulo": "13.1", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/ind%C3%BAstria/ind%C3%BAstria-01?authuser=0"}, {"status": "Em Atualização", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 14 - Transporte", "subcapitulo": "14.1", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/transporte/transporte-01?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 15 - Comércio e Serviços", "subcapitulo": "15.1", "descricao": "Dados consolidados sobre a infraestrutura e o desempenho econômico do setor de comércio e serviços, apresentando séries históricas de unidades locais, pessoal ocupado, massa salarial, margens de comercialização e receitas brutas de revenda, além do monitoramento da simplificação do registro empresarial em Mato Grosso.\n\nFontes: IBGE (Pesquisa Anual de Comércio) e JUCEMAT/REDESIM.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/com%C3%A9rcio-e-servi%C3%A7os/com%C3%A9rcio-e-servi%C3%A7os-01?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 16 - Exportação e Importação", "subcapitulo": "16.1", "descricao": "", "link": ""}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 17 - Agregados macroeconômicos", "subcapitulo": "17.1 - Produto interno bruto", "descricao": "Dados consolidados sobre o desempenho econômico nacional e regional, apresentando séries históricas do Produto Interno Bruto (PIB) e do Valor Adicionado Bruto, com detalhamento de participações, rankings e indicadores per capita para o Brasil e municípios de Mato Grosso.\n\nFonte: IBGE, em parceria com os Órgãos Estaduais de Estatística, Secretarias Estaduais de Governo e Superintendência da Zona Franca de Manaus - SUFRAMA.", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/produto-interno-bruto?authuser=0"}, {"status": "não terá dados", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 17 - Agregados macroeconômicos", "subcapitulo": "17.2 - Preços", "descricao": "", "link": ""}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 17 - Agregados macroeconômicos", "subcapitulo": "17.3 - Arrecadação pública de repasses", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/arrecada%C3%A7%C3%A3o-p%C3%BAblica-de-repasses?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 17 - Agregados macroeconômicos", "subcapitulo": "17.4 - Serviço e movimentação financeira", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/servi%C3%A7o-e-movimenta%C3%A7%C3%A3o-financeira?authuser=0"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 18 - Trabalho e Rendimento", "subcapitulo": "18.1 - Trabalho", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/trabalho-e-rendimento/trabalho"}, {"status": "Disponível", "dimensao": "Dimensão Econômica", "capitulo": "Capítulo 18 - Trabalho e Rendimento", "subcapitulo": "18.2 - Rendimento", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/trabalho-e-rendimento/rendimento"}, {"status": "Disponível", "dimensao": "Dimensão Social", "capitulo": "Capítulo 19 - Cultura, esporte e lazer", "subcapitulo": "2026-01-19 00:00:00", "descricao": "", "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/cultura-esporte-e-lazer"}];
+
+let currentDimFilter = 'todas';
+let currentSearchQuery = '';
+
+function switchAnuarioTab(tabName, btn) {
+  document.querySelectorAll('.anuario-tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  document.querySelectorAll('.anuario-view').forEach(v => v.classList.remove('active'));
+  if (tabName === 'painel') {
+    document.getElementById('anuario-dashboard-view').classList.add('active');
+  } else {
+    document.getElementById('anuario-diretorio-view').classList.add('active');
+  }
+}
+
+function getDimClass(dim) {
+  if (dim.includes('Ambiental')) return 'ambiental';
+  if (dim.includes('Econômica')) return 'economica';
+  if (dim.includes('Social')) return 'social';
+  return '';
+}
+
+function getDimLabel(dim) {
+  if (dim.includes('Ambiental')) return 'Ambiental e Territorial';
+  if (dim.includes('Econômica')) return 'Econômica';
+  if (dim.includes('Social')) return 'Social';
+  return dim;
+}
+
+function getDimIcon(dim) {
+  if (dim.includes('Ambiental')) return '🌳';
+  if (dim.includes('Econômica')) return '💼';
+  if (dim.includes('Social')) return '👥';
+  return '📄';
+}
+
+function renderCards() {
+  const container = document.getElementById('anuario-list-container');
+  const noResultsMsg = document.getElementById('no-results-msg');
+  container.innerHTML = '';
+  
+  let filtered = anuarioData.filter(item => {
+    const dimClass = getDimClass(item.dimensao);
+    if (currentDimFilter !== 'todas' && dimClass !== currentDimFilter) return false;
+    
+    if (currentSearchQuery) {
+      const query = currentSearchQuery.toLowerCase();
+      const matchCap = item.capitulo.toLowerCase().includes(query);
+      const matchSub = item.subcapitulo.toLowerCase().includes(query);
+      const matchDesc = item.descricao.toLowerCase().includes(query);
+      if (!matchCap && !matchSub && !matchDesc) return false;
+    }
+    return true;
+  });
+  
+  if (filtered.length === 0) {
+    noResultsMsg.style.display = 'block';
+    return;
+  } else {
+    noResultsMsg.style.display = 'none';
+  }
+  
+  filtered.forEach(item => {
+    const dimClass = getDimClass(item.dimensao);
+    const dimLabel = getDimLabel(item.dimensao);
+    const dimIcon = getDimIcon(item.dimensao);
+    
+    let statusClass = 'status-sem-dados';
+    if (item.status === 'Disponível') statusClass = 'status-disponivel';
+    else if (item.status === 'Em Atualização') statusClass = 'status-atualizacao';
+    
+    let buttonHTML = '';
+    if (item.status === 'Disponível' && item.link) {
+      buttonHTML = `<a href="${item.link}" target="_blank" class="access-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> Acessar BI</a>`;
+    } else if (item.status === 'Em Atualização') {
+      buttonHTML = `<button class="access-btn disabled" disabled>Em Atualização</button>`;
+    } else {
+      buttonHTML = `<button class="access-btn disabled" disabled>Sem Dados</button>`;
+    }
+    
+    const card = document.createElement('div');
+    card.className = 'anuario-card';
+    card.innerHTML = `
+      <div class="dimensao-badge-icon badge-${dimClass}">${dimIcon}</div>
+      <div class="card-main-info">
+        <div class="card-top-row">
+          <span class="capitulo-tag">${item.capitulo}</span>
+          <span class="dimensao-tag tag-${dimClass}">${dimLabel}</span>
+        </div>
+        <h3 class="subcapitulo-title">${item.subcapitulo}</h3>
+        <p class="card-desc">${item.descricao.replace(/\n/g, '<br>')}</p>
+      </div>
+      <div class="card-actions">
+        <span class="status-badge ${statusClass}">${item.status}</span>
+        ${buttonHTML}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function filterDim(dim, btn) {
+  currentDimFilter = dim;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function searchData() {
+  currentSearchQuery = document.getElementById('anuario-search').value;
+  renderCards();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  
+  // Setup Chart.js defaults for dark theme
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.font.family = 'Inter';
+  
+  new Chart(document.getElementById('chartAnuarioPop'), {
+    type: 'line',
+    data: {
+      labels: ['1872', '1890', '1900', '1920', '1940', '1950', '1960', '1970', '1980', '1991', '2000', '2010', '2022'],
+      datasets: [{
+        label: 'População (Milhares)',
+        data: [60.4, 92.8, 118.0, 246.6, 238.6, 522.0, 915.0, 609.8, 1138.0, 2022.5, 2504.3, 3035.1, 3658.8],
+        borderColor: '#8b5cf6',
+        backgroundColor: 'rgba(139, 92, 246, 0.15)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: '#1e293b' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  
+  new Chart(document.getElementById('chartAnuarioTrade'), {
+    type: 'bar',
+    data: {
+      labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+      datasets: [{
+        label: 'Exportações',
+        data: [11.2, 12.1, 14.3, 16.5, 17.8, 20.2, 23.4, 28.5, 31.2, 32.1],
+        backgroundColor: '#8b5cf6',
+        borderRadius: 4
+      }, {
+        label: 'Importações',
+        data: [1.2, 1.1, 1.4, 1.6, 1.5, 1.8, 2.2, 3.1, 3.4, 3.6],
+        backgroundColor: '#4ade80',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { grid: { color: '#1e293b' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  
+  new Chart(document.getElementById('chartAnuarioCrops'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Soja', 'Milho', 'Algodão', 'Outros'],
+      datasets: [{
+        data: [58, 30, 8, 4],
+        backgroundColor: ['#8b5cf6', '#4ade80', '#22d3ee', '#f472b6'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: { legend: { position: 'right' } }
+    }
+  });
+});
+</script>

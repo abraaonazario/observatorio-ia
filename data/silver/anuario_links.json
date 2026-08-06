@@ -1,0 +1,402 @@
+[
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Ambiental e Territorial",
+    "capitulo": "Capítulo 1 - Características gerais do Estado",
+    "subcapitulo": "1.1 - Cartogramas",
+    "descricao": "Conjunto de mapas e representações gráficas que detalham a malha territorial de Mato Grosso, incluindo divisões regionais e áreas legalmente protegidas. \n\nFonte: SEPLAG, INTERMAT, IBGE.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-ambiental/caracter%C3%ADsticas-gerais-do-estado/cartogramas"
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Ambiental e Territorial",
+    "capitulo": "Capítulo 1 - Características gerais do Estado",
+    "subcapitulo": "1.2 - Localização geográfica, divisão Político-administrativa",
+    "descricao": "Estatísticas sobre a organização territorial e administrativa, apresentando a regionalização dos municípios, pontos extremos, áreas totais, bacias hidrográficas e o histórico de criação das unidades políticas em Mato Grosso.\n\nFontes: IBGE, SEPLAG-MT.",
+    "link": ""
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Ambiental e Territorial",
+    "capitulo": "Capítulo 1 - Características gerais do Estado",
+    "subcapitulo": "1.3 -  Observações metereológicas",
+    "descricao": "Dados consolidados sobre o clima no estado, apresentando séries históricas de temperatura, pluviosidade e fenômenos atmosféricos por região. \n\nFonte: INMET.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-ambiental/caracter%C3%ADsticas-gerais-do-estado/observa%C3%A7%C3%B5es-meteorol%C3%B3gicas?authuser=0"
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Ambiental e Territorial",
+    "capitulo": "Capítulo 1 - Características gerais do Estado",
+    "subcapitulo": "1.4 - Áreas legalmente protegidas",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Ambiental e Territorial",
+    "capitulo": "Capítulo 1 - Características gerais do Estado",
+    "subcapitulo": "1.5 - Controle e fiscalização da ação antrópica",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 2 - População e domicílio",
+    "subcapitulo": "2.1",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/popula%C3%A7%C3%A3o-e-domic%C3%ADlio/popula%C3%A7%C3%A3o-e-domic%C3%ADlio-01?authuser=0"
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 3 - Saúde e previdência social",
+    "subcapitulo": "3.1 - Saúde",
+    "descricao": "Indicadores de infraestrutura hospitalar, leitos, profissionais e capacidade ambulatorial, além de dados epidemiológicos e de vacinação nos municípios.\nFonte: Datasus / Ministério da Saúde.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/sa%C3%BAde-e-previd%C3%AAncia-social/sa%C3%BAde?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 3 - Saúde e previdência social",
+    "subcapitulo": "3.2 - Previdência social",
+    "descricao": "Estatísticas sobre benefícios previdenciários, aposentadorias, auxílios e pensões concedidos, estratificados por microrregiões.\n\nFonte: INSS.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/sa%C3%BAde-e-previd%C3%AAncia-social/previd%C3%AAncia-social?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.1 - Educação Geral",
+    "descricao": "Apresenta o perfil de alfabetização da população por sexo, cor e faixa etária, além do levantamento geral de estabelecimentos de ensino fundamental no estado.\nFonte: IBGE.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-geral?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.2 - Educação Infantil",
+    "descricao": "Detalha a estrutura da primeira etapa da educação básica, informando o número de unidades escolares, docentes e matrículas por município.\nFonte: INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-infantil?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.3 - Ensino Fundamental",
+    "descricao": "Consolida estatísticas sobre escolas, professores e matrículas, além das taxas de rendimento escolar (aprovação, reprovação e abandono) nos municípios.\nFonte: INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ensino-fundamental?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.4 - Ensino médio",
+    "descricao": "Panorama do ensino médio, abrangendo infraestrutura, quadro docente, total de matrículas e dados de desempenho escolar.\nFonte: MEC / INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ensino-m%C3%A9dio?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.6 - Educação profissional",
+    "descricao": "Informações sobre a rede de ensino técnico e profissionalizante, detalhando o número de escolas, professores e alunos matriculados nesta modalidade.\nFonte: MEC / INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-profissional?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.7 - Educação de jovens e adultos",
+    "descricao": "Estatísticas sobre a EJA presencial e semipresencial, com foco na oferta de unidades escolares, corpo docente e matrículas para o público adulto.\nFonte: MEC / INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-de-jovens-e-adultos?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.9 - Educação especial",
+    "descricao": "Dados sobre a inclusão escolar em classes comuns e exclusivas, abrangendo matrículas desde a educação infantil até a EJA e o ensino médio.\nFonte: MEC / INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/educa%C3%A7%C3%A3o-especial?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 4 - Educação",
+    "subcapitulo": "4.10 - IDEB",
+    "descricao": "Reúne os resultados do Índice de Desenvolvimento da Educação Básica (IDEB), apresentando séries históricas das redes estadual, municipal e pública.\nFonte: MEC / INEP.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/educa%C3%A7%C3%A3o/ideb?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 5 - Organização da sociedade civil e Política",
+    "subcapitulo": "5.1 - Organização da sociedade civil",
+    "descricao": "Estatísticas sobre a estrutura do cooperativismo e o impacto das organizações sociais, apresentando séries históricas de demografia, indicadores financeiros, iniciativas sustentáveis (ODS) e a localização de OSCs em Mato Grosso.\n\nFontes: SistemaOCB e Mapa das Organizações da Sociedade Civil (OSCs).",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/organiza%C3%A7%C3%A3o-da-sociedade-civil-e-pol%C3%ADtica/organiza%C3%A7%C3%A3o-da-sociedade-civil?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 5 - Organização da sociedade civil e Política",
+    "subcapitulo": "5.2 - Política",
+    "descricao": "Estatísticas sobre o cenário eleitoral e a representatividade política, apresentando séries históricas de prefeitos, vereadores e deputados eleitos por partido, sexo, cor/raça e escolaridade, além do perfil do eleitorado e índices de abstenção em Mato Grosso.\n\nFontes: TSE",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/organiza%C3%A7%C3%A3o-da-sociedade-civil-e-pol%C3%ADtica/pol%C3%ADtica?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.1 - Polícia militar",
+    "descricao": "Reúne dados sobre a estrutura organizacional, efetivo por patente e frota da PM-MT. Consolida estatísticas criminais de homicídios, feminicídios, roubos, furtos e apreensões de tráfico nos municípios.\nFonte: MJSP",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-militar?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.2 - Polícia Judiciária Civil",
+    "descricao": "Apresenta dados sobre a estrutura administrativa, quadro de pessoal por cargo, frota de veículos e o balanço das principais atividades investigativas realizadas pela Polícia Civil no estado.\nFonte: MJSP",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-judici%C3%A1ria-civil?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.3 - Polícia rodoviária federal",
+    "descricao": "Consolida informações sobre o efetivo da PRF em Mato Grosso, estatísticas de acidentes e mortes em rodovias federais, além do registro de infrações e multas aplicadas.\nFonte: MJSP; PRF",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/pol%C3%ADcia-rodovi%C3%A1ria-federal?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.4 - Secretaria de justiça",
+    "descricao": "Detalha a realidade do sistema prisional e socioeducativo: capacidade das unidades, população carcerária por regime e tipificação, além do efetivo de agentes penitenciários.\nFonte: SENAPPEN",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/secretaria-de-justi%C3%A7a-e-direitos-humanos?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.5 - Poder judiciário",
+    "descricao": "Panorama da estrutura jurídica estadual, abrangendo a distribuição das comarcas, o andamento de processos judiciais e a atuação da Defensoria Pública na área criminal.\nFonte: TJMT; DATAJUD; Defensoria Pública",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/poder-judici%C3%A1rio?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.6 - Bombeiros",
+    "descricao": "Informações sobre a estrutura do Corpo de Bombeiros, efetivo por patente, frota de salvamento e o relatório das principais atividades de combate a incêndio e resgate.\nFonte: MJSP",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/bombeiros?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.7 - Politec",
+    "descricao": "Dados sobre os órgãos oficiais de perícia criminal e identificação técnica, detalhando a estrutura administrativa, o corpo de peritos e as principais atividades realizadas.\nFonte: MJSP",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/politec?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 6 - Segurança pública",
+    "subcapitulo": "6.8 - Defesa Civil",
+    "descricao": "Dados sobre monitoramento ambiental e preventivo, destacando os focos de incêndio registrados no estado e o balanço de julgamentos de infrações ambientais pela SEMA.\nFonte: INPE; SEMA-MT.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/seguran%C3%A7a-p%C3%BAblica-justi%C3%A7a-e-defesa-da-cidadania/defesa-civil?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 7 - Produção mineral",
+    "subcapitulo": "7.1",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-mineral/produ%C3%A7%C3%A3o-mineral?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 8 - Produção extrativa vegetal e silvicultura",
+    "subcapitulo": "8.1 - Produção extrativa vegetal",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-extrativa-vegetal-e-silvicultura/produ%C3%A7%C3%A3o-extrativa-vegetal?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 8 - Produção extrativa vegetal e silvicultura",
+    "subcapitulo": "8.2 - Silvicultura",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-extrativa-vegetal-e-silvicultura/silvicultura?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem",
+    "subcapitulo": "9.1 - Máquinas e equipamentos",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/m%C3%A1quinas-equipamentos-insumos-agropecu%C3%A1rios-e-armazenagem/m%C3%A1quinas-e-equipamentos?authuser=0"
+  },
+  {
+    "status": "não terá dados",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem",
+    "subcapitulo": "9.2.   Insumos agropecuários",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "não terá dados",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 9 - Máquinas, equipamentos, insumos agropecuários e armazenagem",
+    "subcapitulo": "9.3 - Armazenagem",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 10 - Produção vegetal",
+    "subcapitulo": "10.1 - Culturas temporárias em Mato Grosso",
+    "descricao": "Evolução e séries históricas da produção vegetal de ciclo curto (como soja e milho), detalhando área plantada e produtividade estadual.\nFonte: IBGE / SIDRA.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-tempor%C3%A1rias-em-mato-grosso?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 10 - Produção vegetal",
+    "subcapitulo": "10.2 - Culturas permanentes em Mato Grosso",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-permanentes-em-mato-grosso?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 10 - Produção vegetal",
+    "subcapitulo": "10.3 - Culturas temporárias e permanentes por município",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/produ%C3%A7%C3%A3o-vegetal/culturas-tempor%C3%A1rias-e-permanentes-por-munic%C3%ADpio?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal",
+    "subcapitulo": "11.1 - Efetivos",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/efetivos-produ%C3%A7%C3%A3o-e-sanidade-animal/efetivos?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal",
+    "subcapitulo": "11.2 - Produção",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/efetivos-produ%C3%A7%C3%A3o-e-sanidade-animal/produ%C3%A7%C3%A3o?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 11 - Efetivos, Produção e Sanidade Animal",
+    "subcapitulo": "11.3 - Sanidade Animal",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 12 - Energia",
+    "subcapitulo": "12.1",
+    "descricao": "Dados consolidados sobre o mercado de energia elétrica no estado, apresentando o número de consumidores e o volume de consumo (kWh) por classe e categoria em cada município de Mato Grosso entre 2020 e 2023.\n\nFontes: Energisa MT.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/energia/energia-01?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 13 - Indústria",
+    "subcapitulo": "13.1",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/ind%C3%BAstria/ind%C3%BAstria-01?authuser=0"
+  },
+  {
+    "status": "Em Atualização",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 14 - Transporte",
+    "subcapitulo": "14.1",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/transporte/transporte-01?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 15 - Comércio e Serviços",
+    "subcapitulo": "15.1",
+    "descricao": "Dados consolidados sobre a infraestrutura e o desempenho econômico do setor de comércio e serviços, apresentando séries históricas de unidades locais, pessoal ocupado, massa salarial, margens de comercialização e receitas brutas de revenda, além do monitoramento da simplificação do registro empresarial em Mato Grosso.\n\nFontes: IBGE (Pesquisa Anual de Comércio) e JUCEMAT/REDESIM.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/com%C3%A9rcio-e-servi%C3%A7os/com%C3%A9rcio-e-servi%C3%A7os-01?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 16 - Exportação e Importação",
+    "subcapitulo": "16.1",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 17 - Agregados macroeconômicos",
+    "subcapitulo": "17.1 - Produto interno bruto",
+    "descricao": "Dados consolidados sobre o desempenho econômico nacional e regional, apresentando séries históricas do Produto Interno Bruto (PIB) e do Valor Adicionado Bruto, com detalhamento de participações, rankings e indicadores per capita para o Brasil e municípios de Mato Grosso.\n\nFonte: IBGE, em parceria com os Órgãos Estaduais de Estatística, Secretarias Estaduais de Governo e Superintendência da Zona Franca de Manaus - SUFRAMA.",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/produto-interno-bruto?authuser=0"
+  },
+  {
+    "status": "não terá dados",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 17 - Agregados macroeconômicos",
+    "subcapitulo": "17.2 - Preços",
+    "descricao": "",
+    "link": ""
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 17 - Agregados macroeconômicos",
+    "subcapitulo": "17.3 - Arrecadação pública de repasses",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/arrecada%C3%A7%C3%A3o-p%C3%BAblica-de-repasses?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 17 - Agregados macroeconômicos",
+    "subcapitulo": "17.4 - Serviço e movimentação financeira",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/agregados-macroecon%C3%B4micos/servi%C3%A7o-e-movimenta%C3%A7%C3%A3o-financeira?authuser=0"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 18 - Trabalho e Rendimento",
+    "subcapitulo": "18.1 - Trabalho",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/trabalho-e-rendimento/trabalho"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Econômica",
+    "capitulo": "Capítulo 18 - Trabalho e Rendimento",
+    "subcapitulo": "18.2 - Rendimento",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-econ%C3%B4mico/trabalho-e-rendimento/rendimento"
+  },
+  {
+    "status": "Disponível",
+    "dimensao": "Dimensão Social",
+    "capitulo": "Capítulo 19 - Cultura, esporte e lazer",
+    "subcapitulo": "2026-01-19 00:00:00",
+    "descricao": "",
+    "link": "https://sites.google.com/seplag.mt.gov.br/anuariomt2025/dimens%C3%A3o-social/cultura-esporte-e-lazer"
+  }
+]
