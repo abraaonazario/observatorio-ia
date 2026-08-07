@@ -729,6 +729,7 @@ hide:
   </div>
 </aside>
 
+<div class="dashboard-container">
   <!-- Painel Lateral Esquerdo -->
   <aside class="ai-sidebar" id="ai-sidebar-element">
     <div class="ai-sidebar-logo">
@@ -819,8 +820,7 @@ hide:
         <button class="ai-suggestion-card" data-query="seguranca">Obras em atraso</button>
         <button class="ai-suggestion-card" data-query="infraestrutura">Total gasto no mês</button>
       </div>
-  </main>
-</div>
+    </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
