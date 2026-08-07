@@ -22,12 +22,143 @@ hide:
     margin: 0 !important;
     padding: 0 !important;
     display: grid !important;
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 260px 1fr !important;
     height: calc(100vh - 90px) !important;
     width: calc(100% - 78px) !important;
     overflow: hidden !important;
     background: #0b0f19 !important;
     font-family: 'Inter', sans-serif;
+  }
+  
+  /* Left Sidebar */
+  .ai-sidebar {
+    width: 100%;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
+  
+  .ai-sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding-left: 0.5rem;
+  }
+  .ai-sidebar-logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  }
+  .ai-sidebar-logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .ai-sidebar-logo-text strong {
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .ai-sidebar-logo-text span {
+    color: #94a3b8;
+    font-size: 0.75rem;
+  }
+  
+  .ai-new-chat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #1e293b;
+    border: none;
+    color: #f8fafc;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  .ai-new-chat-btn:hover {
+    background: #334155;
+  }
+  .ai-sidebar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1px solid #1e293b;
+    color: #94a3b8;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+  .ai-sidebar-btn:hover {
+    background: #1e293b;
+    color: #f8fafc;
+  }
+  
+  /* Left Sidebar Custom Scrollbar */
+  .ai-sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .ai-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .ai-sidebar::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+
+  /* Section title for history */
+  .ai-history-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #475569;
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem 0.5rem;
+  }
+  
+  .ai-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .ai-history-item {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ai-history-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: #f1f5f9;
+  }
+  .ai-history-item.active {
+    background: rgba(245, 158, 11, 0.1);
+    color: #fbbf24;
+    font-weight: 500;
   }
   
 
@@ -126,6 +257,37 @@ hide:
     40% { transform: scale(1.0); }
   }
   
+  /* Top Breadcrumb Header */
+  .ai-top-header {
+    width: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: #0b0f19;
+    z-index: 20;
+  }
+  .ai-breadcrumb {
+    color: #64748b;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .ai-breadcrumb strong {
+    color: #cbd5e1;
+    font-weight: 500;
+  }
+  .ai-top-actions {
+    display: flex;
+    gap: 1rem;
+    color: #64748b;
+  }
+  .ai-top-actions svg {
+    cursor: pointer;
+  }
+
   /* Main Chat Area Wrapper */
   .ai-main-wrapper {
     flex: 1;
@@ -144,14 +306,20 @@ hide:
     display: flex;
     flex-direction: column;
     padding: 2rem;
+    transition: all 0.3s;
   }
   
   /* Empty state layout centering */
-  .ai-main-wrapper.empty-state .ai-main-scroll {
-    display: flex;
+  .ai-main-wrapper.empty-state {
     justify-content: center;
     align-items: center;
-    flex: 1;
+  }
+  .ai-main-wrapper.empty-state .ai-main-scroll {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0;
   }
   .ai-main-wrapper.empty-state .ai-chat-messages {
     display: none;
@@ -163,7 +331,7 @@ hide:
     text-align: center;
     width: 100%;
     max-width: 800px;
-    margin: 0 auto 2.5rem auto;
+    margin: 0 auto 1.5rem auto;
     animation: fadeIn 0.4s ease;
   }
   .ai-main-wrapper.empty-state .ai-welcome-header {
@@ -173,38 +341,37 @@ hide:
   }
   
   .ai-welcome-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
-    border-radius: 12px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #a3e635, #22c55e); /* Greenish gradient from mockup */
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0b0f19;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+    color: #fff;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
   }
   
+  .ai-welcome-subtitle {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #94a3b8;
+    margin: 0 0 0.2rem 0;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  }
   .ai-welcome-title {
-    font-size: 1.8rem !important;
+    font-size: 2rem !important;
     font-weight: 700 !important;
     color: #ffffff !important;
-    margin: 0 0 0.8rem 0 !important;
+    margin: 0 !important;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.5px;
     text-align: center;
   }
-  .ai-welcome-subtitle {
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #94a3b8;
-    margin: 0 0 1rem 0;
-    font-family: 'Inter', sans-serif;
-    line-height: 1.5;
-    text-align: center;
-  }
 
-  /* Input area at Bottom */
+  /* Input area at Bottom / Center */
   .ai-input-area {
     width: 100%;
     padding: 1rem 2rem 2rem 2rem;
@@ -217,6 +384,11 @@ hide:
     position: sticky;
     bottom: 0;
     margin-top: auto;
+    transition: all 0.3s;
+  }
+  .ai-main-wrapper.empty-state .ai-input-area {
+    margin-top: 0;
+    padding-top: 0;
   }
   
   .ai-input-container {
@@ -224,95 +396,101 @@ hide:
     max-width: 800px;
     margin: 0 auto;
     background: #181c26;
-    border: 1px solid #272d3d;
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
-    padding: 0.8rem 1rem;
+    padding: 1.2rem 1.2rem 0.8rem 1.2rem;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     box-sizing: border-box;
     transition: border-color 0.2s, box-shadow 0.2s;
-    gap: 0.8rem;
   }
   .ai-input-container:focus-within {
     border-color: #3b82f6;
   }
   
   .ai-input {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: none;
     color: #f8fafc;
-    font-size: 0.95rem;
+    font-size: 1rem;
     outline: none;
     resize: none;
     font-family: 'Inter', sans-serif;
-    min-height: 24px;
+    min-height: 48px;
     max-height: 150px;
     overflow-y: auto;
     line-height: 1.5;
-    padding-top: 2px;
+    margin-bottom: 0.5rem;
   }
-  .ai-input::placeholder { color: #475569; }
+  .ai-input::placeholder { color: #64748b; }
+  
+  .ai-input-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .ai-input-tools {
+    display: flex;
+    gap: 0.8rem;
+    color: #64748b;
+  }
+  .ai-input-tools svg {
+    cursor: pointer;
+  }
   
   .ai-send-btn-new {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: #1e293b;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #334155;
     border: none;
-    color: #94a3b8;
+    color: #f8fafc;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    flex-shrink: 0;
   }
   .ai-send-btn-new:hover {
-    background: #334155;
-    color: #ffffff;
+    background: #475569;
   }
   .ai-send-btn-new.active {
     background: #3b82f6;
-    color: #ffffff;
   }
 
-  /* Shortcut Grid */
+  /* Shortcut Pills */
   .ai-suggestion-grid {
     display: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     margin: 1rem auto 0 auto;
     animation: fadeIn 0.4s ease;
   }
   .ai-main-wrapper.empty-state .ai-suggestion-grid {
-    display: grid;
-  }
-  
-  @media (max-width: 768px) {
-    .ai-suggestion-grid {
-      grid-template-columns: 1fr;
-    }
+    display: flex;
   }
   
   .ai-suggestion-card {
-    background: #111520;
-    border: 1px solid #1e293b;
-    border-radius: 10px;
-    padding: 1.2rem;
-    color: #cbd5e1;
-    font-size: 0.85rem;
-    text-align: left;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    line-height: 1.4;
+    white-space: nowrap;
   }
   .ai-suggestion-card:hover {
-    background: #161b27;
-    border-color: #334155;
+    background: rgba(255,255,255,0.05);
+    color: #e2e8f0;
+    border-color: rgba(255,255,255,0.3);
   }
   
   .ai-model-label {
@@ -551,39 +729,65 @@ hide:
   </div>
 </aside>
 
+  <!-- Painel Lateral Esquerdo -->
+  <aside class="ai-sidebar" id="ai-sidebar-element">
+    <div class="ai-sidebar-logo">
+      <div class="ai-sidebar-logo-icon"></div>
+      <div class="ai-sidebar-logo-text">
+        <strong>Assistente</strong>
+        <span>Inteligência de Dados</span>
+      </div>
+    </div>
+    
+    <button class="ai-new-chat-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Nova Conversa
+    </button>
+    <button class="ai-sidebar-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+      Todos os Paineis
+    </button>
+    
+    <div class="ai-history-title">Conversas Recentes</div>
+    <div class="ai-history-list">
+      <div class="ai-history-item">
+        <span>Qual é a situação atual da saúde?</span>
+      </div>
+      <div class="ai-history-item">
+        <span>Compare os indicadores de educação</span>
+      </div>
+      <div class="ai-history-item">
+        <span>Resumo do investimento em 2024</span>
+      </div>
+      <div class="ai-history-item">
+        <span>Alertas da Segurança Pública</span>
+      </div>
+      <div class="ai-history-item">
+        <span>Diretrizes do Planejamento</span>
+      </div>
+    </div>
+  </aside>
+
   <!-- Área Central do Chat -->
   <main class="ai-main-wrapper empty-state">
     
+    <!-- Top Header -->
+    <div class="ai-top-header">
+      <div class="ai-breadcrumb">
+        <span>Assistente</span> > <strong>Nova Conversa</strong>
+      </div>
+      <div class="ai-top-actions">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </div>
+    </div>
+
     <div class="ai-main-scroll">
       <!-- Welcome Header (only visible in empty-state) -->
       <div class="ai-welcome-header">
-        <div class="ai-welcome-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
-        </div>
-        <h1 class="ai-welcome-title">Assistente Estratégico de IA</h1>
-        <p class="ai-welcome-subtitle">Analise indicadores, identifique tendências e tome decisões baseadas em dados sobre Saúde, Educação, Segurança e Infraestrutura do estado.</p>
-      </div>
-
-      <!-- Action Pills (only visible in empty-state) -->
-      <div class="ai-suggestion-grid">
-        <button class="ai-suggestion-card" data-query="saude">
-          Qual é a situação atual da saúde no estado?
-        </button>
-        <button class="ai-suggestion-card" data-query="evasao">
-          Como está a taxa de evasão escolar?
-        </button>
-        <button class="ai-suggestion-card" data-query="seguranca">
-          Quais indicadores de segurança estão abaixo da meta?
-        </button>
-        <button class="ai-suggestion-card" data-query="infraestrutura">
-          Resumo do investimento em infraestrutura em 2024
-        </button>
-        <button class="ai-suggestion-card" data-query="comparar">
-          Compare os indicadores de educação com as metas
-        </button>
-        <button class="ai-suggestion-card" data-query="alertas">
-          Quais alertas críticos existem no painel?
-        </button>
+        <div class="ai-welcome-icon"></div>
+        <p class="ai-welcome-subtitle">Olá! Sou o Assistente, inteligência artificial do MT 360.</p>
+        <h1 class="ai-welcome-title">Como posso ajudar você hoje?</h1>
       </div>
 
       <!-- Container de Mensagens Ativas -->
@@ -594,23 +798,36 @@ hide:
     <div class="ai-input-area">
       <div class="ai-input-container">
         <!-- Textarea -->
-        <textarea class="ai-input" placeholder="Pergunte sobre os indicadores do governo..." rows="1"></textarea>
+        <textarea class="ai-input" placeholder="Pergunte ao Assistente..." rows="1"></textarea>
         
-        <!-- Send button -->
-        <button class="ai-send-btn-new" title="Enviar mensagem">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
+        <div class="ai-input-actions">
+          <div class="ai-input-tools">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          </div>
+          <!-- Send button -->
+          <button class="ai-send-btn-new" title="Enviar mensagem">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="ai-input-footer">IA especializada em indicadores públicos · Enter para enviar</div>
-    </div>
+      <!-- Action Pills (only visible in empty-state) -->
+      <div class="ai-suggestion-grid">
+        <button class="ai-suggestion-card" data-query="saude">Ver todas as obras</button>
+        <button class="ai-suggestion-card" data-query="evasao">Resumo de conversas</button>
+        <button class="ai-suggestion-card" data-query="seguranca">Obras em atraso</button>
+        <button class="ai-suggestion-card" data-query="infraestrutura">Total gasto no mês</button>
+      </div>
   </main>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+  const newChatBtn = document.querySelector('.ai-new-chat-btn');
+  const historyItems = document.querySelectorAll('.ai-history-item');
   const chatMessages = document.getElementById('ai-chat-messages');
-  const welcomeHeader = document.querySelector('.ai-header-content');
+  const welcomeHeader = document.querySelector('.ai-welcome-header');
   const chatInput = document.querySelector('.ai-input');
   const sendBtn = document.querySelector('.ai-send-btn-new');
   const mainScroll = document.querySelector('.ai-main-scroll');
@@ -796,6 +1013,33 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
   });
 
 
+
+  // New Chat btn
+  if (newChatBtn) {
+    newChatBtn.addEventListener('click', function() {
+      chatMessages.innerHTML = '';
+      chatMessages.style.display = 'none';
+      mainWrapper.classList.add('empty-state');
+      chatInput.value = '';
+      chatInput.style.height = '48px'; // Reset height
+      document.querySelectorAll('.ai-history-item').forEach(i => i.classList.remove('active'));
+    });
+  }
+
+  // History items click
+  historyItems.forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('.ai-history-item').forEach(i => i.classList.remove('active'));
+      this.classList.add('active');
+      
+      const queryText = this.querySelector('span').textContent.trim();
+      chatMessages.innerHTML = '';
+      addMessage(queryText, 'user');
+      chatInput.value = '';
+      chatInput.style.height = '48px'; // Reset height
+      handleBotResponse(queryText);
+    });
+  });
 
   // Suggestion Cards click
   document.querySelectorAll('.ai-suggestion-card').forEach(btn => {
