@@ -20,7 +20,7 @@ hide:
   
   <div class="hero-actions">
     <a href="paineis-indicadores/" class="btn btn-primary">Acessar Painel &rarr;</a>
-    <a href="http://167.114.5.193:8000/assistente-ia/" class="btn btn-secondary">
+    <a href="https://mt360-gov-mt.github.io/datalake-mt/assistente" class="btn btn-secondary">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="margin-right: 8px;"><path d="M12 2l3 6 6 3-6 3-3 6-3-6-6-3 6-3z"></path></svg>
       Assistente IA
     </a>
