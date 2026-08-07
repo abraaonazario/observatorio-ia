@@ -565,6 +565,11 @@ hide:
 
   @media (max-width: 768px) {
     .dashboard-container {
+      left: 0 !important;
+      width: 100% !important;
+      top: 48px !important; /* height of mobile mkdocs header */
+      height: calc(100vh - 48px) !important;
+      grid-template-columns: 1fr !important;
       padding-left: 0 !important;
     }
     
@@ -577,12 +582,12 @@ hide:
       max-width: 300px;
       z-index: 1000;
       box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
     }
     
-    .ai-sidebar.collapsed {
-      width: 0 !important;
-      padding: 1.5rem 0 !important;
-      border-right-color: transparent !important;
+    .ai-sidebar.active {
+      transform: translateX(0);
     }
 
     /* Move toggle button to right to avoid being covered by sidebar if possible, 
@@ -732,6 +737,9 @@ hide:
 <div class="dashboard-container">
   <!-- Painel Lateral Esquerdo -->
   <aside class="ai-sidebar" id="ai-sidebar-element">
+    <div class="ai-sidebar-mobile-close" id="mobile-close-sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
     <div class="ai-sidebar-logo">
       <div class="ai-sidebar-logo-icon"></div>
       <div class="ai-sidebar-logo-text">
@@ -775,6 +783,9 @@ hide:
     <!-- Top Header -->
     <div class="ai-top-header">
       <div class="ai-breadcrumb">
+        <span id="mobile-open-sidebar" style="display:none; cursor:pointer; margin-right:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </span>
         <span>Assistente</span> > <strong>Nova Conversa</strong>
       </div>
       <div class="ai-top-actions">
@@ -832,6 +843,31 @@ document.addEventListener("DOMContentLoaded", function() {
   const sendBtn = document.querySelector('.ai-send-btn-new');
   const mainScroll = document.querySelector('.ai-main-scroll');
   const mainWrapper = document.querySelector('.ai-main-wrapper');
+  
+  const sidebar = document.getElementById('ai-sidebar-element');
+  const openSidebarBtn = document.getElementById('mobile-open-sidebar');
+  const closeSidebarBtn = document.getElementById('mobile-close-sidebar');
+
+  // Sidebar toggles for mobile
+  if (openSidebarBtn && closeSidebarBtn && sidebar) {
+    openSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.add('active');
+    });
+    closeSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+    });
+    // Ensure button is visible only on mobile
+    function checkMobile() {
+      if (window.innerWidth <= 768) {
+        openSidebarBtn.style.display = 'inline-flex';
+      } else {
+        openSidebarBtn.style.display = 'none';
+        sidebar.classList.remove('active');
+      }
+    }
+    window.addEventListener('resize', checkMobile);
+    checkMobile();
+  }
 
   // Simulated Answers database
   const responses = {
