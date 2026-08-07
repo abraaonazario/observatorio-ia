@@ -269,48 +269,46 @@ hide:
   }
   
   /* Empty state layout centering (Astra model) */
-  .ai-main-wrapper.empty-state {
-    justify-content: center;
-  }
   .ai-main-wrapper.empty-state .ai-main-scroll {
-    display: none;
+    justify-content: center;
+    align-items: center;
   }
   .ai-main-wrapper.empty-state .ai-input-area {
     margin: 0 auto;
     width: 100%;
     max-width: 1000px;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem 2rem;
     box-sizing: border-box;
   }
 
   /* Welcome Header (Astra Model) */
   .ai-welcome-header {
     display: none;
-    text-align: left;
+    text-align: center;
     width: 100%;
-    max-width: 1000px;
-    margin-bottom: 1.5rem;
-    padding-left: 0.2rem;
+    max-width: 800px;
+    margin: 0 auto 2.5rem auto;
     animation: fadeIn 0.4s ease;
   }
   .ai-main-wrapper.empty-state .ai-welcome-header {
     display: block;
   }
   .ai-welcome-title {
-    font-size: 1.8rem !important;
-    font-weight: 700 !important;
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
     color: #ffffff !important;
-    margin: 0 0 0.3rem 0 !important;
+    margin: 0 0 0.8rem 0 !important;
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.5px;
+    text-align: center;
   }
-  .ai-welcome-subtitle {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     color: #94a3b8;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 1rem 0;
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
+    text-align: center;
   }
 
   /* Input area at Bottom */
@@ -452,19 +450,6 @@ hide:
     transform: scale(1.05);
   }
   
-  /* Shortcut Pills (below input container) */
-  .ai-action-pills {
-    display: none;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-    width: 100%;
-    max-width: 1000px;
-    animation: fadeIn 0.4s ease;
-  }
-  .ai-main-wrapper.empty-state .ai-action-pills {
-    display: flex;
   }
   
   .ai-pill-btn {
@@ -714,19 +699,37 @@ hide:
     </button>
     
     <div class="ai-main-scroll">
-      <!-- Container de Mensagens Ativas -->
-      <div id="ai-chat-messages" class="ai-chat-messages"></div>
-    </div>
-
-    <!-- Barra de Digitação (Chat Input) Fixada na Base -->
-    <div class="ai-input-area">
-      
       <!-- Welcome Header (only visible in empty-state) -->
       <div class="ai-welcome-header">
         <h1 class="ai-welcome-title">Olá!</h1>
         <p class="ai-welcome-subtitle">MT 360º | Central de Dados Unificados de Mato Grosso</p>
       </div>
 
+      <!-- Action Pills (only visible in empty-state) -->
+      <div class="ai-action-pills">
+        <button class="ai-pill-btn" data-query="saude">
+          <span>🏥 Análise de Saúde</span>
+        </button>
+        <button class="ai-pill-btn" data-query="evasao">
+          <span>🎓 Metas de Educação</span>
+        </button>
+        <button class="ai-pill-btn" data-query="seguranca">
+          <span>🛡️ Alertas de Segurança</span>
+        </button>
+        <button class="ai-pill-btn" data-query="infraestrutura">
+          <span>🏗️ Obras de Infraestrutura</span>
+        </button>
+        <button class="ai-pill-btn" data-query="planejamento">
+          <span>📊 Diretrizes de Planejamento</span>
+        </button>
+      </div>
+
+      <!-- Container de Mensagens Ativas -->
+      <div id="ai-chat-messages" class="ai-chat-messages"></div>
+    </div>
+
+    <!-- Barra de Digitação (Chat Input) Fixada na Base -->
+    <div class="ai-input-area">
       <div class="ai-input-container">
         <!-- Top Row: Textarea -->
         <textarea class="ai-input" placeholder="Pergunte ao Assistente..." rows="1"></textarea>
@@ -752,25 +755,6 @@ hide:
             </button>
           </div>
         </div>
-      </div>
-
-      <!-- Action Pills (only visible in empty-state) -->
-      <div class="ai-action-pills">
-        <button class="ai-pill-btn" data-query="saude">
-          <span>🏥 Análise de Saúde</span>
-        </button>
-        <button class="ai-pill-btn" data-query="evasao">
-          <span>🎓 Metas de Educação</span>
-        </button>
-        <button class="ai-pill-btn" data-query="seguranca">
-          <span>🛡️ Alertas de Segurança</span>
-        </button>
-        <button class="ai-pill-btn" data-query="infraestrutura">
-          <span>🏗️ Obras de Infraestrutura</span>
-        </button>
-        <button class="ai-pill-btn" data-query="planejamento">
-          <span>📊 Diretrizes de Planejamento</span>
-        </button>
       </div>
 
       <div class="ai-input-footer">IA especializada em indicadores públicos · Feito para o MT</div>
