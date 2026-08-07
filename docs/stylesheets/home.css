@@ -536,7 +536,7 @@ body.dark-theme .btn-secondary:hover {
   height: 70px; font-family: 'Inter', sans-serif; box-sizing: border-box;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.nav-brand { display: flex; align-items: center; gap: 1rem; }
+.nav-brand { display: flex; align-items: center; gap: 2rem; }
 .nav-logo {
   background: linear-gradient(135deg, #0ea5e9, #10b981); color: white; width: 35px; height: 35px;
   border-radius: 50%; display: flex; align-items: center; justify-content: center;

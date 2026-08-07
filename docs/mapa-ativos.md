@@ -11,13 +11,22 @@ hide:
     --theme-color: #3b82f6; /* Azul do Mapa */
   }
   
+  /* Zera margens padroes do mkdocs que estavam empurrando para baixo */
+  .md-container { padding-top: 0 !important; }
+  .md-main { margin: 0 !important; padding: 0 !important; }
+  .md-main__inner { margin-top: 0 !important; padding: 0 !important; }
+  .md-content { padding: 0 !important; margin: 0 !important; }
+
   /* Layout do mapa ocupando a tela inteira abaixo do menu e respeitando a barra lateral */
+  .custom-top-nav {
+    border-bottom: none !important;
+  }
   .dashboard-container {
     padding: 0 !important;
-    margin: 90px 0 0 78px !important;
+    margin: 70px 0 0 78px !important;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 90px); 
+    height: calc(100vh - 70px); 
     width: calc(100% - 78px);
     overflow: hidden;
     position: relative; /* Importante para a sidebar absoluta */
@@ -106,29 +115,49 @@ hide:
   .theme-btn.active[data-theme="financas"] { background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #10b981; }
   .theme-btn.active[data-theme="assistencia"] { background: rgba(236, 72, 153, 0.2); border-color: #ec4899; color: #ec4899; }
 
-  /* Caixa de Estatísticas Analíticas */
+  /* Caixa de Estatísticas Analíticas (Movida para o topo) */
   .stats-box {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 1rem;
-    border: 1px solid rgba(255,255,255,0.05);
+    position: absolute;
+    top: 20px;
+    left: 360px; /* Espaço para a sidebar */
+    right: 20px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
   .stats-title {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #94a3b8;
-    margin-bottom: 0.8rem;
+    margin: 0;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    padding-right: 2rem;
+  }
+  #stats-content {
+    display: flex;
+    gap: 3rem;
+    flex: 1;
+    justify-content: flex-start;
   }
   .stat-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
   }
-  .stat-row:last-child { margin-bottom: 0; }
-  .stat-label { font-size: 0.85rem; color: #cbd5e1; }
-  .stat-value { font-size: 1rem; font-weight: 700; color: white; }
+  .stat-label { font-size: 0.75rem; color: #cbd5e1; margin-bottom: 0.3rem; }
+  .stat-value { font-size: 1.15rem; font-weight: 700; color: white; }
 
   /* Estilização dos Popups do mapa */
   .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -247,15 +276,15 @@ hide:
         <option value="Barra do Garças">Barra do Garças</option>
       </select>
     </div>
+  </div>
 
-    <!-- Caixa de Estatísticas -->
-    <div class="stats-box">
-      <div class="stats-title" id="stats-title">ESTATÍSTICAS GERAIS</div>
-      <div id="stats-content">
-        <div class="stat-row"><span class="stat-label">Total de Ativos:</span> <span class="stat-value">5</span></div>
-        <div class="stat-row"><span class="stat-label">Conexões Ativas:</span> <span class="stat-value">365</span></div>
-        <div class="stat-row"><span class="stat-label">Status Regional:</span> <span class="stat-value" style="color:#10b981;">Estável</span></div>
-      </div>
+  <!-- Caixa de Estatísticas no Topo -->
+  <div class="stats-box">
+    <div class="stats-title" id="stats-title">ESTATÍSTICAS GERAIS</div>
+    <div id="stats-content">
+      <div class="stat-row"><span class="stat-label">Total de Ativos:</span> <span class="stat-value">5</span></div>
+      <div class="stat-row"><span class="stat-label">Conexões Ativas:</span> <span class="stat-value">365</span></div>
+      <div class="stat-row"><span class="stat-label">Status Regional:</span> <span class="stat-value" style="color:#10b981;">Estável</span></div>
     </div>
   </div>
 
