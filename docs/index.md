@@ -10,7 +10,7 @@ hide:
 
 <div class="hero-section">
   <div class="hero-badge">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="margin-right: 8px;"><path d="M12 2l3 6 6 3-6 3-3 6-3-6-6-3 6-3z"></path></svg> Transparência e Gestão Pública de Excelência
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="margin-right: 8px;"><path d="M12 2l3 6 6 3-6 3-3 6-3-6-6-3 6-3z"></path></svg> Uma visão analítica para a Alta Gestão Governamental
   </div>
   <h1 class="hero-title">INDICADORES ESTRATÉGICOS PARA UM ESTADO BRILHANTE</h1>
   <p class="hero-subtitle">
