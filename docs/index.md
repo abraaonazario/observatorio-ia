@@ -29,7 +29,7 @@ hide:
   <div class="hero-stats">
     <div class="stat-item">
       <h4>+39</h4>
-      <p>Mapeados</p>
+      <p>Secretarias Mapeadas</p>
     </div>
     <div class="stat-item">
       <h4>4</h4>
