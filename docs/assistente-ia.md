@@ -268,17 +268,22 @@ hide:
     padding: 2rem;
   }
   
-  /* Empty state layout centering (Astra model) */
-  .ai-main-wrapper.empty-state .ai-main-scroll {
+  /* Empty state layout centering */
+  .ai-main-wrapper.empty-state {
     justify-content: center;
     align-items: center;
+    height: 100%;
+  }
+  .ai-main-wrapper.empty-state .ai-main-scroll {
+    display: none;
   }
   .ai-main-wrapper.empty-state .ai-input-area {
     margin: 0 auto;
     width: 100%;
-    max-width: 1000px;
-    padding: 1rem 2rem 2rem 2rem;
-    box-sizing: border-box;
+    max-width: 800px;
+    padding: 1rem;
+    background: transparent;
+    border-top: none;
   }
 
   /* Welcome Header (Astra Model) */
@@ -699,37 +704,19 @@ hide:
     </button>
     
     <div class="ai-main-scroll">
-      <!-- Welcome Header (only visible in empty-state) -->
-      <div class="ai-welcome-header">
-        <h1 class="ai-welcome-title">Olá!</h1>
-        <p class="ai-welcome-subtitle">MT 360º | Central de Dados Unificados de Mato Grosso</p>
-      </div>
-
-      <!-- Action Pills (only visible in empty-state) -->
-      <div class="ai-action-pills">
-        <button class="ai-pill-btn" data-query="saude">
-          <span>🏥 Análise de Saúde</span>
-        </button>
-        <button class="ai-pill-btn" data-query="evasao">
-          <span>🎓 Metas de Educação</span>
-        </button>
-        <button class="ai-pill-btn" data-query="seguranca">
-          <span>🛡️ Alertas de Segurança</span>
-        </button>
-        <button class="ai-pill-btn" data-query="infraestrutura">
-          <span>🏗️ Obras de Infraestrutura</span>
-        </button>
-        <button class="ai-pill-btn" data-query="planejamento">
-          <span>📊 Diretrizes de Planejamento</span>
-        </button>
-      </div>
-
       <!-- Container de Mensagens Ativas -->
       <div id="ai-chat-messages" class="ai-chat-messages"></div>
     </div>
 
     <!-- Barra de Digitação (Chat Input) Fixada na Base -->
     <div class="ai-input-area">
+      
+      <!-- Welcome Header (only visible in empty-state) -->
+      <div class="ai-welcome-header">
+        <h1 class="ai-welcome-title">Olá!</h1>
+        <p class="ai-welcome-subtitle">MT 360º | Central de Dados Unificados de Mato Grosso</p>
+      </div>
+
       <div class="ai-input-container">
         <!-- Top Row: Textarea -->
         <textarea class="ai-input" placeholder="Pergunte ao Assistente..." rows="1"></textarea>
@@ -755,6 +742,25 @@ hide:
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- Action Pills (only visible in empty-state) -->
+      <div class="ai-action-pills">
+        <button class="ai-pill-btn" data-query="saude">
+          <span>🏥 Análise de Saúde</span>
+        </button>
+        <button class="ai-pill-btn" data-query="evasao">
+          <span>🎓 Metas de Educação</span>
+        </button>
+        <button class="ai-pill-btn" data-query="seguranca">
+          <span>🛡️ Alertas de Segurança</span>
+        </button>
+        <button class="ai-pill-btn" data-query="infraestrutura">
+          <span>🏗️ Obras de Infraestrutura</span>
+        </button>
+        <button class="ai-pill-btn" data-query="planejamento">
+          <span>📊 Diretrizes de Planejamento</span>
+        </button>
       </div>
 
       <div class="ai-input-footer">IA especializada em indicadores públicos · Feito para o MT</div>
