@@ -196,8 +196,25 @@
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .charts-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 768px) {
+  .pbi-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .pbi-sidebar.open-mobile {
+    transform: translateX(0);
+  }
+  .dashboard-container {
+    padding-left: 1.5rem !important;
+  }
+  /* If container has zero padding on left, ensure it fills the width */
+}
 @media (max-width: 600px) {
   .kpi-grid { grid-template-columns: 1fr; }
+  .dashboard-container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
 }
 
 /* Dashboard Specific Header */

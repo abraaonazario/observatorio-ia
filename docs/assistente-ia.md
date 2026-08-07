@@ -17,7 +17,8 @@ hide:
     margin: 90px 0 0 0 !important; /* Push down exactly 90px to stay below the fixed header */
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 90px); 
+    height: calc(100vh - 90px);
+    height: calc(100dvh - 90px);
     width: 100%;
     overflow: hidden;
     background: #0b0f19;
@@ -499,6 +500,106 @@ hide:
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding-left: 0 !important;
+    }
+    
+    .ai-sidebar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 100% !important;
+      max-width: 300px;
+      z-index: 1000;
+      box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+    }
+    
+    .ai-sidebar.collapsed {
+      width: 0 !important;
+      padding: 1.5rem 0 !important;
+      border-right-color: transparent !important;
+    }
+
+    /* Move toggle button to right to avoid being covered by sidebar if possible, 
+       or just keep it left. We will add a close button inside sidebar. */
+    .ai-sidebar-toggle {
+      top: 1rem;
+      right: 1rem;
+      left: auto;
+    }
+
+    .ai-input-area {
+      padding: 1rem 0.5rem;
+    }
+
+    .ai-action-pills {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      width: 100%;
+      padding-bottom: 0.5rem;
+    }
+    
+    /* Esconde barra de rolagem mas permite scroll */
+    .ai-action-pills::-webkit-scrollbar {
+      height: 4px;
+    }
+    .ai-action-pills::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+
+    .ai-pill-btn {
+      width: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .ai-welcome-title {
+      font-size: 1.5rem !important;
+    }
+
+    .ai-welcome-subtitle {
+      font-size: 0.85rem;
+    }
+    
+    .ai-input-tools {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+    
+    .ai-tools-left {
+      justify-content: center;
+    }
+    
+    .ai-tools-right {
+      justify-content: space-between;
+    }
+    
+    .ai-sidebar-mobile-close {
+      display: flex !important;
+    }
+  }
+  
+  .ai-sidebar-mobile-close {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+  }
 </style>
 
 <!-- O MESMO MENU DOS DASHBOARDS! -->
@@ -566,11 +667,16 @@ hide:
   </div>
 </aside>
 
-<!-- Container Principal da IA -->
-<div class="dashboard-container">
-  
   <!-- Painel Lateral Esquerdo -->
-  <aside class="ai-sidebar">
+  <aside class="ai-sidebar" id="ai-sidebar-element">
+    <script>
+      if (window.innerWidth <= 768) {
+        document.getElementById('ai-sidebar-element').classList.add('collapsed');
+      }
+    </script>
+    <div class="ai-sidebar-mobile-close" id="ai-sidebar-mobile-close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </div>
     <button class="ai-new-chat-btn">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       Nova Conversa
@@ -603,7 +709,7 @@ hide:
   <!-- Área Central do Chat -->
   <main class="ai-main-wrapper empty-state">
     <!-- Botão de recolher/expandir sidebar -->
-    <button class="ai-sidebar-toggle" id="ai-sidebar-toggle" title="Esconder Histórico">
+    <button class="ai-sidebar-toggle" id="ai-sidebar-toggle" title="Menu de Histórico">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
     </button>
     
@@ -676,6 +782,7 @@ hide:
 document.addEventListener("DOMContentLoaded", function() {
   const sidebar = document.querySelector('.ai-sidebar');
   const sidebarToggle = document.getElementById('ai-sidebar-toggle');
+  const sidebarMobileClose = document.getElementById('ai-sidebar-mobile-close');
   const newChatBtn = document.querySelector('.ai-new-chat-btn');
   const historyItems = document.querySelectorAll('.ai-history-item');
   const chatMessages = document.getElementById('ai-chat-messages');
@@ -685,17 +792,27 @@ document.addEventListener("DOMContentLoaded", function() {
   const mainScroll = document.querySelector('.ai-main-scroll');
   const mainWrapper = document.querySelector('.ai-main-wrapper');
   
+  // Collapse sidebar on mobile by default
+  if (window.innerWidth <= 768) {
+    sidebar.classList.add('collapsed');
+  }
+
   // Toggle Sidebar
   sidebarToggle.addEventListener('click', function() {
     sidebar.classList.toggle('collapsed');
-    if (sidebar.classList.contains('collapsed')) {
-      sidebarToggle.title = "Mostrar Histórico";
-      sidebarToggle.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>`;
-    } else {
-      sidebarToggle.title = "Esconder Histórico";
-      sidebarToggle.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`;
-    }
   });
+
+  // Mobile close button
+  sidebarMobileClose.addEventListener('click', function() {
+    sidebar.classList.add('collapsed');
+  });
+
+  // Auto collapse sidebar on mobile when interacting
+  function autoCollapseSidebar() {
+    if (window.innerWidth <= 768) {
+      sidebar.classList.add('collapsed');
+    }
+  }
 
   // Simulated Answers database
   const responses = {
@@ -884,6 +1001,7 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
     chatInput.value = '';
     chatInput.style.height = '24px'; // Reset height
     document.querySelectorAll('.ai-history-item').forEach(i => i.classList.remove('active'));
+    autoCollapseSidebar();
   });
 
   // History items click
@@ -898,6 +1016,7 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
       chatInput.value = '';
       chatInput.style.height = '24px'; // Reset height
       handleBotResponse(queryText);
+      autoCollapseSidebar();
     });
   });
 
