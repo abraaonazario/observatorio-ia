@@ -27,7 +27,7 @@ hide:
   
   /* Left Sidebar */
   .ai-sidebar {
-    width: 380px;
+    width: 280px;
     background: #0f172a;
     border-right: 1px solid #1e293b;
     display: flex;
@@ -125,10 +125,11 @@ hide:
   .ai-chat-messages {
     display: flex;
     width: 100%;
-    max-width: 1000px;
+    max-width: 800px;
+    margin: 0 auto;
     flex-direction: column;
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
   }
   
   .ai-message {
@@ -256,6 +257,7 @@ hide:
     position: relative;
     background: #0b0f19;
     overflow: hidden;
+    height: 100%;
   }
   
   /* Scrollable Content Area */
@@ -264,7 +266,6 @@ hide:
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: 2rem;
   }
   
@@ -307,6 +308,7 @@ hide:
     letter-spacing: -0.5px;
     text-align: center;
   }
+  .ai-welcome-subtitle {
     font-size: 1.1rem;
     font-weight: 400;
     color: #94a3b8;
@@ -323,14 +325,18 @@ hide:
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(transparent, #0b0f19 20%);
+    background: #0b0f19;
     z-index: 10;
     box-sizing: border-box;
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
   }
   
   .ai-input-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 800px;
+    margin: 0 auto;
     background: #181c26;
     border: 1px solid #272d3d;
     border-radius: 20px;
@@ -395,6 +401,21 @@ hide:
   .ai-tool-btn-circle:hover {
     background: rgba(255,255,255,0.08);
     color: #ffffff;
+  }
+
+  /* Shortcut Pills (below input container) */
+  .ai-action-pills {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 1.5rem auto 0 auto;
+    width: 100%;
+    max-width: 800px;
+    animation: fadeIn 0.4s ease;
+  }
+  .ai-main-wrapper.empty-state .ai-action-pills {
+    display: flex;
   }
   
   .ai-tool-pill-btn {
