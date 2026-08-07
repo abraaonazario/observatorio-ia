@@ -75,7 +75,7 @@ Combinando tecnologias de **Data Lake** com o poder da **Inteligência Artificia
 </div>
 
 <div class="section-wrapper datalake-section">
-  <span class="section-badge">Sobre o Observatório</span>
+  <span class="section-badge">Sobre o MT 360</span>
   <h2 class="section-title">Um Data Lake para todo o Estado</h2>
   <p class="hero-subtitle">
     O MT 360º atua como um Data Lake central, unificando os dados de <strong>39 secretarias</strong> do Estado em uma única plataforma inteligente. Rompemos com a fragmentação de informações...
@@ -138,7 +138,7 @@ Combinando tecnologias de **Data Lake** com o poder da **Inteligência Artificia
 </div>
 
 <div class="section-wrapper" style="background: white;">
-  <h2 class="section-title">Metodologia do Observatório de IA</h2>
+  <h2 class="section-title">Metodologia do MT 360</h2>
   <p class="hero-subtitle">Do dado bruto Ã  decisão estratégica: um fluxo estruturado em quatro etapas que garante confiabilidade e agilidade.</p>
 
 <style>
@@ -218,7 +218,7 @@ Combinando tecnologias de **Data Lake** com o poder da **Inteligência Artificia
 </style>
 
   <div style="text-align: center; margin: 3rem auto; max-width: 1000px;">
-    <img src="layout/arquitetutura.png" alt="Arquitetura do Observatório de IA" style="max-width: 100%; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+    <img src="layout/arquitetutura.png" alt="Arquitetura do MT 360" style="max-width: 100%; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
   </div>
 
 <div class="methodology-flow" id="metodologia">
@@ -372,7 +372,7 @@ Combinando tecnologias de **Data Lake** com o poder da **Inteligência Artificia
     <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; color: #64748b; font-size: 0.85rem; flex-wrap: wrap; gap: 1rem;">
         <div style="display: flex; align-items: center; gap: 10px;">
             <div style="background: #e8f5e9; color: #22c55e; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%;">📊</div>
-            &copy; 2024 Observatório de IA MT - Painel de Indicadores Estratégicos
+            &copy; 2024 MT 360 - Painel de Indicadores Estratégicos
         </div>
         <div style="display: flex; gap: 1.5rem; font-weight: 600;">
             <a href="#" style="color: #475569; text-decoration: none;">Termos</a>

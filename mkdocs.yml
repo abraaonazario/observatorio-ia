@@ -24,6 +24,7 @@ extra_javascript:
   - javascripts/chart-datalabels.js
   - javascripts/theme-toggle.js
   - javascripts/agent-widget.js
+  - javascripts/dynamic-date.js
 
 markdown_extensions:
   - attr_list
@@ -37,7 +38,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - MT 360º:
-      - Observatório de IA: observatorio-ia-dashboard.md
+      - MT 360: observatorio-ia-dashboard.md
       - Painéis de Indicadores: paineis-indicadores.md
       - Dados Abertos (MT): painel-mt.md
   - Mapa: mapa-ativos.md

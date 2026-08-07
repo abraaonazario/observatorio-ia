@@ -185,7 +185,7 @@ hide:
   <div class="bi-header">
     <div class="bi-title">
       <h1>BI • Cadeia de Valor Integrada</h1>
-      <p>Observatório Governamental - Estado de Mato Grosso</p>
+      <p>MT 360 - Estado de Mato Grosso</p>
     </div>
     <div style="text-align:right;">
       <div style="font-size:0.75rem; color:#9ca3af;">Índice Geral de Eficiência</div>

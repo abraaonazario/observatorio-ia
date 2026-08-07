@@ -451,7 +451,7 @@ hide:
   .scrollable-chart::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
   /* =========================================
-     DARK MODE — Estilo Observatório de IA MT
+     DARK MODE — Estilo MT 360
      Premium dark: fundo #0d1117, cards #161b22
      ========================================= */
 
@@ -577,7 +577,7 @@ hide:
 <div class="pbi-scale-wrapper">
   <div class="pbi-dashboard">
     
-    <!-- Sidebar Observatório MT -->
+    <!-- Sidebar MT 360 -->
     <aside class="pbi-sidebar">
       <!-- Home -->
       <div class="pbi-nav-btn active" title="Início" onclick="window.location.href='/'" style="cursor:pointer;">
@@ -1277,7 +1277,7 @@ window.toggleDarkMode = function() {
       </div>
     </div>
     <div class="obs-foot">
-      <span>🌐 Observatório de Dados MT · Estado de Mato Grosso</span>
+      <span>🌐 MT 360 · Estado de Mato Grosso</span>
       <a onclick="window.location.href='/'">← Voltar ao início</a>
     </div>
   </div>

@@ -1,6 +1,6 @@
 # Copiloto Executivo: Agente de IA para a Gestão
 
-Em resposta à necessidade de dar agilidade à tomada de decisão na Secretaria de Educação (SEDUC), o Observatório de IA documenta e prototipa a arquitetura do **Agente Especializado para a Área Executiva** (Copiloto Educacional).
+Em resposta à necessidade de dar agilidade à tomada de decisão na Secretaria de Educação (SEDUC), o MT 360 documenta e prototipa a arquitetura do **Agente Especializado para a Área Executiva** (Copiloto Educacional).
 
 Este projeto visa substituir a busca manual em dezenas de relatórios por uma interface conversacional de linguagem natural, permitindo que Secretários, Adjuntos e Diretores interajam diretamente com o Data Lake.
 

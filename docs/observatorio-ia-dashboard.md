@@ -413,7 +413,7 @@ hide:
 <div class="dashboard-container">
   <div class="dash-header">
     <div class="dash-title-group">
-      <h1>Dashboard Observatório de IA</h1>
+      <h1>Dashboard MT 360</h1>
       <p>Indicadores de execução e desempenho - RAG 2025 Mato Grosso</p>
     </div>
     <div class="dash-actions">

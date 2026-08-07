@@ -4,9 +4,9 @@ hide:
   - toc
 ---
 
-# Observatório de IA
+# MT 360
 
-O Observatório de IA é o ápice da maturidade analítica da nossa plataforma. Ele congrega modelos de *Machine Learning* e algoritmos de Inteligência Artificial desenvolvidos para otimizar a máquina pública e melhorar a oferta de serviços ao cidadão.
+O MT 360 é o ápice da maturidade analítica da nossa plataforma. Ele congrega modelos de *Machine Learning* e algoritmos de Inteligência Artificial desenvolvidos para otimizar a máquina pública e melhorar a oferta de serviços ao cidadão.
 
 ## Nossos Modelos de Inteligência Artificial
 
