@@ -11,6 +11,11 @@
         </a>
       </div>
     </div>
+    
+    <div class="mobile-nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" style="padding: 10px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </div>
+    
     <nav class="nav-links">
       <a href="{{ base_url }}/" class="{% if page.url == '' %}active{% endif %}">Home</a>
       <a href="{{ base_url }}/paineis-indicadores/" class="{% if page.url == 'paineis-indicadores/' %}active{% endif %}">MT 360º</a>
