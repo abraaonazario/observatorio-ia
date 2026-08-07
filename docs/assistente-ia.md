@@ -2,6 +2,7 @@
 hide:
   - navigation
   - toc
+  - footer
 ---
 
 <script>document.body.classList.add('dashboard-page');</script>
@@ -13,28 +14,31 @@ hide:
   
   /* Reset and Layout */
   .dashboard-container {
-    padding: 0 0 0 78px !important;
-    margin: 90px 0 0 0 !important; /* Push down exactly 90px to stay below the fixed header */
-    display: flex;
-    flex-direction: row;
-    height: calc(100vh - 90px);
-    height: calc(100dvh - 90px);
-    width: 100%;
-    overflow: hidden;
-    background: #0b0f19;
+    position: fixed !important;
+    top: 90px !important;
+    left: 78px !important; /* Pula a pbi-sidebar principal */
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: 260px 1fr !important;
+    height: calc(100vh - 90px) !important;
+    width: calc(100% - 78px) !important;
+    overflow: hidden !important;
+    background: #0b0f19 !important;
     font-family: 'Inter', sans-serif;
   }
   
   /* Left Sidebar */
   .ai-sidebar {
-    width: 280px;
+    width: 100%;
     background: #0f172a;
     border-right: 1px solid #1e293b;
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem;
     overflow-y: auto;
-    flex-shrink: 0;
   }
   
   .ai-new-chat-btn {
