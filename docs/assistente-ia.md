@@ -22,7 +22,7 @@ hide:
     margin: 0 !important;
     padding: 0 !important;
     display: grid !important;
-    grid-template-columns: 260px 1fr !important;
+    grid-template-columns: 1fr !important;
     height: calc(100vh - 90px) !important;
     width: calc(100% - 78px) !important;
     overflow: hidden !important;
@@ -30,100 +30,7 @@ hide:
     font-family: 'Inter', sans-serif;
   }
   
-  /* Left Sidebar */
-  .ai-sidebar {
-    width: 100%;
-    background: #0f172a;
-    border-right: 1px solid #1e293b;
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem 1rem;
-    overflow-y: auto;
-  }
-  
-  .ai-new-chat-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    background: transparent;
-    border: 1px solid #f59e0b;
-    color: #f59e0b;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 1.5rem;
-    width: 100%;
-  }
-  .ai-new-chat-btn:hover {
-    background: rgba(245, 158, 11, 0.1);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
-  }
-  
-  /* Left Sidebar Custom Scrollbar */
-  .ai-sidebar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .ai-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .ai-sidebar::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 4px;
-  }
-  .ai-sidebar::-webkit-scrollbar-thumb:hover {
-    background: #334155;
-  }
 
-  /* Section title for history */
-  .ai-history-title {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #475569;
-    font-weight: 700;
-    margin: 0.5rem 0 0.5rem 0.5rem;
-  }
-  
-  .ai-history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .ai-history-item {
-    color: #94a3b8;
-    font-size: 0.88rem;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    overflow: hidden;
-    width: 100%;
-    border: 1px solid transparent;
-  }
-  .ai-history-item span {
-    flex: 1;
-    line-height: 1.4;
-  }
-  .ai-history-item:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: #f1f5f9;
-  }
-  .ai-history-item.active {
-    background: rgba(245, 158, 11, 0.1);
-    color: #fbbf24;
-    border-color: rgba(245, 158, 11, 0.25);
-    font-weight: 500;
-  }
-  .ai-history-item.active svg {
-    color: #fbbf24;
-  }
 
   /* Chat Messages CSS */
   .ai-chat-messages {
@@ -194,41 +101,7 @@ hide:
     color: #ffffff;
   }
   
-  /* Collapsible Sidebar Styles */
-  .ai-sidebar-toggle {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid #1e293b;
-    color: #cbd5e1;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 100;
-    transition: all 0.2s;
-  }
-  .ai-sidebar-toggle:hover {
-    background: rgba(30, 41, 59, 0.9);
-    border-color: #f59e0b;
-    color: #f8fafc;
-  }
-  
-  /* Sidebar state transitions */
-  .ai-sidebar {
-    transition: width 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
-  }
-  
-  .ai-sidebar.collapsed {
-    width: 0 !important;
-    padding: 1.5rem 0 !important;
-    border-right-color: transparent !important;
-    overflow: hidden;
-  }
+
   
   /* Typing Indicator */
   .typing-indicator {
@@ -678,51 +551,8 @@ hide:
   </div>
 </aside>
 
-  <!-- Painel Lateral Esquerdo -->
-  <aside class="ai-sidebar" id="ai-sidebar-element">
-    <script>
-      if (window.innerWidth <= 768) {
-        document.getElementById('ai-sidebar-element').classList.add('collapsed');
-      }
-    </script>
-    <div class="ai-sidebar-mobile-close" id="ai-sidebar-mobile-close">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </div>
-    <button class="ai-new-chat-btn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      Nova Conversa
-    </button>
-    <div class="ai-history-title">Conversas Recentes</div>
-    <div class="ai-history-list">
-      <div class="ai-history-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Qual é a situação atual da saúde no estado?</span>
-      </div>
-      <div class="ai-history-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Compare os indicadores de educação com as metas</span>
-      </div>
-      <div class="ai-history-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Resumo do investimento em infraestrutura em 2024</span>
-      </div>
-      <div class="ai-history-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Alertas da Segurança Pública</span>
-      </div>
-      <div class="ai-history-item">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Diretrizes do Planejamento Estratégico</span>
-      </div>
-    </div>
-  </aside>
-
   <!-- Área Central do Chat -->
   <main class="ai-main-wrapper empty-state">
-    <!-- Botão de recolher/expandir sidebar -->
-    <button class="ai-sidebar-toggle" id="ai-sidebar-toggle" title="Menu de Histórico">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
     
     <div class="ai-main-scroll">
       <!-- Welcome Header (only visible in empty-state) -->
@@ -779,39 +609,12 @@ hide:
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const sidebar = document.querySelector('.ai-sidebar');
-  const sidebarToggle = document.getElementById('ai-sidebar-toggle');
-  const sidebarMobileClose = document.getElementById('ai-sidebar-mobile-close');
-  const newChatBtn = document.querySelector('.ai-new-chat-btn');
-  const historyItems = document.querySelectorAll('.ai-history-item');
   const chatMessages = document.getElementById('ai-chat-messages');
   const welcomeHeader = document.querySelector('.ai-header-content');
   const chatInput = document.querySelector('.ai-input');
   const sendBtn = document.querySelector('.ai-send-btn-new');
   const mainScroll = document.querySelector('.ai-main-scroll');
   const mainWrapper = document.querySelector('.ai-main-wrapper');
-  
-  // Collapse sidebar on mobile by default
-  if (window.innerWidth <= 768) {
-    sidebar.classList.add('collapsed');
-  }
-
-  // Toggle Sidebar
-  sidebarToggle.addEventListener('click', function() {
-    sidebar.classList.toggle('collapsed');
-  });
-
-  // Mobile close button
-  sidebarMobileClose.addEventListener('click', function() {
-    sidebar.classList.add('collapsed');
-  });
-
-  // Auto collapse sidebar on mobile when interacting
-  function autoCollapseSidebar() {
-    if (window.innerWidth <= 768) {
-      sidebar.classList.add('collapsed');
-    }
-  }
 
   // Simulated Answers database
   const responses = {
@@ -992,32 +795,7 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
     this.style.height = this.scrollHeight + 'px';
   });
 
-  // New Chat btn
-  newChatBtn.addEventListener('click', function() {
-    chatMessages.innerHTML = '';
-    chatMessages.style.display = 'none';
-    mainWrapper.classList.add('empty-state');
-    chatInput.value = '';
-    chatInput.style.height = '24px'; // Reset height
-    document.querySelectorAll('.ai-history-item').forEach(i => i.classList.remove('active'));
-    autoCollapseSidebar();
-  });
 
-  // History items click
-  historyItems.forEach(item => {
-    item.addEventListener('click', function() {
-      document.querySelectorAll('.ai-history-item').forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-      
-      const queryText = this.querySelector('span').textContent.trim();
-      chatMessages.innerHTML = '';
-      addMessage(queryText, 'user');
-      chatInput.value = '';
-      chatInput.style.height = '24px'; // Reset height
-      handleBotResponse(queryText);
-      autoCollapseSidebar();
-    });
-  });
 
   // Suggestion Cards click
   document.querySelectorAll('.ai-suggestion-card').forEach(btn => {
