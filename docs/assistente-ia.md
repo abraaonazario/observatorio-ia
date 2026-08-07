@@ -1019,8 +1019,8 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
     });
   });
 
-  // Pill buttons click
-  document.querySelectorAll('.ai-pill-btn').forEach(btn => {
+  // Suggestion Cards click
+  document.querySelectorAll('.ai-suggestion-card').forEach(btn => {
     btn.addEventListener('click', function() {
       const queryType = this.getAttribute('data-query');
       let queryText = "";
@@ -1028,7 +1028,8 @@ Os alertas de planejamento recomendam foco contínuo na agilização de licencia
       else if (queryType === 'evasao') queryText = "Como está a taxa de evasão escolar?";
       else if (queryType === 'seguranca') queryText = "Quais indicadores de segurança estão abaixo da meta?";
       else if (queryType === 'infraestrutura') queryText = "Resumo do investimento em infraestrutura em 2024";
-      else if (queryType === 'planejamento') queryText = "Quais são as diretrizes do planejamento estratégico?";
+      else if (queryType === 'comparar') queryText = "Compare os indicadores de educação com as metas";
+      else if (queryType === 'alertas') queryText = "Quais alertas críticos existem no painel?";
       
       if (queryText) {
         addMessage(queryText, 'user');
