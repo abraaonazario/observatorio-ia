@@ -32,7 +32,7 @@ hide:
       <p>Secretarias Mapeadas</p>
     </div>
     <div class="stat-item">
-      <h4>4</h4>
+      <h4>7</h4>
       <p>Áreas Monitoradas</p>
     </div>
     <div class="stat-item">
