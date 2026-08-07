@@ -274,24 +274,17 @@ hide:
   }
   
   /* Empty state layout centering */
-  .ai-main-wrapper.empty-state {
+  .ai-main-wrapper.empty-state .ai-main-scroll {
+    display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    flex: 1;
   }
-  .ai-main-wrapper.empty-state .ai-main-scroll {
+  .ai-main-wrapper.empty-state .ai-chat-messages {
     display: none;
   }
-  .ai-main-wrapper.empty-state .ai-input-area {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 800px;
-    padding: 1rem;
-    background: transparent;
-    border-top: none;
-  }
 
-  /* Welcome Header (Astra Model) */
+  /* Welcome Header */
   .ai-welcome-header {
     display: none;
     text-align: center;
@@ -301,11 +294,27 @@ hide:
     animation: fadeIn 0.4s ease;
   }
   .ai-main-wrapper.empty-state .ai-welcome-header {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+  
+  .ai-welcome-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b0f19;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  }
+  
   .ai-welcome-title {
-    font-size: 2.2rem !important;
-    font-weight: 800 !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
     color: #ffffff !important;
     margin: 0 0 0.8rem 0 !important;
     font-family: 'Inter', sans-serif;
@@ -343,25 +352,25 @@ hide:
     margin: 0 auto;
     background: #181c26;
     border: 1px solid #272d3d;
-    border-radius: 20px;
-    padding: 1.2rem;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
     display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    align-items: flex-end;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     box-sizing: border-box;
     transition: border-color 0.2s, box-shadow 0.2s;
+    gap: 0.8rem;
   }
   .ai-input-container:focus-within {
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
+    border-color: #3b82f6;
   }
   
   .ai-input {
-    width: 100%;
+    flex: 1;
     background: transparent;
     border: none;
     color: #f8fafc;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     outline: none;
     resize: none;
     font-family: 'Inter', sans-serif;
@@ -369,81 +378,68 @@ hide:
     max-height: 150px;
     overflow-y: auto;
     line-height: 1.5;
+    padding-top: 2px;
   }
   .ai-input::placeholder { color: #475569; }
   
-  /* Input tools row */
-  .ai-input-tools {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 0.8rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 0.8rem;
-  }
-  
-  .ai-tools-left, .ai-tools-right {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  
-  .ai-tool-btn-circle {
+  .ai-send-btn-new {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    background: #1e293b;
+    border: none;
     color: #94a3b8;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
+    flex-shrink: 0;
   }
-  .ai-tool-btn-circle:hover {
-    background: rgba(255,255,255,0.08);
+  .ai-send-btn-new:hover {
+    background: #334155;
+    color: #ffffff;
+  }
+  .ai-send-btn-new.active {
+    background: #3b82f6;
     color: #ffffff;
   }
 
-  /* Shortcut Pills (below input container) */
-  .ai-action-pills {
+  /* Shortcut Grid */
+  .ai-suggestion-grid {
     display: none;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 1.5rem auto 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
     width: 100%;
-    max-width: 800px;
+    max-width: 700px;
+    margin: 1rem auto 0 auto;
     animation: fadeIn 0.4s ease;
   }
-  .ai-main-wrapper.empty-state .ai-action-pills {
-    display: flex;
+  .ai-main-wrapper.empty-state .ai-suggestion-grid {
+    display: grid;
   }
   
-  .ai-tool-pill-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+  @media (max-width: 768px) {
+    .ai-suggestion-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .ai-suggestion-card {
+    background: #111520;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 1.2rem;
     color: #cbd5e1;
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: left;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    line-height: 1.4;
   }
-  .ai-tool-pill-btn:hover {
-    background: rgba(255,255,255,0.08);
-    color: #ffffff;
-  }
-  .ai-tool-pill-btn.active {
-    background: rgba(245, 158, 11, 0.1);
-    border-color: rgba(245, 158, 11, 0.3);
-    color: #f59e0b;
+  .ai-suggestion-card:hover {
+    background: #161b27;
+    border-color: #334155;
   }
   
   .ai-model-label {
@@ -729,66 +725,54 @@ hide:
     </button>
     
     <div class="ai-main-scroll">
+      <!-- Welcome Header (only visible in empty-state) -->
+      <div class="ai-welcome-header">
+        <div class="ai-welcome-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path></svg>
+        </div>
+        <h1 class="ai-welcome-title">Assistente Estratégico de IA</h1>
+        <p class="ai-welcome-subtitle">Analise indicadores, identifique tendências e tome decisões baseadas em dados sobre Saúde, Educação, Segurança e Infraestrutura do estado.</p>
+      </div>
+
+      <!-- Action Pills (only visible in empty-state) -->
+      <div class="ai-suggestion-grid">
+        <button class="ai-suggestion-card" data-query="saude">
+          Qual é a situação atual da saúde no estado?
+        </button>
+        <button class="ai-suggestion-card" data-query="evasao">
+          Como está a taxa de evasão escolar?
+        </button>
+        <button class="ai-suggestion-card" data-query="seguranca">
+          Quais indicadores de segurança estão abaixo da meta?
+        </button>
+        <button class="ai-suggestion-card" data-query="infraestrutura">
+          Resumo do investimento em infraestrutura em 2024
+        </button>
+        <button class="ai-suggestion-card" data-query="comparar">
+          Compare os indicadores de educação com as metas
+        </button>
+        <button class="ai-suggestion-card" data-query="alertas">
+          Quais alertas críticos existem no painel?
+        </button>
+      </div>
+
       <!-- Container de Mensagens Ativas -->
       <div id="ai-chat-messages" class="ai-chat-messages"></div>
     </div>
 
     <!-- Barra de Digitação (Chat Input) Fixada na Base -->
     <div class="ai-input-area">
-      
-      <!-- Welcome Header (only visible in empty-state) -->
-      <div class="ai-welcome-header">
-        <h1 class="ai-welcome-title">Olá!</h1>
-        <p class="ai-welcome-subtitle">MT 360º | Central de Dados Unificados de Mato Grosso</p>
-      </div>
-
       <div class="ai-input-container">
-        <!-- Top Row: Textarea -->
-        <textarea class="ai-input" placeholder="Pergunte ao Assistente..." rows="1"></textarea>
+        <!-- Textarea -->
+        <textarea class="ai-input" placeholder="Pergunte sobre os indicadores do governo..." rows="1"></textarea>
         
-        <!-- Bottom Row: Tools -->
-        <div class="ai-input-tools">
-          <div class="ai-tools-left">
-            <button class="ai-tool-btn-circle" title="Adicionar arquivo ou contexto">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            </button>
-            <button class="ai-tool-pill-btn active" title="Pesquisar na Web">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-              <span>Pesquisa web</span>
-            </button>
-          </div>
-          <div class="ai-tools-right">
-            <div class="ai-model-label">
-              <span>MT-IA</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-            </div>
-            <button class="ai-send-btn-new" title="Enviar mensagem">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Action Pills (only visible in empty-state) -->
-      <div class="ai-action-pills">
-        <button class="ai-pill-btn" data-query="saude">
-          <span>🏥 Análise de Saúde</span>
-        </button>
-        <button class="ai-pill-btn" data-query="evasao">
-          <span>🎓 Metas de Educação</span>
-        </button>
-        <button class="ai-pill-btn" data-query="seguranca">
-          <span>🛡️ Alertas de Segurança</span>
-        </button>
-        <button class="ai-pill-btn" data-query="infraestrutura">
-          <span>🏗️ Obras de Infraestrutura</span>
-        </button>
-        <button class="ai-pill-btn" data-query="planejamento">
-          <span>📊 Diretrizes de Planejamento</span>
+        <!-- Send button -->
+        <button class="ai-send-btn-new" title="Enviar mensagem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </div>
 
-      <div class="ai-input-footer">IA especializada em indicadores públicos · Feito para o MT</div>
+      <div class="ai-input-footer">IA especializada em indicadores públicos · Enter para enviar</div>
     </div>
   </main>
 </div>
