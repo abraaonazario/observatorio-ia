@@ -1,0 +1,1252 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentação Técnica e Governança de Dados do Governo">
+      
+      
+      
+      
+        <link rel="prev" href="../observatorio-ia-dashboard/">
+      
+      
+        <link rel="next" href="../painel-mt/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Painéis de Indicadores - MT 360º</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/agent-widget.css">
+    
+      <link rel="stylesheet" href="../stylesheets/home.css">
+    
+      <link rel="stylesheet" href="../stylesheets/dashboard.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      <header class="custom-top-nav">
+  <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1500px; margin: 0 auto;">
+    <div class="nav-brand" style="margin-left: 20px;">
+      <div class="nav-logo" style="background: linear-gradient(135deg, #0ea5e9, #10b981);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="18" y="3" width="4" height="18"></rect><rect x="10" y="8" width="4" height="13"></rect><rect x="2" y="13" width="4" height="8"></rect></svg>
+      </div>
+      <div class="nav-titles">
+        <a href="../paineis-indicadores/" style="text-decoration: none; color: inherit; display: block;">
+          <div class="nav-main-title" style="letter-spacing: 0.5px; font-weight: 800;">MT 360º</div>
+          <div class="nav-sub-title" style="font-size: 0.6rem; color: #64748b; letter-spacing: 0.5px;">PAINEL DE INDICADORES - EST. 2024</div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="mobile-nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" style="padding: 10px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </div>
+    
+    <nav class="nav-links">
+      <a href="../" class="">Home</a>
+      <a href="../paineis-indicadores/" class="active">MT 360º</a>
+      <a href="../mapa-ativos/" class="">Mapa</a>
+      <a href="../perfil-municipios/" class="">Municípios</a>
+      <a href="../assistente-ia/" class="">Assistente IA</a>
+      <a href="../camada1-datalake/" class="">Metodologia</a>
+      <a href="../sobre/" class="">Sobre</a>
+    </nav>
+  </div>
+
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MT 360º" class="md-nav__button md-logo" aria-label="MT 360º" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MT 360º
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT 360º
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MT 360º
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../observatorio-ia-dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT 360
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Painéis de Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../painel-mt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dados Abertos (MT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mapa-ativos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mapa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Municípios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Municípios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perfil-municipios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cidade-agua-boa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Água Boa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cidade-sao-jose-do-povo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    São José do Povo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assistente-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assistente IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metodologia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Metodologia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../camada1-datalake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral do Data Lake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../camada2-secretarias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integração de Secretarias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura-atualizacao-dados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura de Atualização de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../camada3-observatorio-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metodologia de IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto-agente-executivo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projeto Agente Executivo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sobre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sobre
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+<style>
+  /* HIDE MKDOCS DEFAULTS COMPLETELY */
+  h1 { display: none !important; } 
+  .md-main__inner { margin: 0 !important; max-width: 100% !important; }
+  .md-content { padding: 0 !important; }
+  .md-grid { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  .md-content__inner { margin: 0 !important; padding: 0 !important; }
+  body, html { margin: 0; padding: 0; min-height: 100vh; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+  :root {
+    --bg-color: #eef1f6;
+    --panel-bg: rgba(255, 255, 255, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.5);
+    --text-main: #212121;
+    --text-muted: #555555;
+
+    /* Theme Colors */
+    --c-saude: #22d3ee;
+    --c-edu: #a78bfa;
+    --c-seg: #fb923c;
+    --c-inf: #facc15;
+    --c-soc: #f472b6;
+    --c-fin: #4ade80;
+  }
+
+  /* FULL PAGE WRAPPER */
+  .hub-wrapper {
+    width: 100%;
+    min-height: calc(100vh - 70px); /* Adjusting for standard header */
+    background-color: var(--bg-color);
+    /* Subtle map background pattern */
+    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+  }
+
+  /* TOP BAR LOGO */
+  .hub-top-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    color: #112d7b;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    background: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-decoration: none;
+    z-index: 10;
+  }
+  .hub-top-bar svg { fill: #112d7b; }
+
+  .hub-top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777;
+  }
+  .hub-top-right span {
+    font-weight: 800;
+    color: #5b21b6;
+  }
+
+  /* MAIN PANEL */
+  .hub-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08), 
+                inset 0 2px 0 rgba(255,255,255,0.7);
+    padding: 50px 40px;
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .hub-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .hub-subtitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin: 10px 0 40px 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* GRID CARDS */
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .hub-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.03);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .hub-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: transparent;
+    transition: all 0.3s;
+  }
+
+  .hub-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  }
+
+  /* Color specific hovers */
+  .hub-card.saude:hover::before { background: var(--c-saude); }
+  .hub-card.edu:hover::before { background: var(--c-edu); }
+  .hub-card.seg:hover::before { background: var(--c-seg); }
+  .hub-card.inf:hover::before { background: var(--c-inf); }
+  .hub-card.soc:hover::before { background: var(--c-soc); }
+  .hub-card.fin:hover::before { background: var(--c-fin); }
+
+  .hub-icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+  }
+
+  .hub-card:hover .hub-icon-wrap {
+    transform: scale(1.1);
+  }
+
+  .hub-card.saude .hub-icon-wrap { background: rgba(34, 211, 238, 0.15); color: #0891b2; }
+  .hub-card.edu .hub-icon-wrap { background: rgba(167, 139, 250, 0.15); color: #7c3aed; }
+  .hub-card.seg .hub-icon-wrap { background: rgba(251, 146, 60, 0.15); color: #ea580c; }
+  .hub-card.inf .hub-icon-wrap { background: rgba(250, 204, 21, 0.15); color: #ca8a04; }
+  .hub-card.soc .hub-icon-wrap { background: rgba(244, 114, 182, 0.15); color: #db2777; }
+  .hub-card.fin .hub-icon-wrap { background: rgba(74, 222, 128, 0.15); color: #16a34a; }
+
+  .hub-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .hub-card-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main) !important;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .hub-footer {
+    font-size: 10px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  @media(max-width: 900px) {
+    .hub-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media(max-width: 600px) {
+    .hub-grid { grid-template-columns: 1fr; }
+    .hub-panel { padding: 30px 20px; }
+  }
+
+  /* DARK MODE */
+  body.dark-mode .hub-wrapper {
+    --bg-color: #0d1117;
+    --panel-bg: rgba(22, 27, 34, 0.85);
+    --panel-border: rgba(48, 54, 61, 0.5);
+    --text-main: #ffffff;
+    --text-muted: #cccccc;
+    background-image: radial-gradient(#30363d 1px, transparent 1px);
+  }
+  body.dark-mode .hub-card {
+    background: #161b22;
+    border-color: #30363d;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  }
+  body.dark-mode .hub-top-bar {
+    background: #1c2128;
+    color: #ffffff;
+    border: 1px solid #30363d;
+  }
+  body.dark-mode .hub-top-bar svg {
+    fill: #58a6ff;
+  }
+  body.dark-mode .hub-card-label {
+    color: #aaaaaa;
+  }
+  body.dark-mode .hub-footer {
+    color: #aaaaaa;
+  }
+  body.dark-mode .hub-top-right {
+    color: #cccccc;
+  }
+  body.dark-mode .hub-top-right span {
+    color: #ffffff;
+  }
+  body.dark-mode .hub-card-title {
+    color: #ffffff !important;
+  }
+  .theme-toggle-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 12px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-main);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    user-select: none;
+    margin-left: 14px;
+    transition: all 0.2s;
+  }
+  .theme-toggle-btn:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  body.dark-mode .theme-toggle-btn:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+</style>
+
+<div class="hub-wrapper">
+
+  <div class="hub-panel">
+
+    <h1 class="hub-title">MT 360º</h1>
+    <div class="hub-subtitle">ANÁLISE DETALHADA DOS PAINÉIS DE INDICADORES DO ESTADO</div>
+
+    <div class="hub-grid">
+
+      <!-- SAÚDE -->
+      <a href="../saude/" class="hub-card saude">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        </div>
+        <h2 class="hub-card-title">SAÚDE</h2>
+      </a>
+
+      <!-- EDUCAÇÃO -->
+      <a href="../educacao/" class="hub-card edu">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        </div>
+        <h2 class="hub-card-title">EDUCAÇÃO</h2>
+      </a>
+
+      <!-- SEGURANÇA -->
+      <a href="../seguranca/" class="hub-card seg">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h2 class="hub-card-title">SEGURANÇA</h2>
+      </a>
+
+      <!-- INFRAESTRUTURA -->
+      <a href="../infraestrutura/" class="hub-card inf">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <h2 class="hub-card-title">INFRAESTRUTURA</h2>
+      </a>
+
+      <!-- ASSISTÊNCIA SOCIAL -->
+      <a href="../assistencia/" class="hub-card soc">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <h2 class="hub-card-title">SOCIAL</h2>
+      </a>
+
+      <!-- FINANÇAS / FIPLAN -->
+      <a href="../financas/" class="hub-card fin">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+        <h2 class="hub-card-title">FIPLAN</h2>
+      </a>
+
+      <!-- TRANSPORTES -->
+      <a href="../transportes/" class="hub-card inf">
+        <div class="hub-icon-wrap">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect><circle cx="6" cy="19" r="2"></circle><circle cx="18" cy="19" r="2"></circle><path d="M22 17v-4l-4-4H6"></path></svg>
+        </div>
+        <h2 class="hub-card-title">TRANSPORTES</h2>
+      </a>
+
+    </div>
+
+    <div class="hub-footer">
+      OS DADOS DESTA SEÇÃO SÃO FORNECIDOS E CONSOLIDADOS PELAS RESPECTIVAS SECRETARIAS. <br/>
+      O MT 360º ATUA COMO PLATAFORMA DE INTEGRAÇÃO.
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function applyHubTheme(theme) {
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Carregar o tema salvo
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      applyHubTheme('dark');
+      const btn = document.getElementById('theme-toggle');
+      if(btn) btn.innerHTML = 'Light'; // Just an example, maybe with SVG
+    }
+
+    // 2. Ouvir o botão padrão do menu superior
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        // Toggle the body class
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "search.suggest", "search.highlight", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+        <script src="../javascripts/chart-datalabels.js"></script>
+      
+        <script src="../javascripts/theme-toggle.js"></script>
+      
+        <script src="../javascripts/agent-widget.js"></script>
+      
+        <script src="../javascripts/dynamic-date.js"></script>
+      
+    
+  </body>
+</html>

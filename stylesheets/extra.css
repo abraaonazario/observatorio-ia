@@ -1,0 +1,49 @@
+:root {
+  --md-primary-fg-color: #071d41; /* Azul Escuro */
+  --md-primary-fg-color--light: #0055a4; /* Azul Claro */
+  --md-primary-fg-color--dark: #041024;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffff;
+  
+  --md-accent-fg-color: #0055a4; /* Azul Claro para destaque */
+  --md-accent-fg-color--transparent: rgba(0, 85, 164, 0.1);
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: #ffffff;
+}
+
+/* Estilização para cards na página inicial */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.grid.cards > div {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  padding: 1.5rem;
+  transition: all 250ms;
+  background-color: var(--md-default-bg-color);
+  box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.05);
+}
+
+.grid.cards > div:hover {
+  box-shadow: 0 0.4rem 1rem rgba(0,0,0,0.1);
+  border-color: var(--md-primary-fg-color);
+}
+
+.grid.cards h3 {
+  margin-top: 0;
+  color: var(--md-primary-fg-color);
+}
+
+.grid.cards p {
+  margin-bottom: 0;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Ocultar direitos autorais do MkDocs no rodapé */
+.md-copyright {
+  display: none !important;
+}
